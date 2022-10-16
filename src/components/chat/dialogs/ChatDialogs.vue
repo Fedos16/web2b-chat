@@ -1,124 +1,35 @@
 <template>
   <div class="sidebar">
-    <div class="menu">
-      <div class="menu_search">
-        <img src="@/assets/images/search.svg" alt="">
-        <input type="text" class="menu_search__input" placeholder="Поиск">
-      </div>
-      <div class="menu_actions">
-        <img src="@/assets/images/letter.svg" alt="">
-        <img src="@/assets/images/arrowup.svg" alt="">
-        <div class="menu_actions__button">
-          <button class="actions_button">Создать чат <img src="@/assets/images/checkmarkdown.svg" alt=""></button>
-        </div>
-      </div>
-    </div>
-    <div class="chatlist">
-      <div class="archive">
-        <div class="archive_archive">
-          <img src="@/assets/images/box.svg" alt="">
-          <div class="archive_archive__text">Архив</div>
-        </div>
-        <div class="archive_checkmark">
-          <img src="@/assets/images/checkmarkright.svg" alt="">
-        </div>
-      </div>
-      <div class="dialog">
-       <div class="dialogIcon"></div>
-        <div class="dialogInfo">
-          <div class="dialogInfoTop">
-            <div class="dialogInfoName"></div>
-            <div class="dialogInfoData"></div>
-          </div>
-          <div class="dialogInfoBot">
-            <div class="dialogInfoBotLeft">
-              <div class="dialogInfoText"></div>
-            </div>
-            <div class="dialogInfoBotRight">
-              <div class="dialogInfoFix"></div>
-              <div class="dialogInfoMenu"></div>
-            </div>
-          </div>
-          </div>
-      </div>
-    </div>
+    <Menu :dialogs="dialogs" />
+    <Archive/>
+    <Dialog v-for="dialog in dialogs" :dialog="dialog" :key="dialog.id"/>
   </div>
 </template>
 
+<script>
+import Dialog from "./componentsDialogs/Dialog.vue"
+import Menu from "./componentsDialogs/menu.vue"
+import Archive from "./componentsDialogs/archive.vue"
+
+export default {
+  components: { Dialog, Menu, Archive },
+  props: {
+    dialogs: {
+      type: Array,
+      required: true,
+    },
+  },
+}
+</script>
+
+
 <style scoped>
   .sidebar{
-    border: 1px solid #E7EFFD;
-    height: 100%;
+    border-right: 1px solid #E7EFFD;;
+    max-height: 100%;
     max-width: 315px;
+    min-width: 315px;
+    max-width: 100%;
   }
-  .menu{
-    height: 56px;
-    display: flex;
-    justify-content: space-between;
-    margin: 0px 8px;
-    align-items: center;
-  }
-  .menu_search{
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-  }
-  .menu_search__input{
-    width: 42px;
-    height: 20px;
-    font-family: 'Raleway';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-    color: #7D95BD;flex: none;
-    border: none;
-  }
-  .menu_actions{
-    display: flex;
-  }
-  .actions_button{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    width: 132px;
-    height: 38px;
-    background: #E9EDF5;
-    border-radius: 4px;
-    border: none;
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-    font-family: 'Raleway';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 20px;
-    color: #2E5599;
-  }
-  .archive{
-    display: flex;
-    justify-content: space-between;
-    padding: 4px 4px 4px 20px;
-    border-top: 1px solid #E7EFFD;
-    align-items: center;
-  }
-  .archive_archive{
-    display: flex;
-    align-items: center;
-  }
-  .archive_archive__text{
-    margin-left: 15px;
-    font-family: 'Raleway';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 16px;
-    color: #2E5599;
-  }
-  .archive_checkmark{
-    height: 16px;
-  }
+
 </style>
