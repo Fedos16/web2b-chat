@@ -15,7 +15,7 @@
     <div class="menu_find" v-else>
       <div class="menu_search__search">
         <img src="@/assets/images/search.svg" alt="">
-        <input type="text" class="menu_search__input" placeholder="Поиск" id="menu_search__input" ref="menu_search__input">
+        <input type="text" class="menu_search__input" placeholder="Поиск" @input="searchDialog" v-model="searchName">
         <img src="../../../../assets/images/crossclose.svg" alt="" @click="menu">
       </div>
     </div>
@@ -23,6 +23,12 @@
 
 <script>
 export default {
+props: {
+    dialogs: {
+      type: Array,
+      required: true,
+    },
+  },
 data() {
     return{
       searchVisible: false,
@@ -36,6 +42,7 @@ data() {
       default: false,
     },
     };
+    searchName: '';
   },
   methods: {
     menusearch(){
@@ -49,8 +56,12 @@ data() {
     startTimer () {
       this.$nextTick(() => {
         this.$refs.menu_search__input[0].focus()
-    })
-}
+      })
+    },
+    searchDialog(){
+      let res = this.dialogs.filter(item => item.name == this.searchName )
+      console.log(res)
+    },
   },
 }
 </script>

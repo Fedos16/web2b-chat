@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <Menu/>
+    <Menu :dialogs="dialogs" />
     <Archive/>
     <Dialog v-for="dialog in dialogs" :dialog="dialog" :key="dialog.id"/>
   </div>
