@@ -15,7 +15,7 @@
     <div class="menu_find" v-else>
       <div class="menu_search__search">
         <img src="@/assets/images/search.svg" alt="">
-        <input type="text" class="menu_search__input" placeholder="Поиск" autofocus>
+        <input type="text" class="menu_search__input" placeholder="Поиск" id="menu_search__input" ref="menu_search__input">
         <img src="../../../../assets/images/crossclose.svg" alt="" @click="menu">
       </div>
     </div>
@@ -41,18 +41,17 @@ data() {
     menusearch(){
       this.showMenu = false;
       this.showSearch = true;
-      this.menu_search__input.autofocus;
     },
     menu(){
       this.showSearch = false;
       this.showMenu = true;
     },
-  methods: {
-    sort(){
-      return this.dialogs.sort.dataLastMsg((a,b)=>b-a)
-    }
+    startTimer () {
+      this.$nextTick(() => {
+        this.$refs.menu_search__input[0].focus()
+    })
+}
   },
-    },
 }
 </script>
 
