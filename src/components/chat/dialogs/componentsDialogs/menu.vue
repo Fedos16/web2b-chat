@@ -23,24 +23,24 @@
 
 <script>
 export default {
-props: {
+  props: {
     dialogs: {
       type: Array,
       required: true,
     },
   },
-data() {
-    return{
+  data() {
+    return {
       searchVisible: false,
       menuVisible: false,
       showMenu: {
-      type: Boolean,
-      default: true,
-    },
+        type: Boolean,
+        default: true,
+      },
       showSearch: {
-      type: Boolean,
-      default: false,
-    },
+        type: Boolean,
+        default: false,
+      },
     };
     searchName: '';
   },

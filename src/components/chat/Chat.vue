@@ -16,12 +16,14 @@ export default {
 </script>
 
 <style scoped>
-    .chat {
-        display: flex;
-        max-width: 100vh;
-        margin: 24px 24px 24px 20px;
-        font-family: "Raleway";
-        font-size: 14px;
-        border: 1px solid var(--border-color);
-    }
+  .chat {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: "Raleway";
+    font-size: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: #fff;
+  }
 </style>
