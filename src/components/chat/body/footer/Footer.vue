@@ -32,10 +32,10 @@
         width: 100%;
         margin-right: 10px;
         border: none;
-        color: #102447;
+        color: var(--input-text-color);
     }
     .chat-body_footer__section input::placeholder {
-        color: #7D95BD;
+        color: var(--input-placeholder-color);
     }
     .chat-body_footer__send-message {
         width: 48px;
