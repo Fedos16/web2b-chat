@@ -70,11 +70,19 @@ export default {
         flex-direction: row-reverse;
     }
     .message-list_row__action {
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 20px;
         background-image: url('@/assets/images/menu.svg');
         background-size: cover;
+        background-position: center;
         cursor: pointer;
+        transition: 200ms;
+        line-height: 0px;
+        margin: 0px 5px;
+    }
+    .message-list_row__action:hover {
+        border-radius: 50%;
+        background-color: var(--button-secondary-background);
     }
     .message-list_row_message {
         width: auto;

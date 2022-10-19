@@ -1,6 +1,6 @@
 <template>
     <div class="chat-body_header">
-        <div class="chat-body_header_user-info">
+        <div class="chat-body_header_user-info" v-if="!activeSearch">
             <div class="chat-body_header_user-info__avatar">
                 <img src="@/assets/images/tehSupport.svg" alt="">
             </div>
@@ -9,16 +9,65 @@
                 <p>Пользователь</p>
             </div>
         </div>
-        <div class="chat-body_header_actions">
-            <div class="chat-body_header_actions__item">
+        <div class="chat-body_header_actions" v-if="!activeSearch">
+            <div class="chat-body_header_actions__item" @click="switchSearch">
                 <img src="@/assets/images/search.svg" alt="">
             </div>
             <div class="chat-body_header_actions__item">
                 <img src="@/assets/images/menu.svg" alt="">
             </div>
         </div>
+        <div class="chat-body_header_search" v-if="activeSearch">
+            <img src="@/assets/images/search.svg" alt="">
+            <input type="text" placeholder="Поиск по истории сообщений" v-model="searchText" @input="searchMessage" ref="searchInput">
+            <button class="invisible-button margin-r--15">
+                <img src="@/assets/images/calendar.png" alt="">
+            </button>
+            <button class="web-button main-button margin-r--10">Найти</button>
+            <button class="web-button secondary-button" @click="switchSearch">Отмена</button>
+        </div>
     </div>
 </template>
+
+<script>
+
+    import { ref, watch } from 'vue';
+
+    export default {
+        
+        setup() {
+            const searchInput = ref(null);
+
+            watch(searchInput, (current) => {
+
+                if (current) {
+                    current.focus()
+                }
+
+            });
+
+            return {
+                searchInput
+            }
+        },
+        data() {
+            return {
+                activeSearch: false,
+                searchText: ''
+            }
+        },
+        methods: {
+            switchSearch() {
+                this.activeSearch = !this.activeSearch;
+                if (this.searchText) this.searchText = '';
+            },
+            searchMessage() {
+                console.log(`Search: ${this.searchText}`);
+            }
+        }
+    }
+    
+</script>
 
 <style scoped>
     .chat-body_header {
@@ -47,7 +96,7 @@
     .chat-body_header_user-info__user-name {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: space-evenly;
     }
     .chat-body_header_user-info__user-name b {
         font-size: 18px;
@@ -70,6 +119,22 @@
     }
     .chat-body_header_actions__item:last-child {
         margin-right: 0px;
+    }
+
+    .chat-body_header_search {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .chat-body_header_search input {
+        width: 100%;
+        border: none;
+        margin: 0px 15px;
+        color: var(--input-text-color);
+    }
+    .chat-body_header_search input::placeholder {
+        color: var(--input-placeholder-color);
     }
 
 </style>
