@@ -1,6 +1,6 @@
 <template>
   <Chat>
-    <Dialogs :dialogs="dialogs" />
+    <Dialogs />
     <ChatBody />
   </Chat>
 </template>
@@ -11,32 +11,13 @@ import Chat from '@/components/chat/Chat';
 import Dialogs from '@/components/chat/dialogs/ChatDialogs';
 import ChatBody from '@/components/chat/body/ChatBody';
 
+
 export default {
   name: 'App',
   components: {
     Chat,
     Dialogs,
     ChatBody
-  },
-  data() {
-    return {
-      dialogs: [
-        { id: 1, img:"123", name: "Олег" , dataLastMsg: "14.10.2022", lastMsg: "привет1" },
-        { id: 2, img:"123", name: "Любовь" , dataLastMsg: "13.10.2022", lastMsg: "привет2" },
-        { id: 3, img:"123", name: "Евгений" , dataLastMsg: "12.10.2022", lastMsg: "привет3" },
-        { id: 4, img:"123", name: "Григорий" , dataLastMsg: "15.10.2022", lastMsg: "привет4" },
-        { id: 5, img:"123", name: "Петр" , dataLastMsg: "20.10.2022", lastMsg: "привет5" },
-        { id: 6, img:"123", name: "Екатерина" , dataLastMsg: "28.10.2022", lastMsg: "привет2" },
-        { id: 7, img:"123", name: "Тимур" , dataLastMsg: "06.10.2022", lastMsg: "привет3" },
-        { id: 8, img:"123", name: "Ульяна" , dataLastMsg: "11.10.2022", lastMsg: "привет4" },
-        { id: 9, img:"123", name: "Харитон" , dataLastMsg: "01.10.2022", lastMsg: "привет5" }
-      ],
-    };
-  },
-  methods: {
-    sort(){
-      return this.dialogs.sort.dataLastMsg((a,b)=>b-a)
-    }
   },
 };
 </script>
@@ -104,7 +85,7 @@ export default {
     height: 6px;
     width: 5px;
   }
-  .my-scroll::-webkit-scrollbar-thumb{
+  .my-scroll::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background-color: #C7D4E9;
   }

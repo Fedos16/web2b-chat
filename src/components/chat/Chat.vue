@@ -1,19 +1,8 @@
 <template>
-    <div class="chat">
-        <slot />
-    </div>
+  <div class="chat">
+      <slot />
+  </div>
 </template>
-
-<script>
-export default {
-  props: {
-    dialogs: {
-      type: Array,
-      required: true,
-    },
-  },
-};
-</script>
 
 <style scoped>
   .chat {
