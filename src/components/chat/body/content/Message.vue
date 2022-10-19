@@ -2,12 +2,12 @@
     <div 
     class="message-list_row"
     :class="classMessage">
-        <div class="message-list_row__autor">
-            {{ !preMessage?.incoming && message.incoming ? message.user : '' }}
+        <div class="message-list_row__autor" v-if="!preMessage?.incoming && message.incoming">
+            {{ message.user }}
         </div>
         <div class="message-list_row__message-content">
             <div class="message-list_row_message">
-                <div class="message-list_row_message__text">{{ message.text }}</div>
+                <div class="message-list_row_message__text" v-html="message.findedText || message.text"></div>
                 <div class="message-list_row_message__time">{{ timeFormat(message.date) }}</div>
             </div>
             <div class="message-list_row__action"></div>
@@ -98,6 +98,7 @@ export default {
     }
     .message-list_row_message__text {
         margin-right: 5px;
+        line-height: 20px;
     }
     .message-list_row_message__time {
         font-size: 12px;
