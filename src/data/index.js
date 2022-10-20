@@ -72,13 +72,13 @@ export const messages = [
   }
 ]
 export const dialogs = [
-  { id: 1, img: "123", name: "Олег", dateLastMsg: "14.10.2022", textLastMsg: "привет1" },
-  { id: 2, img: "123", name: "Любовь", dateLastMsg: "13.10.2022", textLastMsg: "привет2" },
-  { id: 3, img: "123", name: "Евгений", dateLastMsg: "12.10.2022", textLastMsg: "привет3" },
-  { id: 4, img: "123", name: "Григорий", dateLastMsg: "15.10.2022", textLastMsg: "привет4" },
-  { id: 5, img: "123", name: "Петр", dateLastMsg: "20.10.2022", textLastMsg: "привет5" },
-  { id: 6, img: "123", name: "Екатерина", dateLastMsg: "28.10.2022", textLastMsg: "привет2" },
-  { id: 7, img: "123", name: "Тимур", dateLastMsg: "06.10.2022", textLastMsg: "привет3" },
-  { id: 8, img: "123", name: "Ульяна", dateLastMsg: "11.10.2022", textLastMsg: "привет4" },
-  { id: 9, img: "123", name: "Харитон", dateLastMsg: "01.10.2022", textLastMsg: "привет5" },
+    { id: 1, img: "123", name: "Олег", dateLastMsg: "14.10.2022", textLastMsg: "привет1" },
+    { id: 2, img: "123", name: "Любовь", dateLastMsg: "13.10.2022", textLastMsg: "привет2" },
+    { id: 3, img: "123", name: "Евгений", dateLastMsg: "12.10.2022", textLastMsg: "привет3" },
+    { id: 4, img: "123", name: "Григорий", dateLastMsg: "15.10.2022", textLastMsg: "привет4" },
+    { id: 5, img: "123", name: "Петр", dateLastMsg: "20.10.2022", textLastMsg: "привет5" },
+    { id: 6, img: "123", name: "Екатерина", dateLastMsg: "28.10.2022", textLastMsg: "привет2" },
+    { id: 7, img: "123", name: "Тимур", dateLastMsg: "06.10.2022", textLastMsg: "привет3" },
+    { id: 8, img: "123", name: "Ульяна", dateLastMsg: "11.10.2022", textLastMsg: "привет4" },
+    { id: 9, img: "123", name: "Харитон", dateLastMsg: "01.10.2022", textLastMsg: "привет5" },
 ]

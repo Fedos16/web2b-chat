@@ -5,7 +5,8 @@
             <div class="menu_search__find">Поиск</div>
         </div>
         <div class="menu_actions">
-            <img src="@/assets/images/letter.svg" alt="" @click="sort">
+            <img src="@/assets/images/letter.svg" alt="" v-if="showUnreadLatter" @click="switchLatter">
+            <img src="@/assets/images/unreadletter.svg" alt="" v-else @click="switchLatter">
             <img src="@/assets/images/arrowup.svg" alt="">
             <div class="menu_actions__button">
                 <button class="actions_button">Создать чат <img src="@/assets/images/checkmarkdown.svg" alt=""></button>
@@ -35,6 +36,10 @@ export default {
                 type: Boolean,
                 default: true,
             },
+            showUnreadLatter: {
+                type: Boolean,
+                default: true,
+            },
             searchName: ''
         }
     },
@@ -47,6 +52,9 @@ export default {
             if (this.searchName) this.searchName = '';
             this.search();
         },
+        switchLatter(){
+            this.showUnreadLatter = !this.showUnreadLatter;
+        },
         search() {
             this.$emit('dialogSearch',this.searchName);
         }
@@ -54,13 +62,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .menu {
-    height: 56px;
+    min-height: 56px;
+    max-height: 56px;
     display: flex;
     justify-content: space-between;
-    margin: 0px 8px;
+    padding: 0px 8px;
     align-items: center;
+    border-bottom: 1px solid #E7EFFD;
 }
 .menu_search {
     width: 100%;
@@ -69,11 +79,13 @@ export default {
     cursor: pointer;
 }
 .menu_find {
-    height: 56px;
+    min-height: 56px;
+    max-height: 56px;
     display: flex;
     justify-content: space-between;
-    margin: 0px 20px;
+    padding: 0px 8px;
     align-items: center;
+    border-bottom: 1px solid #E7EFFD;
 }
 .menu_search__search {
     width: 100%;
@@ -124,29 +136,5 @@ export default {
     line-height: 20px;
     color: #2E5599;
     cursor: pointer;
-}
-.archive {
-    display: flex;
-    justify-content: space-between;
-    padding: 4px 4px 4px 20px;
-    border-top: 1px solid #E7EFFD;
-    border-bottom: 1px solid #E7EFFD;
-    align-items: center;
-}
-.archive_archive {
-    display: flex;
-    align-items: center;
-}
-.archive_archive__text {
-    margin-left: 15px;
-    font-family: 'Raleway';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 16px;
-    color: #2E5599;
-}
-.archive_checkmark {
-    height: 16px;
 }
 </style>
