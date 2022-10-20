@@ -14,9 +14,11 @@
 </template>
 
 <script>
-import Dialog from "./componentsDialogs/Dialog.vue";
-import Menu from "./componentsDialogs/Menu.vue";
-import Archive from "./componentsDialogs/Archive.vue";
+import Dialog from "./componentsDialogs/Dialog";
+import Menu from './componentsDialogs/Menu';
+import Archive from './componentsDialogs/Archive';
+
+
 import { dialogs } from '@/data/index';
 
 export default {

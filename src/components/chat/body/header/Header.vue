@@ -53,16 +53,22 @@
         data() {
             return {
                 activeSearch: false,
-                searchText: ''
+            }
+        },
+        computed: {
+            searchText: {
+                get() {
+                    return this.$store.state.searchMessageText;
+                },
+                set(value) {
+                    this.$store.commit('updateSearchMessageText', value);
+                }
             }
         },
         methods: {
             switchSearch() {
                 this.activeSearch = !this.activeSearch;
-                if (this.searchText) this.searchText = '';
-            },
-            searchMessage() {
-                console.log(`Search: ${this.searchText}`);
+                if (this.$store.state.searchMessageText) this.$store.commit('updateSearchMessageText', '');
             }
         }
     }
