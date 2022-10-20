@@ -13,6 +13,8 @@
 
 <script>
 
+import { nextTick } from 'vue';
+
 import Message from './Message.vue';
 
 export default {
@@ -20,12 +22,12 @@ export default {
         Message
     },
     mounted(){
-        this.$nextTick(() => {
-            const container = this.$refs.chatBody;
-            if (container) {
-                container.scrollTop = container.scrollHeight;
+        nextTick(() => {
+            const { chatBody } = this.$refs;
+            if (chatBody) {
+                chatBody.scrollTop = chatBody.scrollHeight;
             }
-        })
+        });
     },
     data() {
         return {

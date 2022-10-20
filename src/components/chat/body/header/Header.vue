@@ -19,11 +19,11 @@
         </div>
         <div class="chat-body_header_search" v-if="activeSearch">
             <img src="@/assets/images/search.svg" alt="">
-            <input type="text" placeholder="Поиск по истории сообщений" v-model="searchText" @input="searchMessage" ref="searchInput">
+            <input type="text" placeholder="Поиск по истории сообщений" :value="searchText" ref="searchInput">
             <button class="invisible-button margin-r--15">
                 <img src="@/assets/images/calendar.png" alt="">
             </button>
-            <button class="web-button main-button margin-r--10">Найти</button>
+            <button class="web-button main-button margin-r--10" @click="searchMessage">Найти</button>
             <button class="web-button secondary-button" @click="switchSearch">Отмена</button>
         </div>
     </div>
@@ -56,19 +56,17 @@
             }
         },
         computed: {
-            searchText: {
-                get() {
-                    return this.$store.state.searchMessageText;
-                },
-                set(value) {
-                    this.$store.commit('updateSearchMessageText', value);
-                }
+            searchText() {
+                return this.$store.state.searchMessageText;
             }
         },
         methods: {
             switchSearch() {
                 this.activeSearch = !this.activeSearch;
                 if (this.$store.state.searchMessageText) this.$store.commit('updateSearchMessageText', '');
+            },
+            searchMessage() {
+                this.$store.commit('updateSearchMessageText', this.$refs.searchInput.value);
             }
         }
     }
