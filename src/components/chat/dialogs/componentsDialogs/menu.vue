@@ -5,11 +5,20 @@
             <div class="menu_search__find">Поиск</div>
         </div>
         <div class="menu_actions">
-            <img src="@/assets/images/letter.svg" alt="" v-if="showUnreadLatter" @click="switchLatter">
-            <img src="@/assets/images/unreadletter.svg" alt="" v-else @click="switchLatter">
-            <img src="@/assets/images/arrowup.svg" alt="">
+            <img src="@/assets/images/letter.svg" alt="" v-if="showUnreadLatter" @click="showNotReadMessage">
+            <img src="@/assets/images/unreadletter.svg" alt="" v-else @click="showReadMessage">
+            <img class="arrow" src="@/assets/images/arrowup.svg" alt="" v-if="sortDialogDate" @click="sortDialogsNewMassege">
+            <img class="arrow" src="@/assets/images/arrowup.svg" alt="" v-else @click="sortDialogsLastMassege">
             <div class="menu_actions__button">
-                <button class="actions_button">Создать чат <img src="@/assets/images/checkmarkdown.svg" alt=""></button>
+                <button class="actions_button" @click="popapCreateChat">Создать чат<img src="@/assets/images/checkmarkdown.svg" alt=""></button>
+                    <div class="notPopapCreateChat" v-if="CreateChat">
+                        <div class="popapCreateChat_user"><button>С пользователем</button></div>
+                        <div class="popapCreateChat_order"><button>По заказу</button></div>
+                    </div>
+                    <div class="PopapCreateChat" v-else>
+                        <div class="popapCreateChat_user"><button>С пользователем</button></div>
+                        <div class="popapCreateChat_order"><button>По заказу</button></div>
+                    </div>
             </div>
         </div>
     </div>
@@ -40,11 +49,23 @@ export default {
                 type: Boolean,
                 default: true,
             },
+            CreateChat: {
+                type: Boolean,
+                default: false,
+            },
+            sortDialogDate: {
+                type: Boolean,
+                default: true,
+            },
             searchName: ''
         }
     },
     emits: {
         dialogSearch: null,
+        sortDialogsNewMassege: null,
+        sortDialogsLastMassege: null,
+        showNotReadMessege: null,
+        showReadMessege: null
     },
     methods: {
         switchMenuSearch() {
@@ -52,11 +73,27 @@ export default {
             if (this.searchName) this.searchName = '';
             this.search();
         },
-        switchLatter(){
-            this.showUnreadLatter = !this.showUnreadLatter;
+        sortDialogsNewMassege(){
+            this.sortDialogDate = !this.sortDialogDate;
+            this.$emit('sortDialogsNewMassege');
+        },
+        sortDialogsLastMassege(){
+            this.sortDialogDate = !this.sortDialogDate;
+            this.$emit('sortDialogsLastMassege');
         },
         search() {
             this.$emit('dialogSearch',this.searchName);
+        },
+        popapCreateChat(){
+            this.CreateChat = !this.CreateChat;
+        },
+        showNotReadMessage(){
+            this.showUnreadLatter = !this.showUnreadLatter;
+            this.$emit('showNotReadMessege')
+        },
+        showReadMessage(){
+            this.showUnreadLatter = !this.showUnreadLatter;
+            this.$emit('showReadMessege')
         }
     },
 }
@@ -136,5 +173,14 @@ export default {
     line-height: 20px;
     color: #2E5599;
     cursor: pointer;
+}
+.arrow{
+    transform: rotate(180deg);
+}
+.notPopapCreateChat{
+    display: none;
+}
+.PopapCreateChat{
+    display: block;
 }
 </style>
