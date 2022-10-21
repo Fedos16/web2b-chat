@@ -22,6 +22,9 @@ import { dialogs } from '@/data/index';
 
 export default {
     components: { Dialog, Menu, Archive },
+    mounted(){
+        this.sortDialogsNewMassege();
+    },
     data() {
         return {
             dialogs,

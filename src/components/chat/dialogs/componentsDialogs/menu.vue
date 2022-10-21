@@ -5,19 +5,15 @@
             <input type="text" class="menu_search__find" placeholder="Поиск" @input="search" v-model="searchName">
         </div>
         <div class="menu_actions">
-            <img src="@/assets/images/letter.svg" alt="" v-if="showUnreadLatter" @click="showNotReadMessage">
-            <img src="@/assets/images/unreadletter.svg" alt="" v-else @click="showReadMessage">
-            <img class="arrow" src="@/assets/images/arrowup.svg" alt="" v-if="sortDialogDate" @click="sortDialogsNewMassege">
-            <img class="arrow" src="@/assets/images/arrowup.svg" alt="" v-else @click="sortDialogsLastMassege">
+            <img class="img" src="@/assets/images/letter.svg" alt="" v-if="showUnreadLatter" @click="showNotReadMessage">
+            <img class="img" src="@/assets/images/unreadletter.svg" alt="" v-else @click="showReadMessage">
+            <img class="arrow img" src="@/assets/images/arrowup.svg" alt="" v-if="sortDialogDate" @click="sortDialogsLastMassege">
+            <img class="arrow1 img" src="@/assets/images/arrowup.svg" alt="" v-else @click="sortDialogsNewMassege">
             <div class="menu_actions__button">
                 <button class="actions_button" @click="popapCreateChat">Создать чат<img src="@/assets/images/checkmarkdown.svg" alt=""></button>
-                    <div class="notPopapCreateChat" v-if="CreateChat">
-                        <div class="popapCreateChat_user"><button>С пользователем</button></div>
-                        <div class="popapCreateChat_order"><button>По заказу</button></div>
-                    </div>
-                    <div class="PopapCreateChat" v-else>
-                        <div class="popapCreateChat_user"><button>С пользователем</button></div>
-                        <div class="popapCreateChat_order"><button>По заказу</button></div>
+                    <div class="popap-create-chat" v-if="!CreateChat">
+                        <button class="popap-create-chat__button">С пользователем</button>
+                        <button class="popap-create-chat__button">По заказу</button>
                     </div>
             </div>
         </div>
@@ -25,19 +21,32 @@
     <div class="menu_find" v-else>
         <div class="menu_search__search">
             <img src="@/assets/images/search.svg" alt="">
-            <input type="text" class="menu_search__input" placeholder="Поиск" @input="search" v-model="searchName">
+            <input type="text" class="menu_search__input" placeholder="Поиск" ref="searchInput" @input="search" v-model="searchName">
             <img src="@/assets/images/crossclose.svg" alt="" @click="switchMenuSearch">
         </div>
     </div>
 </template>
 
 <script>
+import { ref, watch } from 'vue';
+
 export default {
     props: {
         dialogs: {
             type: Array,
             required: true,
         },
+    },
+    setup() {
+        const searchInput = ref(null);
+        watch(searchInput, (current) => {
+            if (current) {
+                current.focus()
+            }
+        });
+        return {
+            searchInput
+        }
     },
     data() {
         return {
@@ -174,10 +183,27 @@ export default {
 .arrow{
     transform: rotate(180deg);
 }
-.notPopapCreateChat{
-    display: none;
-}
-.PopapCreateChat{
+.popap-create-chat{
     display: block;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+.menu_actions__button{
+    position: relative;
+}
+.popap-create-chat__button{
+    width: 100%;
+    min-height: 30px;
+    border: none;
+    background-color: #fff;
+    text-align: left;
+    color: #2E5599;
+}
+.popap-create-chat__button:hover{
+    background-color: #F7F8FA;
+}
+.img{
+    cursor: pointer;
 }
 </style>
