@@ -1,9 +1,9 @@
 <template>
     <div class="sidebar ">
-        <Menu :dialogs="dialogs" @dialog-search="searchDialog" />
+        <Menu :dialogs="dialogs" @dialog-search="searchDialog" @sort-dialogs-new-massege="sortDialogsNewMassege" @sort-dialogs-last-massege="sortDialogsLastMassege" @show-not-read-messege="notReadMessege" @show-read-messege="readMessege"/>
         <Archive v-if="showSidebar"/>
         <div class="sidebar_chats my-scroll" v-if="showSidebar">
-            <Dialog v-for="dialog in dialogs" :dialog="dialog" :key="dialog.id"/>
+            <Dialog ref="dialog" v-for="dialog in dialogs" :dialog="dialog" :key="dialog.id" @click="dialogActive"/>
         </div>
         <div class="sidebar_chatNotFound" v-if="!showSidebar">
             <p>Чатов с названием</p>
@@ -14,15 +14,17 @@
 </template>
 
 <script>
-import Dialog from "./componentsDialogs/Dialog";
-import Menu from './componentsDialogs/Menu';
-import Archive from './componentsDialogs/Archive';
-
-
+import moment from "moment"
+import Dialog from "./componentsDialogs/Dialog.vue";
+import Menu from "./componentsDialogs/Menu.vue";
+import Archive from "./componentsDialogs/Archive.vue";
 import { dialogs } from '@/data/index';
 
 export default {
     components: { Dialog, Menu, Archive },
+    mounted(){
+        this.sortDialogsNewMassege();
+    },
     data() {
         return {
             dialogs,
@@ -31,7 +33,8 @@ export default {
                 type: Boolean,
                 default: true,
             },
-            searchName: ''
+            searchName: '',
+            dialogTarget: false,
         }
     },
     methods:{
@@ -42,14 +45,33 @@ export default {
             if (this.dialogs.length == '0') {
                 this.searchName = searchName;
                 this.switchSidebar();
+
             } else {
                 this.showSidebar = true;
-            }
+            };
+        },
+        sortDialogsNewMassege(){
+            this.dialogs = this.arr.sort((a, b) => moment(a.dateLastMsg, 'DD.MM.YY') - moment(b.dateLastMsg, 'DD.MM.YY'))
+        },
+        sortDialogsLastMassege(){
+            this.dialogs = this.arr.sort((a, b) => moment(b.dateLastMsg, 'DD.MM.YY') - moment(a.dateLastMsg, 'DD.MM.YY'))
         },
         switchSidebar() {
             if (this.showSidebar) {
                 this.showSidebar = !this.showSidebar;
             }
+        },
+        notReadMessege(){
+            this.dialogs = this.arr.filter(item =>{
+                return item.sumNotReadMassege > 0;
+            })
+        },
+        readMessege(){
+            this.dialogs = this.arr;
+        },
+        dialogActive(){
+            let aaa = this.$refs.target
+            console.log()
         }
     }
 }
@@ -83,5 +105,11 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.dialog_active {
+    padding: 12px;
+    display: flex;
+    border-bottom: 1px solid #E7EFFD;
+    background: #F7F8FA;
 }
 </style>
