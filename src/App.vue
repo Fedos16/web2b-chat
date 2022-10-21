@@ -120,4 +120,9 @@ export default {
     margin-right: 15px;
   }
 
+  .finded-text-format {
+    font-weight: 700;
+    color: var(--input-text-color);
+  }
+
 </style>

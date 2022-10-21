@@ -3,7 +3,7 @@
         <Menu :dialogs="dialogs" @dialog-search="searchDialog" @sort-dialogs-new-massege="sortDialogsNewMassege" @sort-dialogs-last-massege="sortDialogsLastMassege" @show-not-read-messege="notReadMessege" @show-read-messege="readMessege"/>
         <Archive v-if="showSidebar"/>
         <div class="sidebar_chats my-scroll" v-if="showSidebar">
-            <Dialog v-for="dialog in dialogs" :dialog="dialog" :key="dialog.id" @click="dialogActive"/>
+            <Dialog ref="dialog" v-for="dialog in dialogs" :dialog="dialog" :key="dialog.id" @click="dialogActive"/>
         </div>
         <div class="sidebar_chatNotFound" v-if="!showSidebar">
             <p>Чатов с названием</p>
@@ -30,7 +30,8 @@ export default {
                 type: Boolean,
                 default: true,
             },
-            searchName: ''
+            searchName: '',
+            dialogTarget: false,
         }
     },
     methods:{
@@ -66,7 +67,8 @@ export default {
             this.dialogs = this.arr;
         },
         dialogActive(){
-
+            let aaa = this.$refs.target
+            console.log()
         }
     }
 }

@@ -2,7 +2,7 @@
     <div class="menu" v-if="showMenu">
         <div class="menu_search" @click="switchMenuSearch">
             <img src="@/assets/images/search.svg" alt="">
-            <div class="menu_search__find">Поиск</div>
+            <input type="text" class="menu_search__find" placeholder="Поиск" @input="search" v-model="searchName">
         </div>
         <div class="menu_actions">
             <img src="@/assets/images/letter.svg" alt="" v-if="showUnreadLatter" @click="showNotReadMessage">
@@ -104,15 +104,16 @@ export default {
     min-height: 56px;
     max-height: 56px;
     display: flex;
-    justify-content: space-between;
-    padding: 0px 8px;
+    padding: 0px 10px 0px 20px;
     align-items: center;
     border-bottom: 1px solid #E7EFFD;
 }
 .menu_search {
+    min-height: 56px;
+    max-height: 56px;
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    align-items: center;
     cursor: pointer;
 }
 .menu_find {
@@ -120,34 +121,30 @@ export default {
     max-height: 56px;
     display: flex;
     justify-content: space-between;
-    padding: 0px 8px;
+    padding: 0px 10px 0px 20px;
     align-items: center;
     border-bottom: 1px solid #E7EFFD;
 }
 .menu_search__search {
     width: 100%;
     display: flex;
-    justify-content: space-around;
     align-items: center;
 }
 .menu_search__input {
     width: 100%;
     height: 100%;
-    font-family: 'Raleway';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
     color: #102447;
-    margin-left: 21px;
-    border: none;
+    margin-left: 20px;
     cursor: pointer;
+    border: none;
 }
 .menu_search__find {
-    width: 50px;
-    height: 20px;
-    line-height: 20px;
-    color: #7D95BD;flex: none;
+    width: 50%;
+    height: 100%;
+    color: #7D95BD;
+    margin-left: 20px;
     cursor: pointer;
+    border: none;
 }
 .menu_actions {
     display: flex;
