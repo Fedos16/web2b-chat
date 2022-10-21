@@ -13,17 +13,18 @@
             <div class="chat-body_header_actions__item" @click="switchSearch">
                 <img src="@/assets/images/search.svg" alt="">
             </div>
-            <div class="chat-body_header_actions__item">
-                <img src="@/assets/images/menu.svg" alt="">
+            <div class="chat-body_header_actions__item chat-popup">
+                <button class="chat-button-invisible" @click="toggleChatActions"><img src="@/assets/images/menu.svg" alt=""></button>
+                <ChatPopUp />
             </div>
         </div>
         <div class="chat-body_header_search" v-if="activeSearch">
             <img src="@/assets/images/search.svg" alt="">
-            <input type="text" placeholder="Поиск по истории сообщений" v-model="searchText" @input="searchMessage" ref="searchInput">
+            <input type="text" placeholder="Поиск по истории сообщений" :value="searchText" ref="searchInput">
             <button class="invisible-button margin-r--15">
                 <img src="@/assets/images/calendar.png" alt="">
             </button>
-            <button class="web-button main-button margin-r--10">Найти</button>
+            <button class="web-button main-button margin-r--10" @click="searchMessage">Найти</button>
             <button class="web-button secondary-button" @click="switchSearch">Отмена</button>
         </div>
     </div>
@@ -33,8 +34,12 @@
 
     import { ref, watch } from 'vue';
 
+    import ChatPopUp from '@/components/chat/popup/ChatPopUp';
+
     export default {
-        
+        components: {
+            ChatPopUp
+        },
         setup() {
             const searchInput = ref(null);
 
@@ -53,16 +58,23 @@
         data() {
             return {
                 activeSearch: false,
-                searchText: ''
+            }
+        },
+        computed: {
+            searchText() {
+                return this.$store.state.searchMessageText;
             }
         },
         methods: {
             switchSearch() {
                 this.activeSearch = !this.activeSearch;
-                if (this.searchText) this.searchText = '';
+                if (this.$store.state.searchMessageText) this.$store.commit('updateSearchMessageText', '');
             },
             searchMessage() {
-                console.log(`Search: ${this.searchText}`);
+                this.$store.commit('updateSearchMessageText', this.$refs.searchInput.value);
+            },
+            toggleChatActions() {
+                this.$store.commit('toggleChatActions');
             }
         }
     }

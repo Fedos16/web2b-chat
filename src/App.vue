@@ -75,6 +75,10 @@ export default {
     outline: none;
     font-size: 14px;
   }
+  #app ul {
+    list-style: none;
+    margin: 0px;
+  }
 
   .my-scroll::-webkit-scrollbar-track {
     border: 1px solid transparent;
@@ -118,6 +122,11 @@ export default {
   }
   .margin-r--15 {
     margin-right: 15px;
+  }
+
+  .finded-text-format {
+    font-weight: 700;
+    color: var(--input-text-color);
   }
 
 </style>

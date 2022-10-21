@@ -1,5 +1,5 @@
 <template>
-    <div class="chat-body_content my-scroll">
+    <div class="chat-body_content my-scroll" ref="chatBody">
         <div class="empty-dialog" v-if="emptyDialog">
             <img class="union-messages" src="@/assets/images/union-messages.png" alt="">
             <p>Выберите чат</p>
@@ -13,17 +13,30 @@
 
 <script>
 
-import { messages } from '@/data/index';
+import { nextTick } from 'vue';
+
 import Message from './Message.vue';
 
 export default {
     components: {
         Message
     },
+    mounted(){
+        nextTick(() => {
+            const { chatBody } = this.$refs;
+            if (chatBody) {
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+        });
+    },
     data() {
         return {
             emptyDialog: false,
-            messages: messages
+        }
+    },
+    computed: {
+        messages() {
+            return this.$store.getters.getMessages;
         }
     }
 }
@@ -32,9 +45,9 @@ export default {
 <style scoped>
 
     .chat-body_content {
-        flex: 1;
         width: 100%;
         padding: 24px 14px;
+        height: 100%;
         overflow-y: auto;
     }
     .empty-dialog {
@@ -70,7 +83,6 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        overflow-y: auto;
     }
 
 </style>
