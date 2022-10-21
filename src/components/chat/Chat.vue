@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<style scoped>
+<style>
   .chat {
     display: flex;
     width: 100%;
@@ -16,4 +16,14 @@
     border-radius: 4px;
     background-color: #fff;
   }
+
+  .chat-popup {
+    position: relative;
+  }
+
+  .chat-button-invisible {
+    background-color: transparent;
+    border: none;
+  }
+
 </style>

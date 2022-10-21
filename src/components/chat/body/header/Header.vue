@@ -13,8 +13,9 @@
             <div class="chat-body_header_actions__item" @click="switchSearch">
                 <img src="@/assets/images/search.svg" alt="">
             </div>
-            <div class="chat-body_header_actions__item">
-                <img src="@/assets/images/menu.svg" alt="">
+            <div class="chat-body_header_actions__item chat-popup">
+                <button class="chat-button-invisible" @click="toggleChatActions"><img src="@/assets/images/menu.svg" alt=""></button>
+                <ChatPopUp />
             </div>
         </div>
         <div class="chat-body_header_search" v-if="activeSearch">
@@ -33,8 +34,12 @@
 
     import { ref, watch } from 'vue';
 
+    import ChatPopUp from '@/components/chat/popup/ChatPopUp';
+
     export default {
-        
+        components: {
+            ChatPopUp
+        },
         setup() {
             const searchInput = ref(null);
 
@@ -67,6 +72,9 @@
             },
             searchMessage() {
                 this.$store.commit('updateSearchMessageText', this.$refs.searchInput.value);
+            },
+            toggleChatActions() {
+                this.$store.commit('toggleChatActions');
             }
         }
     }

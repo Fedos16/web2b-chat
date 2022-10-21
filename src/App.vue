@@ -75,6 +75,10 @@ export default {
     outline: none;
     font-size: 14px;
   }
+  #app ul {
+    list-style: none;
+    margin: 0px;
+  }
 
   .my-scroll::-webkit-scrollbar-track {
     border: 1px solid transparent;
