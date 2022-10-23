@@ -15,6 +15,7 @@
     border: 1px solid var(--border-color);
     border-radius: 4px;
     background-color: #fff;
+    cursor: default;
   }
 
   .chat-popup {

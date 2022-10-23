@@ -1,7 +1,7 @@
 <template>
-    <div class="chat-body_footer">
+    <div class="chat-body_footer" v-if="messages.length > 0">
         <div class="chat-body_footer__section">
-            <input type="text" placeholder="Введите текст сообщения">
+            <input type="text" placeholder="Введите текст сообщения" ref="inputTextMessage">
             <img src="@/assets/images/attachment.svg" alt="">
         </div>
         <div class="chat-body_footer__send-message">
@@ -9,6 +9,26 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    mounted() {
+        this.$store.watch(() => this.$store.state.activeDialog, () => {
+            this.$nextTick(() => {
+                const inputTextMessage = this.$refs.inputTextMessage;
+                if (inputTextMessage) {
+                    inputTextMessage.focus();
+                }
+            })
+        })
+    },
+    computed: {
+        messages() {
+            return this.$store.getters.getMessages;
+        }
+    }
+}
+</script>
 
 <style scoped>
     .chat-body_footer {
