@@ -9,6 +9,7 @@ export default createStore({
         dialogs,
         unReadMessages: false,
         descSort: true,
+        showArchive: false,
 
         activeDialog: null,
 
@@ -27,7 +28,7 @@ export default createStore({
                 } else {
                     delete item.findedText;
                 }
-                
+
                 return item;
             });
         },
@@ -36,13 +37,20 @@ export default createStore({
 
                 const filterName = item.name.toLowerCase().includes(state.searchDialogText.toLowerCase());
                 const filterUnRead = state.unReadMessages ? item.unReadCount > 0 : true;
+                const filterArchiv = item.archiveDialog ? false : true;
 
-                return filterName && filterUnRead;
+                return filterName && filterUnRead && filterArchiv;
             })
         },
+        getArchiveDialogs(state) {
+            return state.dialogs.filter(item => {
+                const filterArchiv = item.archiveDialog ? true : false;
+
+                return filterArchiv;
+            })
+        }
     },
     mutations: {
-
         sortDialogs(state) {
             state.dialogs = state.dialogs.sort((a, b) => {
                 const aDate = a.dateLastMsg.getTime();
@@ -78,6 +86,9 @@ export default createStore({
         setActiveDialog(state, id) {
             state.activeDialog = id;
             state.messages = messages.filter(item => item.chatId === id);
+        },
+        showArchive(state) {
+            state.showArchive = !state.showArchive;
         }
 
     },

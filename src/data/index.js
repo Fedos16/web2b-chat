@@ -89,8 +89,124 @@ export const dialogs = [
         dateLastMsg: new Date(),
         textLastMsg: "привет1",
         unReadCount: "1",
-        whomDialog: "moderator"
+        whomDialog: "moderator",
+        archiveDialog: true
     },
+    {
+        id: 1,
+        img: "123",
+        name: "Олег",
+        dateLastMsg: new Date(),
+        textLastMsg: "привет1",
+        unReadCount: "1",
+        whomDialog: "moderator",
+        archiveDialog: true
+    },
+    {
+        id: 1,
+        img: "123",
+        name: "Олег",
+        dateLastMsg: new Date(),
+        textLastMsg: "привет1",
+        unReadCount: "1",
+        whomDialog: "moderator",
+        archiveDialog: true
+    },
+    {
+        id: 1,
+        img: "123",
+        name: "Олег",
+        dateLastMsg: new Date(),
+        textLastMsg: "привет1",
+        unReadCount: "1",
+        whomDialog: "moderator",
+        archiveDialog: true
+    },
+    {
+        id: 1,
+        img: "123",
+        name: "Олег",
+        dateLastMsg: new Date(),
+        textLastMsg: "привет1",
+        unReadCount: "1",
+        whomDialog: "moderator",
+        archiveDialog: true
+    },
+    {
+        id: 1,
+        img: "123",
+        name: "Олег",
+        dateLastMsg: new Date(),
+        textLastMsg: "привет1",
+        unReadCount: "1",
+        whomDialog: "moderator",
+        archiveDialog: true
+    },
+    {
+        id: 1,
+        img: "123",
+        name: "Олег",
+        dateLastMsg: new Date(),
+        textLastMsg: "привет1",
+        unReadCount: "1",
+        whomDialog: "moderator",
+        archiveDialog: true
+    },
+    {
+        id: 1,
+        img: "123",
+        name: "Олег",
+        dateLastMsg: new Date(),
+        textLastMsg: "привет1",
+        unReadCount: "1",
+        whomDialog: "moderator",
+        archiveDialog: true
+    },
+    {
+        id: 1,
+        img: "123",
+        name: "Олег",
+        dateLastMsg: new Date(),
+        textLastMsg: "привет1",
+        unReadCount: "1",
+        whomDialog: "moderator",
+        archiveDialog: true
+    },
+    {
+        id: 1,
+        img: "123",
+        name: "Олег",
+        dateLastMsg: new Date(),
+        textLastMsg: "привет1",
+        unReadCount: "1",
+        whomDialog: "moderator",
+        archiveDialog: true
+    },
+    {
+        id: 1,
+        img: "123",
+        name: "Олег",
+        dateLastMsg: new Date(),
+        textLastMsg: "привет1",
+        unReadCount: "1",
+        whomDialog: "moderator",
+        archiveDialog: true
+    },
+    {
+        id: 1,
+        img: "123",
+        name: "Олег",
+        dateLastMsg: new Date(),
+        textLastMsg: "привет1",
+        unReadCount: "1",
+        whomDialog: "moderator",
+        archiveDialog: true
+    },
+
+
+
+
+
     {
         id: 2,
         img: "123",
@@ -98,7 +214,8 @@ export const dialogs = [
         dateLastMsg: new Date(2022, 9, 23, 2, 15),
         textLastMsg: "привет2",
         unReadCount: "0",
-        whomDialog: "moderator"
+        whomDialog: "moderator",
+        archiveDialog: true
     },
     {
         id: 3,
@@ -107,7 +224,8 @@ export const dialogs = [
         dateLastMsg: new Date(2022, 9, 12),
         textLastMsg: "привет3",
         unReadCount: "0",
-        whomDialog: "user"
+        whomDialog: "user",
+        archiveDialog: false
     },
     {
         id: 4,
@@ -116,7 +234,8 @@ export const dialogs = [
         dateLastMsg: new Date(2022, 9, 13),
         textLastMsg: "привет4",
         unReadCount: "0",
-        whomDialog: "user"
+        whomDialog: "user",
+        archiveDialog: true
     },
     {
         id: 5,
@@ -125,7 +244,8 @@ export const dialogs = [
         dateLastMsg: new Date(2022, 9, 10),
         textLastMsg: "привет5",
         unReadCount: "0",
-        whomDialog: "user"
+        whomDialog: "user",
+        archiveDialog: true
     },
     {
         id: 6,
@@ -134,7 +254,8 @@ export const dialogs = [
         dateLastMsg: new Date(2022, 9, 11),
         textLastMsg: "привет2",
         unReadCount: "0",
-        whomDialog: "user"
+        whomDialog: "user",
+        archiveDialog: false
     },
     {
         id: 7,
@@ -143,7 +264,8 @@ export const dialogs = [
         dateLastMsg: new Date(2022, 9, 14),
         textLastMsg: "привет3",
         unReadCount: "0",
-        whomDialog: "user"
+        whomDialog: "user",
+        archiveDialog: false
     },
     {
         id: 8,
@@ -152,7 +274,8 @@ export const dialogs = [
         dateLastMsg: new Date(2022, 9, 15),
         textLastMsg: "привет4",
         unReadCount: "0",
-        whomDialog: "user"
+        whomDialog: "user",
+        archiveDialog: false
     },
     {
         id: 9,
@@ -161,7 +284,8 @@ export const dialogs = [
         dateLastMsg: new Date(2022, 9, 18),
         textLastMsg: "привет5",
         unReadCount: "4",
-        whomDialog: "user"
+        whomDialog: "user",
+        archiveDialog: false
     },
     {
         id: 10,
@@ -170,7 +294,8 @@ export const dialogs = [
         dateLastMsg: new Date(2022, 9, 18),
         textLastMsg: "привет5",
         unReadCount: "4",
-        whomDialog: "user"
+        whomDialog: "user",
+        archiveDialog: false
     },
     {
         id: 11,
@@ -179,7 +304,8 @@ export const dialogs = [
         dateLastMsg: new Date(2022, 9, 18),
         textLastMsg: "привет5",
         unReadCount: "4",
-        whomDialog: "user"
+        whomDialog: "user",
+        archiveDialog: false
     },
     {
         id: 12,
@@ -188,7 +314,8 @@ export const dialogs = [
         dateLastMsg: new Date(2022, 9, 18),
         textLastMsg: "привет5",
         unReadCount: "4",
-        whomDialog: "user"
+        whomDialog: "user",
+        archiveDialog: false
     },
     {
         id: 13,
@@ -197,7 +324,8 @@ export const dialogs = [
         dateLastMsg: new Date(2022, 9, 18),
         textLastMsg: "привет5",
         unReadCount: "4",
-        whomDialog: "user"
+        whomDialog: "user",
+        archiveDialog: false
     },
     {
         id: 14,
@@ -206,7 +334,8 @@ export const dialogs = [
         dateLastMsg: new Date(2022, 9, 18),
         textLastMsg: "привет5",
         unReadCount: "4",
-        whomDialog: "user"
+        whomDialog: "user",
+        archiveDialog: false
     },
     {
         id: 15,
@@ -215,6 +344,7 @@ export const dialogs = [
         dateLastMsg: new Date(2022, 9, 18),
         textLastMsg: "привет5",
         unReadCount: "4",
-        whomDialog: "user"
+        whomDialog: "user",
+        archiveDialog: true
     },
 ]

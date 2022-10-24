@@ -1,5 +1,5 @@
 <template>
-  <div class="archive">
+    <div class="archive" @click="switchArchive">
         <div class="archive_archive">
           <img src="@/assets/images/box.svg" alt="">
           <div class="archive_archive__text">Архив</div>
@@ -7,12 +7,31 @@
         <div class="archive_checkmark">
           <img src="@/assets/images/checkmarkright.svg" alt="">
         </div>
-      </div>
+    </div>
+    <div class="" v-show="showArhive">
+        <Dialog ref="archiveDialogs" v-for="dialog in archiveDialogs" :dialog="dialog" :key="dialog.id" />
+    </div>
 </template>
 
 <script>
-export default {
 
+import Dialog from './Dialog.vue';
+
+export default {
+    components: { Dialog },
+    computed: {
+        archiveDialogs() {
+            return this.$store.getters.getArchiveDialogs;
+        },
+        showArhive(){
+            return this.$store.state.showArhive;
+        }
+    },
+    methods:{
+        switchArchive(){
+            this.$store.commit('showArchive');
+        }
+    }
 }
 </script>
 
@@ -23,6 +42,7 @@ export default {
     padding: 4px 4px 4px 20px;
     border-bottom: 1px solid #E7EFFD;
     align-items: center;
+    cursor: pointer;
 }
 .archive_archive {
     display: flex;
