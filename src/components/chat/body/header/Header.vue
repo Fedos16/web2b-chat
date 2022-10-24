@@ -1,5 +1,5 @@
 <template>
-    <div class="chat-body_header">
+    <div class="chat-body_header" v-if="messages.length > 0">
         <div class="chat-body_header_user-info" v-if="!activeSearch">
             <div class="chat-body_header_user-info__avatar">
                 <img src="@/assets/images/tehSupport.svg" alt="">
@@ -63,6 +63,9 @@
         computed: {
             searchText() {
                 return this.$store.state.searchMessageText;
+            },
+            messages() {
+                return this.$store.getters.getMessages;
             }
         },
         methods: {

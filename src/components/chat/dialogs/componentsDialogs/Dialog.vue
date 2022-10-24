@@ -1,15 +1,14 @@
 <template>
-<div class="dialog">
+<div class="dialog" :class="classActiveDialog" @click="setActiveDialog">
     <img src="@/assets/images/tehSupport.svg" alt="">
     <div class="dialog_info">
         <div class="dialog_info__top">
             <div class="dialog_info__name">{{ dialog.name }}</div>
-            <div class="dialog_info__data">{{ dateFormat(dialog.dateLastMsg) }}</div>
+            <div class="dialog_info__data">{{ formatingDateTime(dialog.dateLastMsg) }}</div>
         </div>
         <div class="dialog_info__bot">
             <div class="dialog_info__text">{{ dialog.textLastMsg }}</div>
-            <img class="img" src="@/assets/images/pinbutton.svg" alt="" v-if="notReadMassege == 0">
-            <div class="notReadMessage" v-else>{{ dialog.sumNotReadMassege }}</div>
+            <div class="notReadMessage" v-if="dialog.unReadCount > 0">{{ dialog.unReadCount }}</div>
         </div>
     </div>
     <div class="dialog_menu">
@@ -28,12 +27,11 @@
 </template>
 
 <script>
-import { dateFormat } from '@/helpers/index';
+import { formatingDateTime } from '@/helpers/index';
 
 export default {
     data() {
         return {
-            notReadMassege: this.dialog.sumNotReadMassege,
             showMenuModerator: {
                 type: Boolean,
                 default: false,
@@ -44,6 +42,16 @@ export default {
             }
         }
     },
+    computed: {
+        activeDialogId() {
+            return this.$store.state.activeDialog;
+        },
+        classActiveDialog() {
+            return {
+                'active': this.activeDialogId === this.dialog.id
+            }
+        }
+    },
     props: {
         dialog: {
             type: Object,
@@ -51,12 +59,17 @@ export default {
         }
     },
     methods: {
-        dateFormat,
+        formatingDateTime,
         popapMenu(){
             if(this.dialog.whomDialog == 'moderator'){
                 this.showMenuModerator = !this.showMenuModerator
             } else if(this.dialog.whomDialog == 'user'){
                 this.showMenuUser = !this.showMenuUser
+            }
+        },
+        setActiveDialog() {
+            if (this.dialog.id !== this.activeDialogId) {
+                this.$store.commit('setActiveDialog', this.dialog.id);
             }
         }
     }
@@ -69,14 +82,11 @@ export default {
     display: flex;
     border-bottom: 1px solid #E7EFFD;
 }
+.dialog.active {
+    background: #F7F8FA;
+}
 .dialog:hover{
     background-color: #F7F8FA;
-}
-.dialog_active {
-    padding: 12px;
-    display: flex;
-    border-bottom: 1px solid #E7EFFD;
-    background: #F7F8FA;
 }
 .dialog_info {
     width: 100%;
@@ -102,9 +112,10 @@ export default {
     color: #102447;
 }
 .notReadMessage{
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
     background: #2E5599;
+    font-size: 10px;
     border-radius: 50%;
     color: #FFFFFF;
     display: flex;
