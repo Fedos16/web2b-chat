@@ -1,11 +1,11 @@
 <template>
     <div class="chat-body_content my-scroll" ref="chatBody">
-        <div class="empty-dialog" v-if="emptyDialog">
+        <div class="empty-dialog" v-if="messages.length === 0">
             <img class="union-messages" src="@/assets/images/union-messages.png" alt="">
             <p>Выберите чат</p>
             <p>или <span>создайте новый <img class="arrow-bottom" src="@/assets/images/checkmarkdown.svg" alt=""></span></p>
         </div>
-        <div class="message-list">
+        <div class="message-list" v-else>
             <Message v-for="(message, index) in messages" :pre-message="index-1 >= 0 ? messages[index-1] : null" :message="message" :key="message.id" />
         </div>
     </div>
@@ -19,18 +19,15 @@ export default {
     components: {
         Message
     },
-    mounted(){
-        this.$nextTick(() => {
-            const container = this.$refs.chatBody;
-            if (container) {
-                container.scrollTop = container.scrollHeight;
-            }
+    mounted() {
+        this.$store.watch(() => this.$store.state.activeDialog, () => {
+            this.$nextTick(() => {
+                const chatBody = this.$refs.chatBody;
+                if (chatBody) {
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }
+            })
         })
-    },
-    data() {
-        return {
-            emptyDialog: false,
-        }
     },
     computed: {
         messages() {

@@ -1,7 +1,6 @@
 <template>
     <div 
-    class="message-list_row"
-    :class="classMessage">
+    class="message-list_row" :class="classMessage">
         <div class="message-list_row__autor" v-if="!preMessage?.incoming && message.incoming">
             {{ message.user }}
         </div>

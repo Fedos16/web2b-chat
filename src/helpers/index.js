@@ -4,6 +4,15 @@ export const timeFormat = (date) => {
 export const dateFormat = (date) => {
     return new Date(date).toLocaleDateString('ru-RU');
 }
+export const formatingDateTime = (date) => {
+    const now = new Date();
+    date = new Date(date);
+    const isToday = now.getFullYear() === date.getFullYear() && now.getMonth() === date.getMonth() && now.getDate() === date.getDate();
+
+    if (isToday) return timeFormat(date);
+    return dateFormat(date);
+
+}
 export const formatingText = (sourceText, text) => {
 
     const regex = new RegExp(text, 'i');

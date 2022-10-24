@@ -64,8 +64,8 @@ export default {
   /* DELETE IN PRODUCTION */
   #app {
     width: 1000px;
-    margin: 0px auto;
-    height: 100vh;
+    margin: 20px auto;
+    height: calc(100vh - 40px);
   }
 
   #app p, #app b {
@@ -74,6 +74,10 @@ export default {
   #app input {
     outline: none;
     font-size: 14px;
+  }
+  #app ul {
+    list-style: none;
+    margin: 0px;
   }
 
   .my-scroll::-webkit-scrollbar-track {
