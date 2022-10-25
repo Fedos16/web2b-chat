@@ -40,7 +40,7 @@ export default createStore({
 
                 const filterName = getNameChat(item).toLowerCase().includes(state.searchDialogText.toLowerCase());
                 const filterUnRead = state.unReadMessages ? item.unReadCount > 0 : true;
-                const filterArchiv = item.archiveDialog ? false : true;
+                const filterArchiv = !item.archiveDialog;
 
                 return filterName && filterUnRead && filterArchiv;
             })
@@ -50,7 +50,7 @@ export default createStore({
         },
         getArchiveDialogs(state) {
             return state.dialogs.filter(item => {
-                const filterArchiv = item.archiveDialog ? true : false;
+                const filterArchiv = item.archiveDialog;
 
                 return filterArchiv;
             })
@@ -93,8 +93,9 @@ export default createStore({
             state.activeDialog = id;
             state.messages = messages.filter(item => item.chatId === id);
         },
-        showArchive(state) {
+        toggleShowArchive(state) {
             state.showArchive = !state.showArchive;
+            console.log(state.showArchive)
         }
 
     },
