@@ -95,7 +95,8 @@ export const dialogs = [
         typeDialog: "user",
         additionalInfo: {
             numOrder: null
-        }
+        },
+        archiveDialog: true
     },
     {
         id: 2,

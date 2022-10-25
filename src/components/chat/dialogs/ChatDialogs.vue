@@ -2,7 +2,7 @@
     <div class="sidebar ">
         <Menu />
         <Archive />
-        <div class="sidebar_chats my-scroll" v-show="dialogs.length > 0">
+        <div class="sidebar_chats my-scroll" v-show="dialogs.length > 0 && !showArhive">
             <Dialog ref="dialog" v-for="dialog in dialogs" :dialog="dialog" :key="dialog.id" />
         </div>
         <div class="sidebar_chatNotFound" v-show="dialogs.length === 0">
@@ -30,6 +30,9 @@ export default {
         },
         chatName() {
             return this.$store.state.searchDialogText;
+        },
+        showArhive(){
+            return this.$store.state.showArhive;
         }
     }
 }
