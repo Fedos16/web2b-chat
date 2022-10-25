@@ -1,21 +1,32 @@
 <template>
-    <div class="archive" @click="switchArchive">
+    <div :class="archiveClasses" @click="switchArchive" v-if="showArchive.length > 0">
         <div class="archive_archive">
-          <img src="@/assets/images/box.svg" alt="">
+          <img src="@/assets/images/box.svg" alt="" v-show="!switchMenuArchive">
           <div class="archive_archive__text">Архив</div>
         </div>
         <div class="archive_checkmark">
           <img src="@/assets/images/checkmarkright.svg" alt="">
         </div>
     </div>
+
 </template>
 
 <script>
-
-import Dialog from './Dialog.vue';
-
 export default {
-    components: { Dialog },
+    computed:{
+        showArchive(){
+            return this.$store.getters.getArchiveDialogs;
+        },
+        switchMenuArchive(){
+            return this.$store.state.showArchive;
+        },
+        archiveClasses(){
+            return {
+                archive: true,
+                active: this.switchMenuArchive
+            }
+        }
+    },
     methods:{
         switchArchive(){
             this.$store.commit('toggleShowArchive');
@@ -32,6 +43,12 @@ export default {
     border-bottom: 1px solid #E7EFFD;
     align-items: center;
     cursor: pointer;
+    min-height: 33px;
+}
+.archive.active{
+    flex-direction: row-reverse;
+    justify-content: start;
+    background-color: #E7EFFD;
 }
 .archive_archive {
     display: flex;
@@ -48,5 +65,8 @@ export default {
 }
 .archive_checkmark {
     height: 16px;
+}
+.archive.active .archive_checkmark{
+    transform: rotate(180deg);
 }
 </style>
