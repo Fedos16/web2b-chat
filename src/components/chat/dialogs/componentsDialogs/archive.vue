@@ -8,9 +8,6 @@
           <img src="@/assets/images/checkmarkright.svg" alt="">
         </div>
     </div>
-    <div class="" v-show="showArhive">
-        <Dialog ref="archiveDialogs" v-for="dialog in archiveDialogs" :dialog="dialog" :key="dialog.id" />
-    </div>
 </template>
 
 <script>
@@ -19,17 +16,9 @@ import Dialog from './Dialog.vue';
 
 export default {
     components: { Dialog },
-    computed: {
-        archiveDialogs() {
-            return this.$store.getters.getArchiveDialogs;
-        },
-        showArhive(){
-            return this.$store.state.showArhive;
-        }
-    },
     methods:{
         switchArchive(){
-            this.$store.commit('showArchive');
+            this.$store.commit('toggleShowArchive');
         }
     }
 }

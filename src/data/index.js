@@ -111,7 +111,8 @@ export const dialogs = [
         typeDialog: "moderator",
         additionalInfo: {
             numOrder: 8392
-        }
+        },
+        archiveDialog: true
     },
     {
         id: 3,
@@ -126,7 +127,8 @@ export const dialogs = [
         typeDialog: "order",
         additionalInfo: {
             numOrder: 26794
-        }
+        },
+        archiveDialog: false
     },
     {
         id: 4,
@@ -141,6 +143,7 @@ export const dialogs = [
         typeDialog: "support",
         additionalInfo: {
             numOrder: null
-        }
+        },
+        archiveDialog: false
     }
 ]
