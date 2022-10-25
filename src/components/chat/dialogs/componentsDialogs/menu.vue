@@ -4,9 +4,9 @@
             <img src="@/assets/images/search.svg" alt="">
             <input type="text" class="menu_search__find" placeholder="Поиск" ref="searchInput" v-model="searchText" :readonly="!showMenu">
         </div>
-        <div class="menu_actions" v-if="!showMenu">
-            <img class="img" :src="imageUnReadMessages" alt="" @click="switchUnReadMessges">
-            <img :class="classTypeSort" src="@/assets/images/arrowup.svg" alt="" @click="sortDialogs">
+        <div class="menu_actions" v-show="!showMenu">
+            <button class="chat-button-invisible" :disabled="!isUnreadDialogs" @click="switchUnReadMessges"><img class="img" :src="imageUnReadMessages" alt="" ></button>
+            <button class="chat-button-invisible"  @click="sortDialogs"><img :class="classTypeSort" src="@/assets/images/arrowup.svg" alt=""></button>
             <div class="menu_actions__button">
                 <button class="actions_button" @click="popapCreateChat">Создать чат<img src="@/assets/images/checkmarkdown.svg" alt=""></button>
                 <div class="popap-create-chat" v-if="!CreateChat">
@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-        <img src="@/assets/images/crossclose.svg" alt="" @click="switchMenuSearch" v-if="showMenu">
+        <img src="@/assets/images/crossclose.svg" alt="" @click="switchMenuSearch" v-show="showMenu">
     </div>
 </template>
 
@@ -43,6 +43,9 @@ export default {
         },
         unReadMessages() {
             return this.$store.state.unReadMessages;
+        },
+        isUnreadDialogs() {
+            return this.$store.getters.isUnreadDialogs;
         },
         imageUnReadMessages() {
             return this.unReadMessages ? require('@/assets/images/unreadletter.svg') : require('@/assets/images/letter.svg');
@@ -97,6 +100,7 @@ export default {
         color: var(--input-placeholder-color);
     }
     .menu_search input {
+        width: 100%;
         color: var(----input-text-color);
     }
     .menu_search__find {
@@ -147,8 +151,5 @@ export default {
     }
     .popap-create-chat__button:hover{
         background-color: #F7F8FA;
-    }
-    .img{
-        cursor: pointer;
     }
 </style>

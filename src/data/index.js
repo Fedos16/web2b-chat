@@ -85,266 +85,62 @@ export const dialogs = [
     {
         id: 1,
         img: "123",
-        name: "Олег",
-        dateLastMsg: new Date(),
-        textLastMsg: "привет1",
-        unReadCount: "1",
-        whomDialog: "moderator",
+        name: "Очень очень очень очень очень очень очень очень очень длинное название диалога",
+        lastMessage: {
+            date: new Date(2022, 9, 24, 18, 30),
+            text: 'В целом, конечно, укрепление и развитие внутренней структуры позволяет оценить значение экспериментов, поражающих по своей масштабности и грандиозности.',
+            user: 'Олег'
+        },
+        unReadCount: 0,
+        typeDialog: "user",
+        additionalInfo: {
+            numOrder: null
+        },
         archiveDialog: true
     },
-    {
-        id: 1,
-        img: "123",
-        name: "Олег",
-        dateLastMsg: new Date(),
-        textLastMsg: "привет1",
-        unReadCount: "1",
-        whomDialog: "moderator",
-        archiveDialog: true
-    },
-    {
-        id: 1,
-        img: "123",
-        name: "Олег",
-        dateLastMsg: new Date(),
-        textLastMsg: "привет1",
-        unReadCount: "1",
-        whomDialog: "moderator",
-        archiveDialog: true
-    },
-    {
-        id: 1,
-        img: "123",
-        name: "Олег",
-        dateLastMsg: new Date(),
-        textLastMsg: "привет1",
-        unReadCount: "1",
-        whomDialog: "moderator",
-        archiveDialog: true
-    },
-    {
-        id: 1,
-        img: "123",
-        name: "Олег",
-        dateLastMsg: new Date(),
-        textLastMsg: "привет1",
-        unReadCount: "1",
-        whomDialog: "moderator",
-        archiveDialog: true
-    },
-    {
-        id: 1,
-        img: "123",
-        name: "Олег",
-        dateLastMsg: new Date(),
-        textLastMsg: "привет1",
-        unReadCount: "1",
-        whomDialog: "moderator",
-        archiveDialog: true
-    },
-    {
-        id: 1,
-        img: "123",
-        name: "Олег",
-        dateLastMsg: new Date(),
-        textLastMsg: "привет1",
-        unReadCount: "1",
-        whomDialog: "moderator",
-        archiveDialog: true
-    },
-    {
-        id: 1,
-        img: "123",
-        name: "Олег",
-        dateLastMsg: new Date(),
-        textLastMsg: "привет1",
-        unReadCount: "1",
-        whomDialog: "moderator",
-        archiveDialog: true
-    },
-    {
-        id: 1,
-        img: "123",
-        name: "Олег",
-        dateLastMsg: new Date(),
-        textLastMsg: "привет1",
-        unReadCount: "1",
-        whomDialog: "moderator",
-        archiveDialog: true
-    },
-    {
-        id: 1,
-        img: "123",
-        name: "Олег",
-        dateLastMsg: new Date(),
-        textLastMsg: "привет1",
-        unReadCount: "1",
-        whomDialog: "moderator",
-        archiveDialog: true
-    },
-    {
-        id: 1,
-        img: "123",
-        name: "Олег",
-        dateLastMsg: new Date(),
-        textLastMsg: "привет1",
-        unReadCount: "1",
-        whomDialog: "moderator",
-        archiveDialog: true
-    },
-    {
-        id: 1,
-        img: "123",
-        name: "Олег",
-        dateLastMsg: new Date(),
-        textLastMsg: "привет1",
-        unReadCount: "1",
-        whomDialog: "moderator",
-        archiveDialog: true
-    },
-
-
-
-
-
     {
         id: 2,
         img: "123",
         name: "Любовь",
-        dateLastMsg: new Date(2022, 9, 23, 2, 15),
-        textLastMsg: "привет2",
-        unReadCount: "0",
-        whomDialog: "moderator",
-        archiveDialog: true
+        lastMessage: {
+            date: new Date(2022, 9, 23, 15, 18),
+            text: 'Привет, как дела?',
+            user: 'Fedos16'
+        },
+        unReadCount: 0,
+        typeDialog: "moderator",
+        additionalInfo: {
+            numOrder: 8392
+        }
     },
     {
         id: 3,
         img: "123",
         name: "Евгений",
-        dateLastMsg: new Date(2022, 9, 12),
-        textLastMsg: "привет3",
-        unReadCount: "0",
-        whomDialog: "user",
-        archiveDialog: false
+        lastMessage: {
+            date: new Date(),
+            text: 'Привет, как дела?',
+            user: 'Любовь'
+        },
+        unReadCount: 0,
+        typeDialog: "order",
+        additionalInfo: {
+            numOrder: 26794
+        }
     },
     {
         id: 4,
         img: "123",
         name: "Григорий",
-        dateLastMsg: new Date(2022, 9, 13),
-        textLastMsg: "привет4",
-        unReadCount: "0",
-        whomDialog: "user",
-        archiveDialog: true
-    },
-    {
-        id: 5,
-        img: "123",
-        name: "Петр",
-        dateLastMsg: new Date(2022, 9, 10),
-        textLastMsg: "привет5",
-        unReadCount: "0",
-        whomDialog: "user",
-        archiveDialog: true
-    },
-    {
-        id: 6,
-        img: "123",
-        name: "Екатерина",
-        dateLastMsg: new Date(2022, 9, 11),
-        textLastMsg: "привет2",
-        unReadCount: "0",
-        whomDialog: "user",
-        archiveDialog: false
-    },
-    {
-        id: 7,
-        img: "123",
-        name: "Тимур",
-        dateLastMsg: new Date(2022, 9, 14),
-        textLastMsg: "привет3",
-        unReadCount: "0",
-        whomDialog: "user",
-        archiveDialog: false
-    },
-    {
-        id: 8,
-        img: "123",
-        name: "Ульяна",
-        dateLastMsg: new Date(2022, 9, 15),
-        textLastMsg: "привет4",
-        unReadCount: "0",
-        whomDialog: "user",
-        archiveDialog: false
-    },
-    {
-        id: 9,
-        img: "123",
-        name: "Харитон",
-        dateLastMsg: new Date(2022, 9, 18),
-        textLastMsg: "привет5",
-        unReadCount: "4",
-        whomDialog: "user",
-        archiveDialog: false
-    },
-    {
-        id: 10,
-        img: "123",
-        name: "Харитон",
-        dateLastMsg: new Date(2022, 9, 18),
-        textLastMsg: "привет5",
-        unReadCount: "4",
-        whomDialog: "user",
-        archiveDialog: false
-    },
-    {
-        id: 11,
-        img: "123",
-        name: "Харитон",
-        dateLastMsg: new Date(2022, 9, 18),
-        textLastMsg: "привет5",
-        unReadCount: "4",
-        whomDialog: "user",
-        archiveDialog: false
-    },
-    {
-        id: 12,
-        img: "123",
-        name: "Харитон",
-        dateLastMsg: new Date(2022, 9, 18),
-        textLastMsg: "привет5",
-        unReadCount: "4",
-        whomDialog: "user",
-        archiveDialog: false
-    },
-    {
-        id: 13,
-        img: "123",
-        name: "Харитон",
-        dateLastMsg: new Date(2022, 9, 18),
-        textLastMsg: "привет5",
-        unReadCount: "4",
-        whomDialog: "user",
-        archiveDialog: false
-    },
-    {
-        id: 14,
-        img: "123",
-        name: "Харитон",
-        dateLastMsg: new Date(2022, 9, 18),
-        textLastMsg: "привет5",
-        unReadCount: "4",
-        whomDialog: "user",
-        archiveDialog: false
-    },
-    {
-        id: 15,
-        img: "123",
-        name: "Харитон",
-        dateLastMsg: new Date(2022, 9, 18),
-        textLastMsg: "привет5",
-        unReadCount: "4",
-        whomDialog: "user",
-        archiveDialog: true
-    },
+        lastMessage: {
+            date: new Date(2022, 9, 10, 17, 46),
+            text: 'Привет, как дела?',
+            user: 'Fedos16'
+        },
+        unReadCount: 0,
+        typeDialog: "support",
+        additionalInfo: {
+            numOrder: null
+        }
+    }
 ]

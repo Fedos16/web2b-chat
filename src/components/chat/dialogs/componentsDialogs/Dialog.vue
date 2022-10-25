@@ -2,46 +2,30 @@
 <div class="dialog" :class="classActiveDialog" @click="setActiveDialog">
     <img src="@/assets/images/tehSupport.svg" alt="">
     <div class="dialog_info">
-        <div class="dialog_info__top">
-            <div class="dialog_info__name">{{ dialog.name }}</div>
-            <div class="dialog_info__data">{{ formatingDateTime(dialog.dateLastMsg) }}</div>
+        <div class="dialog_info__row">
+            <div class="dialog_info__name" :title="dialogName">{{ dialogName }}</div>
+            <div class="dialog_info__date">{{ formatingDateTime(dialog.lastMessage.date) }}</div>
         </div>
-        <div class="dialog_info__bot">
-            <div class="dialog_info__text">{{ dialog.textLastMsg }}</div>
+        <div class="dialog_info__row" v-if="dialog.typeDialog === 'moderator'">
+            <div class="dialog_info__text">
+                <span>Заказ №{{ dialog?.additionalInfo?.numOrder }}</span>
+            </div>
+        </div>
+        <div class="dialog_info__row">
+            <div class="dialog_info__text">
+                <p><span>{{ userLastMessage }}: </span>{{ dialog.lastMessage.text }}</p>
+            </div>
             <div class="notReadMessage" v-if="dialog.unReadCount > 0">{{ dialog.unReadCount }}</div>
         </div>
     </div>
-    <div class="dialog_menu">
-        <img class="img" src="@/assets/images/menu.svg" alt="" @click="popapMenu">
-        <div class="dialog_menu__moderator" v-if="!showMenuModerator">
-            <button class="popap-menu-button">Закрепить</button>
-            <button class="popap-menu-button">Переместить в архив</button>
-        </div>
-        <div class="dialog_menu__user" v-if="!showMenuUser">
-            <button class="popap-menu-button">Закрепить</button>
-            <button class="popap-menu-button">Переименовать</button>
-            <button class="popap-menu-button">Переместить в архив</button>
-        </div>
-    </div>
+    <div class="dialog_menu"></div>
 </div>
 </template>
 
 <script>
-import { formatingDateTime } from '@/helpers/index';
+import { formatingDateTime, getNameChat } from '@/helpers/index';
 
 export default {
-    data() {
-        return {
-            showMenuModerator: {
-                type: Boolean,
-                default: false,
-            },
-            showMenuUser: {
-                type: Boolean,
-                default: false,
-            }
-        }
-    },
     computed: {
         activeDialogId() {
             return this.$store.state.activeDialog;
@@ -50,6 +34,15 @@ export default {
             return {
                 'active': this.activeDialogId === this.dialog.id
             }
+        },
+        userName() {
+            return this.$store.state.userName;
+        },
+        userLastMessage() {
+            return this.userName == this.dialog.lastMessage.user ? 'Вы' : this.dialog.lastMessage.user;
+        },
+        dialogName() {
+            return getNameChat(this.dialog);
         }
     },
     props: {
@@ -60,13 +53,6 @@ export default {
     },
     methods: {
         formatingDateTime,
-        popapMenu(){
-            if(this.dialog.whomDialog == 'moderator'){
-                this.showMenuModerator = !this.showMenuModerator
-            } else if(this.dialog.whomDialog == 'user'){
-                this.showMenuUser = !this.showMenuUser
-            }
-        },
         setActiveDialog() {
             if (this.dialog.id !== this.activeDialogId) {
                 this.$store.commit('setActiveDialog', this.dialog.id);
@@ -81,6 +67,8 @@ export default {
     padding: 12px;
     display: flex;
     border-bottom: 1px solid #E7EFFD;
+    align-items: center;
+    user-select: none;
 }
 .dialog.active {
     background: #F7F8FA;
@@ -92,24 +80,36 @@ export default {
     width: 100%;
     margin-left: 8px;
 }
-.dialog_info__top {
+.dialog_info__row {
     display: flex;
     justify-content: space-between;
     margin-bottom: 5px;
 }
-.dialog_info__bot {
-    display: flex;
-    justify-content: space-between;
+.dialog_info__row:last-child {
+    margin-bottom: 0px;
 }
 .dialog_info__name {
     font-weight: 600;
     color: #102447;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
-.dialog_info__data {
+.dialog_info__date {
     color: #7D95BD;
+    font-size: 12px;
 }
 .dialog_info__text {
     color: #102447;
+    font-size: 12px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.dialog_info__text span {
+    color: #7D95BD;
 }
 .notReadMessage{
     width: 16px;
@@ -122,10 +122,6 @@ export default {
     justify-content: center;
     align-items: center;
 }
-.img{
-    cursor: pointer;
-}
-
 .popap-menu-button{
     width: 150%;
     min-height: 30px;
@@ -138,7 +134,11 @@ export default {
     background-color: #F7F8FA;
 }
 .dialog_menu{
+    width: 20px;
+    height: 25px;
     position: relative;
+    background-image: url('@/assets/images/menu.svg');
+    background-size: cover;
 }
 .dialog_menu__moderator{
     border-radius: 4px;
