@@ -50,7 +50,7 @@ export default {
     height: 100%;
         overflow-y: auto;
 }
-.sidebar_chatNotFound{
+.sidebar_chatNotFound {
     Font-family: 'Raleway';
     font-style: normal;
     font-weight: 500;
@@ -63,11 +63,5 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-.dialog_active {
-    padding: 12px;
-    display: flex;
-    border-bottom: 1px solid #E7EFFD;
-    background: #F7F8FA;
 }
 </style>

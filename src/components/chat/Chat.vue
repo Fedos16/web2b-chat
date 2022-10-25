@@ -25,6 +25,12 @@
   .chat-button-invisible {
     background-color: transparent;
     border: none;
+    padding: 0px;
+    cursor: pointer;
+  }
+  .chat-button-invisible:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
   }
 
 </style>

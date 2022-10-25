@@ -10,8 +10,8 @@
             </div>
         </div>
         <div class="chat-body_header_actions" v-if="!activeSearch">
-            <div class="chat-body_header_actions__item" @click="switchSearch">
-                <img src="@/assets/images/search.svg" alt="">
+            <div class="chat-body_header_actions__item">
+                <button class="chat-button-invisible" @click="switchSearch"><img src="@/assets/images/search.svg" alt=""></button>
             </div>
             <div class="chat-body_header_actions__item chat-popup">
                 <button class="chat-button-invisible" @click="toggleChatActions"><img src="@/assets/images/menu.svg" alt=""></button>
@@ -21,7 +21,7 @@
         <div class="chat-body_header_search" v-if="activeSearch">
             <img src="@/assets/images/search.svg" alt="">
             <input type="text" placeholder="Поиск по истории сообщений" :value="searchText" ref="searchInput">
-            <button class="invisible-button margin-r--15">
+            <button class="chat-button-invisible margin-r--15">
                 <img src="@/assets/images/calendar.png" alt="">
             </button>
             <button class="web-button main-button margin-r--10" @click="searchMessage">Найти</button>

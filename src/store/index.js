@@ -1,9 +1,12 @@
 import { createStore } from 'vuex';
 import { messages, dialogs } from '@/data/index';
-import { formatingText } from '@/helpers/index';
+import { formatingText, getNameChat } from '@/helpers/index';
 
 export default createStore({
     state: {
+
+        userName: 'Fedos16',
+
         activeDialogSearch: false,
         searchDialogText: '',
         dialogs,
@@ -34,19 +37,22 @@ export default createStore({
         getDialogs(state) {
             return state.dialogs.filter(item => {
 
-                const filterName = item.name.toLowerCase().includes(state.searchDialogText.toLowerCase());
+                const filterName = getNameChat(item).toLowerCase().includes(state.searchDialogText.toLowerCase());
                 const filterUnRead = state.unReadMessages ? item.unReadCount > 0 : true;
 
                 return filterName && filterUnRead;
             })
         },
+        isUnreadDialogs(state) {
+            return state.dialogs.filter(item => item.unReadCount > 0).length > 0;
+        }
     },
     mutations: {
 
         sortDialogs(state) {
             state.dialogs = state.dialogs.sort((a, b) => {
-                const aDate = a.dateLastMsg.getTime();
-                const bDate = b.dateLastMsg.getTime();
+                const aDate = a.lastMessage.date.getTime();
+                const bDate = b.lastMessage.date.getTime();
 
                 if (state.descSort) {
                     return bDate - aDate;

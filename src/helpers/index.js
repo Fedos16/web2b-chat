@@ -25,3 +25,11 @@ export const formatingText = (sourceText, text) => {
     return newText;
 
 }
+export const getNameChat = (dialog) => {
+    return {
+        'user': dialog?.name,
+        'moderator': 'Модератор',
+        'order': `Заказ №${dialog?.additionalInfo?.numOrder}`,
+        'support': 'Тех. поддержка'
+    }[dialog?.typeDialog]
+}
