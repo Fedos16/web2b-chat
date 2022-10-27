@@ -3,6 +3,7 @@
     <Dialogs />
     <ChatBody />
   </Chat>
+    <RenameDialog v-show="renameDialog"/>
 </template>
 
 <script>
@@ -10,15 +11,22 @@
 import Chat from '@/components/chat/Chat';
 import Dialogs from '@/components/chat/dialogs/ChatDialogs';
 import ChatBody from '@/components/chat/body/ChatBody';
-
+import RenameDialog from '@/components/chat/dialogs/componentsDialogs/RenameDialog.vue'
 
 export default {
-  name: 'App',
-  components: {
-    Chat,
-    Dialogs,
-    ChatBody
-  },
+    name: 'App',
+    components: {
+      Chat,
+      Dialogs,
+      ChatBody,
+      RenameDialog
+    },
+    computed: {
+        renameDialog(){
+            return this.$store.state.renameDialog
+        }
+    },
+
 };
 </script>
 
@@ -128,5 +136,4 @@ export default {
     font-weight: 700;
     color: var(--input-text-color);
   }
-
 </style>

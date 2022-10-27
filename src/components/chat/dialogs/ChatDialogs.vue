@@ -40,7 +40,7 @@ export default {
             return this.$store.state.searchDialogText;
         },
         showArchive(){
-            return this.$store.state.showArhive;
+            return this.$store.state.showArchive;
         },
         switchArchive(){
             return this.$store.commit('toggleShowArchive')
