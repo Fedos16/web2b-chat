@@ -81,6 +81,7 @@ export const messages = [
         "date": new Date(),
     }
 ]
+
 export const dialogs = [
     {
         id: 1,

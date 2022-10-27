@@ -72,6 +72,7 @@ export default {
         position: relative;
         width: 13px;
         height: auto;
+        z-index: 1;
     }
 
     .message-list {

@@ -5,9 +5,9 @@
                 <div class="change-name-dialog_tytle__text">Переименовать чат</div>
                 <img src="@/assets/images/crossclose.svg" alt="" @click="closeRenameDialog">
             </div>
-            <input class="change-name-dialog_input" type="text" name="" id="">
+            <input class="change-name-dialog_input" type="text" name="" id="" v-model="dialogName">
             <div class="change-name-dialog_button">
-                <button class="change-name-dialog_button__rename">
+                <button class="change-name-dialog_button__rename" @click="saveRename">
                 Переименовать
                 </button>
                 <button class="change-name-dialog_button__cancell" @click="closeRenameDialog">
@@ -19,12 +19,22 @@
 </template>
 
 <script>
+import { dialogs } from '@/data'
 export default {
-computed: {
-        closeRenameDialog(){
-            return this.$store.commit('toggleRenameDialog')
+    data(){
+        return{
+            dialogName: this.dialog.name
         }
     },
+    props:{
+        dialog: Object,
+    },
+    methods: {
+        closeRenameDialog(){
+            return this.$store.commit('toggleRenameDialog')
+        },
+
+    }
 }
 </script>
 
@@ -37,6 +47,7 @@ computed: {
     background-color: rgba(0,0,0, 0.5);
     position: fixed;
     display: flex;
+    z-index: 3;
 }
 .change-name-dialog{
     display: flex;
