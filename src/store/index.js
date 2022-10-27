@@ -95,7 +95,6 @@ export default createStore({
         },
         toggleShowArchive(state) {
             state.showArchive = !state.showArchive;
-            console.log(state.showArchive)
         }
 
     },
