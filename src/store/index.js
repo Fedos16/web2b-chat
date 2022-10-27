@@ -13,8 +13,8 @@ export default createStore({
         unReadMessages: false,
         descSort: true,
         showArchive: false,
-
         activeDialog: null,
+        renameDialog: false,
 
         searchMessageText: '',
         messages: [],
@@ -95,8 +95,10 @@ export default createStore({
         },
         toggleShowArchive(state) {
             state.showArchive = !state.showArchive;
+        },
+        toggleRenameDialog(state) {
+            state.renameDialog = !state.renameDialog;
         }
-
     },
     actions: {
     }
