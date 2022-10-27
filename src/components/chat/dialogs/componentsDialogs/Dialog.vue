@@ -18,7 +18,13 @@
             <div class="notReadMessage" v-if="dialog.unReadCount > 0">{{ dialog.unReadCount }}</div>
         </div>
     </div>
-    <div class="dialog_menu"></div>
+    <div class="dialog_menu" @click="popapMenu">
+        <div class="dialog_menu__moderator" v-if="!showMenu">
+            <button class="popap-menu-button">Закрепить</button>
+            <button class="popap-menu-button" @click="renameDialog">Переименовать</button>
+            <button class="popap-menu-button" @click="moveDialogToArchive">Переместить в архив</button>
+        </div>
+    </div>
 </div>
 </template>
 
@@ -26,6 +32,14 @@
 import { formatingDateTime, getNameChat } from '@/helpers/index';
 
 export default {
+    data() {
+        return {
+            showMenu: {
+                type: Boolean,
+                default: false,
+            }
+        }
+    },
     computed: {
         activeDialogId() {
             return this.$store.state.activeDialog;
@@ -43,6 +57,9 @@ export default {
         },
         dialogName() {
             return getNameChat(this.dialog);
+        },
+        renameDialog(){
+            return this.$store.commit('toggleRenameDialog')
         }
     },
     props: {
@@ -57,7 +74,13 @@ export default {
             if (this.dialog.id !== this.activeDialogId) {
                 this.$store.commit('setActiveDialog', this.dialog.id);
             }
-        }
+        },
+        popapMenu(){
+            this.showMenu = !this.showMenu
+        },
+        moveDialogToArchive(){
+            this.dialog.archiveDialog = !this.dialog.archiveDialog;
+        },
     }
 }
 </script>
