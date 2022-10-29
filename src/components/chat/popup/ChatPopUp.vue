@@ -1,26 +1,31 @@
 <template>
-    <div class="chat-dropdown" v-if="isChatActions">
+    <div class="chat-dropdown" v-if="visible">
         <ul>
-            <li v-for="item in chatActions" :key="item">{{ item }}</li>
+            <li v-for="item in data" :key="item.id">{{ item.name }}</li>
         </ul>
     </div>
-    <div class="chat-dropdown_backdrop" v-if="isChatActions" @click="toggleChatActions"></div>
+    <div class="chat-dropdown_backdrop" v-if="visible" @click="closePopUp"></div>
 </template>
 
 <script>
 export default {
-
-    computed: {
-        chatActions() {
-            return this.$store.state.chatActions;
+    props: {
+        visible: {
+            type: Boolean,
+            default: false,
+            required: true
         },
-        isChatActions() {
-            return this.$store.state.isVisibleChatActions;
+        data: {
+            type: Object,
+            required: true
         }
     },
+    emits: {
+        handlerClose: null
+    },
     methods: {
-        toggleChatActions() {
-            this.$store.commit('toggleChatActions');
+        closePopUp() {
+            this.$emit('handlerClose');
         }
     }
 }

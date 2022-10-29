@@ -11,14 +11,13 @@ import Chat from '@/components/chat/Chat';
 import Dialogs from '@/components/chat/dialogs/ChatDialogs';
 import ChatBody from '@/components/chat/body/ChatBody';
 
-
 export default {
     name: 'App',
     components: {
       Chat,
       Dialogs,
       ChatBody
-    },
+    }
 };
 </script>
 

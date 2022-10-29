@@ -4,6 +4,10 @@
         <Content />
         <Footer v-if="!emptyDialog" />
     </div>
+
+    <!-- <ModalWindowBackdrop>
+        <ModalAddUser />
+    </ModalWindowBackdrop> -->
 </template>
 
 <script>
@@ -11,12 +15,16 @@
 import Header from './header/Header.vue';
 import Content from './content/Content.vue';
 import Footer from './footer/Footer.vue';
+import ModalWindowBackdrop from '../modalWindows/ModalWindowBackdrop.vue';
+import ModalAddUser from '../modalWindows/ChatAddUser.vue';
 
 export default {
     components: {
         Header,
         Content,
-        Footer
+        Footer,
+        ModalWindowBackdrop,
+        ModalAddUser
     },
     data() {
         return {
