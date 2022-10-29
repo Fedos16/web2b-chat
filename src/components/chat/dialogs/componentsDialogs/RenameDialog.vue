@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import { dialogs } from '@/data'
 export default {
     data(){
         return{
@@ -33,7 +32,10 @@ export default {
         closeRenameDialog(){
             return this.$store.commit('toggleRenameDialog')
         },
-
+        saveRename(){
+            this.dialog.name = this.dialogName;
+            return this.$store.commit('toggleRenameDialog')
+        }
     }
 }
 </script>
@@ -44,7 +46,7 @@ export default {
     bottom: 0;
     right: 0;
     left: 0;
-    background-color: rgba(0,0,0, 0.5);
+    background-color: rgba(0,0,0, 0.3);
     position: fixed;
     display: flex;
     z-index: 3;

@@ -15,18 +15,19 @@
                 <div class="dialog_info__text">
                     <p><span>{{ userLastMessage }}: </span>{{ dialog.lastMessage.text }}</p>
                 </div>
+                <div class="fixed-dialog"><img src="@/assets/images/pinbutton.svg" alt="" v-if="dialog.fixedDialog"></div>
                 <div class="notReadMessage" v-if="dialog.unReadCount > 0">{{ dialog.unReadCount }}</div>
             </div>
         </div>
         <div class="dialog_menu" @click="popapMenu">
             <div class="dialog_menu__moderator" v-if="!showMenu">
-                <button class="popap-menu-button">Закрепить</button>
+                <button class="popap-menu-button" @click="switchFixedDialog">Закрепить</button>
                 <button class="popap-menu-button" @click="switchRenameDialog">Переименовать</button>
                 <button class="popap-menu-button" @click="moveDialogToArchive">Переместить в архив</button>
             </div>
         </div>
     </div>
-    <RenameDialog v-show="renameDialog" :dialog="dialog"/>
+    <RenameDialog v-if="renameDialog == dialog.id" :dialog="dialog"/>
 </template>
 
 <script>
@@ -85,10 +86,15 @@ export default {
         },
         moveDialogToArchive(){
             this.dialog.archiveDialog = !this.dialog.archiveDialog;
+            this.dialog.fixedDialog = false;
         },
         switchRenameDialog(){
-            return this.$store.commit('toggleRenameDialog')
+            return this.$store.commit('toggleRenameDialog',this.dialog.id)
         },
+        switchFixedDialog(){
+            this.dialog.fixedDialog = !this.dialog.fixedDialog;
+            this.$store.commit('sortDialogs');
+        }
     }
 }
 </script>
