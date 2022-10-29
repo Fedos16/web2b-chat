@@ -48,7 +48,7 @@ export default {
     },
     computed: {
         activeDialogId() {
-            return this.$store.state.activeDialog;
+            return this.$store.state.activeDialogId;
         },
         classActiveDialog() {
             return {

@@ -13,7 +13,7 @@
 <script>
 export default {
     mounted() {
-        this.$store.watch(() => this.$store.state.activeDialog, () => {
+        this.$store.watch(() => this.$store.state.activeDialogId, () => {
             this.$nextTick(() => {
                 const inputTextMessage = this.$refs.inputTextMessage;
                 if (inputTextMessage) {
