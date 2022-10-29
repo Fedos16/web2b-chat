@@ -39,7 +39,7 @@ export const messages = [
     },
     {
         "id": 5,
-        'chatId': 1,
+        'chatId': 5,
         "text": "Учитывая ключевые сценарии поведения, современная методология разработки играет определяющее значение для экономической целесообразности принимаемых решений!",
         "user": "Иванов Сергей",
         "incoming": true,
@@ -47,7 +47,7 @@ export const messages = [
     },
     {
         "id": 6,
-        'chatId': 2,
+        'chatId': 6,
         "text": "А также тщательные исследования конкурентов неоднозначны и будут функционально разнесены на независимые элементы.",
         "user": "Иванов Сергей",
         "incoming": false,
@@ -55,7 +55,7 @@ export const messages = [
     },
     {
         "id": 7,
-        'chatId': 3,
+        'chatId': 7,
         "text": "Внезапно, представители современных социальных резервов призывают нас к новым свершениям, которые, в свою очередь, должны быть функционально разнесены на независимые элементы.",
         "user": "Иванов Сергей",
         "incoming": true,
@@ -63,7 +63,7 @@ export const messages = [
     },
     {
         "id": 8,
-        'chatId': 4,
+        'chatId': 1,
         "text": "Таким образом, сложившаяся структура организации создаёт необходимость включения в производственный план целого ряда внеочередных мероприятий с учётом комплекса глубокомысленных рассуждений.",
         "user": "Иванов Сергей",
         "incoming": false,
@@ -71,7 +71,7 @@ export const messages = [
     },
     {
         "id": 9,
-        'chatId': 1,
+        'chatId': 2,
         "text": "Идейные соображения высшего порядка, а также синтетическое тестирование не оставляет шанса для модели развития.",
         "user": "Иванов Сергей",
         "incoming": false,
@@ -80,7 +80,7 @@ export const messages = [
     ,
     {
         "id": 10,
-        'chatId': 2,
+        'chatId': 3,
         "text": "Как принято считать, тщательные исследования конкурентов ассоциативно распределены по отраслям.",
         "user": "Иванов Сергей",
         "incoming": true,
@@ -150,7 +150,7 @@ export const dialogs = [
             user: 'Fedos16'
         },
         unReadCount: 0,
-        typeDialog: "support",
+        typeDialog: "moderator",
         additionalInfo: {
             numOrder: null
         },
@@ -160,7 +160,7 @@ export const dialogs = [
     {
         id: 5,
         img: "123",
-        name: "Григорий5",
+        name: "Василий",
         lastMessage: {
             date: new Date(2022, 9, 11, 17, 46),
             text: 'Привет, как дела?',
@@ -177,14 +177,14 @@ export const dialogs = [
     {
         id: 6,
         img: "123",
-        name: "Григорий6",
+        name: "Олег",
         lastMessage: {
             date: new Date(2022, 9, 12, 17, 46),
             text: 'Привет, как дела?',
             user: 'Fedos16'
         },
         unReadCount: 0,
-        typeDialog: "support",
+        typeDialog: "order",
         additionalInfo: {
             numOrder: null
         },
@@ -194,14 +194,14 @@ export const dialogs = [
     {
         id: 7,
         img: "123",
-        name: "Григорий7",
+        name: "Владислав",
         lastMessage: {
             date: new Date(2022, 9, 13, 17, 46),
             text: 'Привет, как дела?',
             user: 'Fedos16'
         },
         unReadCount: 0,
-        typeDialog: "support",
+        typeDialog: "user",
         additionalInfo: {
             numOrder: null
         },

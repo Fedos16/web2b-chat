@@ -36,7 +36,6 @@ export default {
             return this.$store.getters.getDialogs;
         },
         dialogsArchive() {
-            console.log(this.$store.getters.getArchiveDialogs)
             return this.$store.getters.getArchiveDialogs;
         },
         dialogsFixed(){
