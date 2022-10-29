@@ -13,6 +13,7 @@ export default createStore({
         unReadMessages: false,
         descSort: true,
         showArchive: false,
+
         renameDialog: null,
 
         visibleChatHeaderActions: false,
@@ -33,18 +34,17 @@ export default createStore({
                 } else {
                     delete item.findedText;
                 }
-
                 return item;
             });
         },
         getDialogs(state) {
             return state.dialogs.filter(item => {
-
                 const filterName = item.name.toLowerCase().includes(state.searchDialogText.toLowerCase());
                 const filterUnRead = state.unReadMessages ? item.unReadCount > 0 : true;
                 const filterArchiv = !item.archiveDialog;
+                const filterFixed = !item.fixedDialog;
 
-                return filterName && filterUnRead && filterArchiv;
+                return filterName && filterUnRead && filterArchiv && filterFixed;
             })
         },
         isUnreadDialogs(state) {
@@ -56,24 +56,36 @@ export default createStore({
 
                 return filterArchiv;
             })
+        },
+        getFixedDialogs(state) {
+            return state.dialogs.filter(item => {
+
+                const filterName = getNameChat(item).toLowerCase().includes(state.searchDialogText.toLowerCase());
+                const filterUnRead = state.unReadMessages ? item.unReadCount > 0 : true;
+                const filterArchiv = !item.archiveDialog;
+                const filterFixed = item.fixedDialog;
+
+                return filterName && filterUnRead && filterArchiv && filterFixed;
+            })
         }
     },
     mutations: {
         sortDialogs(state) {
-            state.dialogs = state.dialogs.sort((a, b) => {
+            state.dialogs.sort((a, b) => {
                 const aDate = a.lastMessage.date.getTime();
                 const bDate = b.lastMessage.date.getTime();
-
                 if (state.descSort) {
                     return bDate - aDate;
                 }
                 return aDate - bDate
             });
         },
+        sortFixedDialog(state) {
+            state.dialogs.sort((a, b) => b.fixedDialog - a.fixedDialog)
+        },
         swithTypeSort(state) {
             state.descSort = !state.descSort;
         },
-
         toggleActiveDialogSearch(state) {
             state.activeDialogSearch = !state.activeDialogSearch;
             state.searchDialogText = '';
@@ -90,7 +102,6 @@ export default createStore({
         toggleChatActions(state) {
             state.visibleChatHeaderActions = !state.visibleChatHeaderActions;
         },
-
         setActiveDialog(state, id) {
             state.activeDialogId = id;
             state.messages = messages.filter(item => item.chatId === id);

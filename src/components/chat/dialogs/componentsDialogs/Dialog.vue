@@ -15,17 +15,27 @@
                 <div class="dialog_info__text">
                     <p><span>{{ userLastMessage }}: </span>{{ dialog.lastMessage.text }}</p>
                 </div>
+<<<<<<< HEAD
+=======
+                <div class="fixed-dialog"><img src="@/assets/images/pinbutton.svg" alt="" v-if="dialog.fixedDialog"></div>
+>>>>>>> 87afa1aaa9f54ef6492be41418379336981ede24
                 <div class="notReadMessage" v-if="dialog.unReadCount > 0">{{ dialog.unReadCount }}</div>
             </div>
         </div>
         <div class="dialog_menu" @click="popapMenu">
             <div class="dialog_menu__moderator" v-if="!showMenu">
+<<<<<<< HEAD
                 <button class="popap-menu-button">Закрепить</button>
                 <button class="popap-menu-button" @click="renameDialog">Переименовать</button>
+=======
+                <button class="popap-menu-button" @click="switchFixedDialog">Закрепить</button>
+                <button class="popap-menu-button" @click="switchRenameDialog">Переименовать</button>
+>>>>>>> 87afa1aaa9f54ef6492be41418379336981ede24
                 <button class="popap-menu-button" @click="moveDialogToArchive">Переместить в архив</button>
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 
     <RenameDialog v-if="isRenameDialog" :dialog="dialog" />
 
@@ -38,6 +48,17 @@ import RenameDialog from '@/components/chat/dialogs/componentsDialogs/RenameDial
 
 export default {
     components: {
+=======
+    <RenameDialog v-if="renameDialog == dialog.id" :dialog="dialog"/>
+</template>
+
+<script>
+import { formatingDateTime, getNameChat } from '@/helpers/index';
+import RenameDialog from '@/components/chat/dialogs/componentsDialogs/RenameDialog.vue'
+
+export default {
+    components:{
+>>>>>>> 87afa1aaa9f54ef6492be41418379336981ede24
         RenameDialog
     },
     data() {
@@ -66,8 +87,13 @@ export default {
         dialogName() {
             return this.dialog.name;
         },
+<<<<<<< HEAD
         isRenameDialog() {
             return this.$store.state.renameDialog === this.dialog.id;
+=======
+        renameDialog(){
+            return this.$store.state.renameDialog
+>>>>>>> 87afa1aaa9f54ef6492be41418379336981ede24
         }
     },
     props: {
@@ -88,9 +114,19 @@ export default {
         },
         moveDialogToArchive(){
             this.dialog.archiveDialog = !this.dialog.archiveDialog;
+            this.dialog.fixedDialog = false;
         },
+<<<<<<< HEAD
         renameDialog(){
             return this.$store.commit('toggleRenameDialog', this.dialog.id);
+=======
+        switchRenameDialog(){
+            return this.$store.commit('toggleRenameDialog',this.dialog.id)
+        },
+        switchFixedDialog(){
+            this.dialog.fixedDialog = !this.dialog.fixedDialog;
+            this.$store.commit('sortDialogs');
+>>>>>>> 87afa1aaa9f54ef6492be41418379336981ede24
         }
     }
 }

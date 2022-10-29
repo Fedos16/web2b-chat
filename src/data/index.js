@@ -87,6 +87,7 @@ export const messages = [
         "date": new Date(),
     }
 ]
+
 export const dialogs = [
     {
         id: 1,
@@ -102,7 +103,8 @@ export const dialogs = [
         additionalInfo: {
             numOrder: null
         },
-        archiveDialog: false
+        archiveDialog: true,
+        fixedDialog: false
     },
     {
         id: 2,
@@ -118,7 +120,8 @@ export const dialogs = [
         additionalInfo: {
             numOrder: 8392
         },
-        archiveDialog: false
+        archiveDialog: true,
+        fixedDialog: false
     },
     {
         id: 3,
@@ -134,7 +137,8 @@ export const dialogs = [
         additionalInfo: {
             numOrder: 26794
         },
-        archiveDialog: false
+        archiveDialog: false,
+        fixedDialog: false
     },
     {
         id: 4,
@@ -150,6 +154,58 @@ export const dialogs = [
         additionalInfo: {
             numOrder: null
         },
-        archiveDialog: false
+        archiveDialog: false,
+        fixedDialog: false
+    },
+    {
+        id: 5,
+        img: "123",
+        name: "Григорий5",
+        lastMessage: {
+            date: new Date(2022, 9, 11, 17, 46),
+            text: 'Привет, как дела?',
+            user: 'Fedos16'
+        },
+        unReadCount: 0,
+        typeDialog: "support",
+        additionalInfo: {
+            numOrder: null
+        },
+        archiveDialog: false,
+        fixedDialog: false
+    },
+    {
+        id: 6,
+        img: "123",
+        name: "Григорий6",
+        lastMessage: {
+            date: new Date(2022, 9, 12, 17, 46),
+            text: 'Привет, как дела?',
+            user: 'Fedos16'
+        },
+        unReadCount: 0,
+        typeDialog: "support",
+        additionalInfo: {
+            numOrder: null
+        },
+        archiveDialog: false,
+        fixedDialog: false
+    },
+    {
+        id: 7,
+        img: "123",
+        name: "Григорий7",
+        lastMessage: {
+            date: new Date(2022, 9, 13, 17, 46),
+            text: 'Привет, как дела?',
+            user: 'Fedos16'
+        },
+        unReadCount: 0,
+        typeDialog: "support",
+        additionalInfo: {
+            numOrder: null
+        },
+        archiveDialog: false,
+        fixedDialog: true
     }
 ]

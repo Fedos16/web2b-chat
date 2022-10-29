@@ -5,9 +5,15 @@
                 <div class="change-name-dialog_tytle__text">Переименовать чат</div>
                 <img src="@/assets/images/crossclose.svg" alt="" @click="closeRenameDialog">
             </div>
+<<<<<<< HEAD
             <input class="change-name-dialog_input" type="text" v-model="nameDialog">
             <div class="change-name-dialog_button">
                 <button class="change-name-dialog_button__rename" @click="renameDialog">
+=======
+            <input class="change-name-dialog_input" type="text" name="" id="" v-model="dialogName">
+            <div class="change-name-dialog_button">
+                <button class="change-name-dialog_button__rename" @click="saveRename">
+>>>>>>> 87afa1aaa9f54ef6492be41418379336981ede24
                 Переименовать
                 </button>
                 <button class="change-name-dialog_button__cancell" @click="closeRenameDialog">
@@ -20,6 +26,7 @@
 
 <script>
 export default {
+<<<<<<< HEAD
     props: {
         dialog: Object
     },
@@ -32,6 +39,24 @@ export default {
         closeRenameDialog(){
             this.$store.commit('toggleRenameDialog')
         }
+=======
+    data(){
+        return{
+            dialogName: this.dialog.name
+        }
+    },
+    props:{
+        dialog: Object,
+    },
+    methods: {
+        closeRenameDialog(){
+            return this.$store.commit('toggleRenameDialog')
+        },
+        saveRename(){
+            this.dialog.name = this.dialogName;
+            return this.$store.commit('toggleRenameDialog')
+        }
+>>>>>>> 87afa1aaa9f54ef6492be41418379336981ede24
     }
 }
 </script>
@@ -42,7 +67,7 @@ export default {
     bottom: 0;
     right: 0;
     left: 0;
-    background-color: rgba(0,0,0, 0.5);
+    background-color: rgba(0,0,0, 0.3);
     position: fixed;
     display: flex;
     z-index: 3;
