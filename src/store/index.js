@@ -60,7 +60,7 @@ export default createStore({
         getFixedDialogs(state) {
             return state.dialogs.filter(item => {
 
-                const filterName = getNameChat(item).toLowerCase().includes(state.searchDialogText.toLowerCase());
+                const filterName = item.name.toLowerCase().includes(state.searchDialogText.toLowerCase());
                 const filterUnRead = state.unReadMessages ? item.unReadCount > 0 : true;
                 const filterArchiv = !item.archiveDialog;
                 const filterFixed = item.fixedDialog;
