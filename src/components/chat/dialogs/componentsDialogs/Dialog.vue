@@ -1,37 +1,43 @@
 <template>
-<div class="dialog" :class="classActiveDialog" @click="setActiveDialog">
-    <img src="@/assets/images/tehSupport.svg" alt="">
-    <div class="dialog_info">
-        <div class="dialog_info__row">
-            <div class="dialog_info__name" :title="dialogName">{{ dialogName }}</div>
-            <div class="dialog_info__date">{{ formatingDateTime(dialog.lastMessage.date) }}</div>
-        </div>
-        <div class="dialog_info__row" v-if="dialog.typeDialog === 'moderator'">
-            <div class="dialog_info__text">
-                <span>Заказ №{{ dialog?.additionalInfo?.numOrder }}</span>
+    <div class="dialog" :class="classActiveDialog" @click="setActiveDialog">
+        <img src="@/assets/images/tehSupport.svg" alt="">
+        <div class="dialog_info">
+            <div class="dialog_info__row">
+                <div class="dialog_info__name" :title="dialogName">{{ dialogName }}</div>
+                <div class="dialog_info__date">{{ formatingDateTime(dialog.lastMessage.date) }}</div>
+            </div>
+            <div class="dialog_info__row" v-if="dialog.typeDialog === 'moderator'">
+                <div class="dialog_info__text">
+                    <span>Заказ №{{ dialog?.additionalInfo?.numOrder }}</span>
+                </div>
+            </div>
+            <div class="dialog_info__row">
+                <div class="dialog_info__text">
+                    <p><span>{{ userLastMessage }}: </span>{{ dialog.lastMessage.text }}</p>
+                </div>
+                <div class="fixed-dialog"><img src="@/assets/images/pinbutton.svg" alt="" v-if="dialog.fixedDialog"></div>
+                <div class="notReadMessage" v-if="dialog.unReadCount > 0">{{ dialog.unReadCount }}</div>
             </div>
         </div>
-        <div class="dialog_info__row">
-            <div class="dialog_info__text">
-                <p><span>{{ userLastMessage }}: </span>{{ dialog.lastMessage.text }}</p>
+        <div class="dialog_menu" @click="popapMenu">
+            <div class="dialog_menu__moderator" v-if="!showMenu">
+                <button class="popap-menu-button" @click="switchFixedDialog">Закрепить</button>
+                <button class="popap-menu-button" @click="switchRenameDialog">Переименовать</button>
+                <button class="popap-menu-button" @click="moveDialogToArchive">Переместить в архив</button>
             </div>
-            <div class="notReadMessage" v-if="dialog.unReadCount > 0">{{ dialog.unReadCount }}</div>
         </div>
     </div>
-    <div class="dialog_menu" @click="popapMenu">
-        <div class="dialog_menu__moderator" v-if="!showMenu">
-            <button class="popap-menu-button">Закрепить</button>
-            <button class="popap-menu-button" @click="renameDialog">Переименовать</button>
-            <button class="popap-menu-button" @click="moveDialogToArchive">Переместить в архив</button>
-        </div>
-    </div>
-</div>
+    <RenameDialog v-if="renameDialog == dialog.id" :dialog="dialog"/>
 </template>
 
 <script>
 import { formatingDateTime, getNameChat } from '@/helpers/index';
+import RenameDialog from '@/components/chat/dialogs/componentsDialogs/RenameDialog.vue'
 
 export default {
+    components:{
+        RenameDialog
+    },
     data() {
         return {
             showMenu: {
@@ -56,10 +62,10 @@ export default {
             return this.userName == this.dialog.lastMessage.user ? 'Вы' : this.dialog.lastMessage.user;
         },
         dialogName() {
-            return getNameChat(this.dialog);
+            return this.dialog.name;
         },
         renameDialog(){
-            return this.$store.commit('toggleRenameDialog')
+            return this.$store.state.renameDialog
         }
     },
     props: {
@@ -80,7 +86,15 @@ export default {
         },
         moveDialogToArchive(){
             this.dialog.archiveDialog = !this.dialog.archiveDialog;
+            this.dialog.fixedDialog = false;
         },
+        switchRenameDialog(){
+            return this.$store.commit('toggleRenameDialog',this.dialog.id)
+        },
+        switchFixedDialog(){
+            this.dialog.fixedDialog = !this.dialog.fixedDialog;
+            this.$store.commit('sortDialogs');
+        }
     }
 }
 </script>

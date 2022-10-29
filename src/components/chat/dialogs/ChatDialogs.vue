@@ -2,6 +2,9 @@
     <div class="sidebar ">
         <Menu />
         <Archive />
+        <div v-if="!showArchive">
+            <Dialog v-for="dialog in dialogsFixed" :dialog="dialog" :key="dialog.id" />
+        </div>
         <div class="sidebar_chats my-scroll" v-show="dialogs.length > 0">
             <div v-if="showArchive">
                 <Dialog v-for="dialog in dialogsArchive" :dialog="dialog" :key="dialog.id" />
@@ -15,7 +18,6 @@
             <p><b>«{{chatName}}»</b> не найдено</p>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -35,6 +37,9 @@ export default {
         },
         dialogsArchive() {
             return this.$store.getters.getArchiveDialogs;
+        },
+        dialogsFixed(){
+            return this.$store.getters.getFixedDialogs;
         },
         chatName() {
             return this.$store.state.searchDialogText;
