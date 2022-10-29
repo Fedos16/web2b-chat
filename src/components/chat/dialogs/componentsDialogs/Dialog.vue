@@ -20,30 +20,34 @@
             </div>
         </div>
         <div class="dialog_menu" @click="popapMenu">
-            <div class="dialog_menu__moderator" v-if="!showMenu">
+            <ChatPopup :visible="!showMenu" :data="menuUsersAndModerator" />
+            <!--<div class="dialog_menu__moderator" v-if="!showMenu">
                 <button class="popap-menu-button" @click="switchFixedDialog">Закрепить</button>
                 <button class="popap-menu-button" @click="switchRenameDialog">Переименовать</button>
                 <button class="popap-menu-button" @click="moveDialogToArchive">Переместить в архив</button>
-            </div>
+            </div>-->
         </div>
     </div>
     <RenameDialog v-if="renameDialog == dialog.id" :dialog="dialog"/>
 </template>
 
 <script>
-import { formatingDateTime, getNameChat } from '@/helpers/index';
-import RenameDialog from '@/components/chat/dialogs/componentsDialogs/RenameDialog.vue'
+import { formatingDateTime} from '@/helpers/index';
+import RenameDialog from '@/components/chat/dialogs/componentsDialogs/RenameDialog'
+import ChatPopup from '@/components/chat/popup/ChatPopUp'
+import { typesDialog } from '@/data/index';
 
 export default {
     components:{
-        RenameDialog
+        RenameDialog,
+        ChatPopup
     },
     data() {
         return {
             showMenu: {
                 type: Boolean,
                 default: false,
-            }
+            },
         }
     },
     computed: {
@@ -66,7 +70,30 @@ export default {
         },
         renameDialog(){
             return this.$store.state.renameDialog
-        }
+        },
+        activeDialogData() {
+            return this.$store.getters.getDialogById(this.activeDialogId);
+        },
+        menuUsersAndModerator(){
+            const list = {
+                [typesDialog['Пользователь']]: [
+                    { id: 'ha-1', name: !this.dialog.fixedDialog ? 'Закрепить' : 'Открепить' , handler: this.switchFixedDialog },
+                    { id: 'ha-2', name: !this.dialog.archiveDialog ? 'Переместить в архив' : 'Вернуть из архива' , handler: this.moveDialogToArchive }
+                ],
+                [typesDialog['Модератор']]: [
+                    { id: 'ha-1', name: !this.dialog.fixedDialog ? 'Закрепить' : 'Открепить' , handler: this.switchFixedDialog },
+                    { id: 'ha-2', name: !this.dialog.archiveDialog ? 'Переместить в архив' : 'Вернуть из архива' , handler: this.moveDialogToArchive }
+                ],
+                [typesDialog['Заказ']]: [
+                    { id: 'ha-1', name: !this.dialog.fixedDialog ? 'Закрепить' : 'Открепить' , handler: this.switchFixedDialog },
+                    { id: 'ha-2', name: 'Переименовать', handler: this.switchRenameDialog  },
+                    { id: 'ha-3', name: !this.dialog.archiveDialog ? 'Переместить в архив' : 'Вернуть из архива' , handler: this.moveDialogToArchive }
+                ],
+                [typesDialog['Поддержка']]: [ { id: 'ha-1', name: !this.dialog.fixedDialog ? 'Закрепить' : 'Открепить' , handler: this.switchFixedDialog } ]
+            }
+            const type = this.activeDialogData?.typeDialog;
+            return list[type] || {};
+        },
     },
     props: {
         dialog: {
@@ -85,15 +112,14 @@ export default {
             this.showMenu = !this.showMenu
         },
         moveDialogToArchive(){
-            this.dialog.archiveDialog = !this.dialog.archiveDialog;
-            this.dialog.fixedDialog = false;
+            this.$store.commit('moveDialogToArchive')
         },
         switchRenameDialog(){
             return this.$store.commit('toggleRenameDialog',this.dialog.id)
         },
         switchFixedDialog(){
-            this.dialog.fixedDialog = !this.dialog.fixedDialog;
             this.$store.commit('sortDialogs');
+            this.$store.commit('toggleFixedDialog')
         }
     }
 }

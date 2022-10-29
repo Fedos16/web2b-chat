@@ -6,7 +6,7 @@
             <Dialog v-for="dialog in dialogsFixed" :dialog="dialog" :key="dialog.id" />
         </div>
         <div class="sidebar_chats my-scroll" v-show="dialogs.length > 0">
-            <div v-if="showArchive">
+            <div v-if="showArchive && dialogsArchive.length > 0">
                 <Dialog v-for="dialog in dialogsArchive" :dialog="dialog" :key="dialog.id" />
             </div>
             <div v-else>

@@ -111,6 +111,21 @@ export default createStore({
         },
         toggleRenameDialog(state, id) {
             state.renameDialog = id;
+        },
+        toggleFixedDialog(state) {
+            const id = state.activeDialogId;
+            const dialog = state.dialogs.find(item => item.id == id);
+            if (dialog) {
+                dialog.fixedDialog = !dialog.fixedDialog
+            }
+        },
+        moveDialogToArchive(state) {
+            const id = state.activeDialogId;
+            const dialog = state.dialogs.find(item => item.id == id);
+            if (dialog) {
+                dialog.archiveDialog = !dialog.archiveDialog;
+                dialog.fixedDialog = false;
+            }
         }
     },
     actions: {

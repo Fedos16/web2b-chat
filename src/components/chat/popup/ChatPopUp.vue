@@ -1,7 +1,7 @@
 <template>
     <div class="chat-dropdown" v-if="visible">
         <ul>
-            <li v-for="item in data" :key="item.id">{{ item.name }}</li>
+            <li v-for="item in data" :key="item.id" @click="item.handler">{{ item.name }}</li>
         </ul>
     </div>
     <div class="chat-dropdown_backdrop" v-if="visible" @click="closePopUp"></div>
