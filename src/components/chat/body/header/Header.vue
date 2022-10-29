@@ -5,8 +5,8 @@
                 <img src="@/assets/images/tehSupport.svg" alt="">
             </div>
             <div class="chat-body_header_user-info__user-name">
-                <b>Олег Федин</b>
-                <p>Пользователь</p>
+                <b :title="activeDialogData.name">{{ activeDialogData.name }}</b>
+                <p v-show="typeDialog">{{ typeDialog }}</p>
             </div>
         </div>
         <div class="chat-body_header_actions" v-if="!activeSearch">
@@ -15,7 +15,7 @@
             </div>
             <div class="chat-body_header_actions__item chat-popup">
                 <button class="chat-button-invisible" @click="toggleChatActions"><img src="@/assets/images/menu.svg" alt=""></button>
-                <ChatPopUp />
+                <ChatPopUp :visible="visibleChatHeaderActions" :data="actionsForType" @handlerClose="toggleChatActions" />
             </div>
         </div>
         <div class="chat-body_header_search" v-if="activeSearch">
@@ -33,7 +33,8 @@
 <script>
 
     import { ref, watch } from 'vue';
-
+    import { typesDialog } from '@/data/index';
+    import { setTypeDialog } from '@/helpers/index';
     import ChatPopUp from '@/components/chat/popup/ChatPopUp';
 
     export default {
@@ -66,6 +67,42 @@
             },
             messages() {
                 return this.$store.getters.getMessages;
+            },
+            activeDialogId() {
+                return this.$store.state.activeDialogId;
+            },
+            activeDialogData() {
+                return this.$store.getters.getDialogById(this.activeDialogId);
+            },
+            typeDialog() {
+                return setTypeDialog(this.activeDialogData);
+            },
+            actionsForType() {
+                const list = {
+                    [typesDialog['Пользователь']]: [
+                        { id: 'ha-1', name: 'Закрепить' },
+                        { id: 'ha-2', name: 'Переместить в архив' }
+                    ],
+                    [typesDialog['Заказ']]: [
+                        { id: 'ha-1', name: 'Закрепить' },
+                        { id: 'ha-2', name: 'Переименовать' },
+                        { id: 'ha-3', name: 'Добавить пользователя' },
+                        { id: 'ha-4', name: 'Показать участников' },
+                        { id: 'ha-5', name: 'Переместить в архив' },
+                    ],
+                    [typesDialog['Модератор']]: [
+                        { id: 'ha-1', name: 'Закрепить' },
+                        { id: 'ha-2', name: 'Переместить в архив' }
+                    ],
+                    [typesDialog['Поддержка']]: [ { id: 'ha-1', name: 'Закрепить' } ]
+                }
+
+                const type = this.activeDialogData.typeDialog;
+
+                return list[type]
+            },
+            visibleChatHeaderActions() {
+                return this.$store.state.visibleChatHeaderActions;
             }
         },
         methods: {
@@ -117,6 +154,10 @@
         font-size: 18px;
         font-weight: 700;
         color: #102447;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
     }
     .chat-body_header_user-info__user-name p {
         font-size: 12px;

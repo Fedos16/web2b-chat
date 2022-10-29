@@ -1,11 +1,11 @@
 import { createStore } from 'vuex';
 import { messages, dialogs } from '@/data/index';
-import { formatingText, getNameChat } from '@/helpers/index';
+import { formatingText } from '@/helpers/index';
 
 export default createStore({
     state: {
-
         userName: 'Fedos16',
+        activeDialogId: null,
 
         activeDialogSearch: false,
         searchDialogText: '',
@@ -13,15 +13,17 @@ export default createStore({
         unReadMessages: false,
         descSort: true,
         showArchive: false,
-        activeDialog: null,
-        renameDialog: false,
+        renameDialog: null,
 
+        visibleChatHeaderActions: false,
         searchMessageText: '',
-        messages: [],
-        chatActions: ['Закрепить', 'Переименовать', 'Добавить пользователя', 'Показать участников', 'Переместить в архив'],
-        isVisibleChatActions: false
+        messages: []
     },
     getters: {
+        getDialogById: (state) => (id) => {
+            return state.dialogs.find(item => item.id == id);
+        },
+
         getMessages(state) {
             return state.messages.filter(item => {
                 return item.text.toLowerCase().includes(state.searchMessageText.toLowerCase());
@@ -38,7 +40,7 @@ export default createStore({
         getDialogs(state) {
             return state.dialogs.filter(item => {
 
-                const filterName = getNameChat(item).toLowerCase().includes(state.searchDialogText.toLowerCase());
+                const filterName = item.name.toLowerCase().includes(state.searchDialogText.toLowerCase());
                 const filterUnRead = state.unReadMessages ? item.unReadCount > 0 : true;
                 const filterArchiv = !item.archiveDialog;
 
@@ -86,18 +88,18 @@ export default createStore({
             state.searchMessageText = text;
         },
         toggleChatActions(state) {
-            state.isVisibleChatActions = !state.isVisibleChatActions;
+            state.visibleChatHeaderActions = !state.visibleChatHeaderActions;
         },
 
         setActiveDialog(state, id) {
-            state.activeDialog = id;
+            state.activeDialogId = id;
             state.messages = messages.filter(item => item.chatId === id);
         },
         toggleShowArchive(state) {
             state.showArchive = !state.showArchive;
         },
-        toggleRenameDialog(state) {
-            state.renameDialog = !state.renameDialog;
+        toggleRenameDialog(state, id) {
+            state.renameDialog = id;
         }
     },
     actions: {

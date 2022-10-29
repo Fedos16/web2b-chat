@@ -1,3 +1,5 @@
+import { typesDialog } from '@/data/index';
+
 export const timeFormat = (date) => {
     return new Date(date).toLocaleTimeString('ru-RU', { hour: 'numeric', minute: 'numeric' });
 }
@@ -25,11 +27,11 @@ export const formatingText = (sourceText, text) => {
     return newText;
 
 }
-export const getNameChat = (dialog) => {
+export const setTypeDialog = (dialog) => {
     return {
-        'user': dialog?.name,
-        'moderator': 'Модератор',
-        'order': `Заказ №${dialog?.additionalInfo?.numOrder}`,
-        'support': 'Тех. поддержка'
+        [typesDialog['Пользователь']]: 'Пользователь',
+        [typesDialog['Модератор']]: `Заказ №${dialog?.additionalInfo?.numOrder}`,
+        [typesDialog['Заказ']]: `Групповой чат по заказу №${dialog?.additionalInfo?.numOrder}`,
+        [typesDialog['Поддержка']]: ''
     }[dialog?.typeDialog]
 }

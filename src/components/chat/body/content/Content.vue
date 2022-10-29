@@ -20,7 +20,7 @@ export default {
         Message
     },
     mounted() {
-        this.$store.watch(() => this.$store.state.activeDialog, () => {
+        this.$store.watch(() => this.$store.state.activeDialogId, () => {
             this.$nextTick(() => {
                 const chatBody = this.$refs.chatBody;
                 if (chatBody) {
