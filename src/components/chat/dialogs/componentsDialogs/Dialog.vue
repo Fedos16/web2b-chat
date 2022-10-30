@@ -21,11 +21,6 @@
         </div>
         <div class="dialog_menu" @click="popapMenu">
             <ChatPopup :visible="!showMenu" :data="menuUsersAndModerator" />
-            <!--<div class="dialog_menu__moderator" v-if="!showMenu">
-                <button class="popap-menu-button" @click="switchFixedDialog">Закрепить</button>
-                <button class="popap-menu-button" @click="switchRenameDialog">Переименовать</button>
-                <button class="popap-menu-button" @click="moveDialogToArchive">Переместить в архив</button>
-            </div>-->
         </div>
     </div>
     <RenameDialog v-if="renameDialog == dialog.id" :dialog="dialog"/>
@@ -112,14 +107,14 @@ export default {
             this.showMenu = !this.showMenu
         },
         moveDialogToArchive(){
-            this.$store.commit('moveDialogToArchive')
+            this.$store.commit('moveDialogToArchive');
         },
         switchRenameDialog(){
-            return this.$store.commit('toggleRenameDialog',this.dialog.id)
+            return this.$store.commit('toggleRenameDialog',this.dialog.id);
         },
         switchFixedDialog(){
             this.$store.commit('sortDialogs');
-            this.$store.commit('toggleFixedDialog')
+            this.$store.commit('toggleFixedDialog');
         }
     }
 }

@@ -33,8 +33,8 @@ export default {
             return this.$store.commit('toggleRenameDialog')
         },
         saveRename(){
-            this.dialog.name = this.dialogName;
-            return this.$store.commit('toggleRenameDialog')
+            this.$store.commit('renameDialog', this.dialogName);
+            this.$store.commit('toggleRenameDialog')
         }
     }
 }

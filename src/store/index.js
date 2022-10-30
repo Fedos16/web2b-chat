@@ -1,6 +1,7 @@
 import { createStore } from 'vuex';
 import { messages, dialogs } from '@/data/index';
 import { formatingText } from '@/helpers/index';
+import modalWindows from './modules/modalWindows';
 
 export default createStore({
     state: {
@@ -126,8 +127,18 @@ export default createStore({
                 dialog.archiveDialog = !dialog.archiveDialog;
                 dialog.fixedDialog = false;
             }
+        },
+        renameDialog(state, name) {
+            const id = state.activeDialogId;
+            const dialog = state.dialogs.find(item => item.id == id);
+            if (dialog) {
+                dialog.name = name;
+            }
         }
     },
     actions: {
+    },
+    modules: {
+        modalWindows
     }
 })

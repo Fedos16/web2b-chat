@@ -24,8 +24,8 @@
             <button class="chat-button-invisible margin-r--15">
                 <img src="@/assets/images/calendar.png" alt="">
             </button>
-            <button class="web-button main-button margin-r--10" @click="searchMessage">Найти</button>
-            <button class="web-button secondary-button" @click="switchSearch">Отмена</button>
+            <button class="chat-button main-button margin-r--10" @click="searchMessage">Найти</button>
+            <button class="chat-button secondary-button" @click="switchSearch">Отмена</button>
         </div>
     </div>
 </template>
@@ -78,28 +78,37 @@
                 return setTypeDialog(this.activeDialogData);
             },
             actionsForType() {
+                const { archiveDialog: isArchive, fixedDialog: isFixed } = this.activeDialogData;
+
                 const list = {
                     [typesDialog['Пользователь']]: [
-                        { id: 'ha-1', name: 'Закрепить' },
-                        { id: 'ha-2', name: 'Переместить в архив' }
+                        { id: 'ha-1', name: isFixed ? 'Открепить' : 'Закрепить', handler: this.changeStateFixed },
+                        { id: 'ha-2', name: isArchive ? 'Вернуть из архива' : 'Переместить в архив', handler: this.changeStateArchive }
                     ],
                     [typesDialog['Заказ']]: [
-                        { id: 'ha-1', name: 'Закрепить' },
-                        { id: 'ha-2', name: 'Переименовать' },
+                        { id: 'ha-1', name: isFixed ? 'Открепить' : 'Закрепить', handler: this.changeStateFixed },
+                        { id: 'ha-2', name: 'Переименовать', handler: this.showWindowRenameDialog },
                         { id: 'ha-3', name: 'Добавить пользователя' },
                         { id: 'ha-4', name: 'Показать участников' },
-                        { id: 'ha-5', name: 'Переместить в архив' },
+                        { id: 'ha-5', name: isArchive ? 'Вернуть из архива' : 'Переместить в архив', handler: this.changeStateArchive },
                     ],
                     [typesDialog['Модератор']]: [
-                        { id: 'ha-1', name: 'Закрепить' },
-                        { id: 'ha-2', name: 'Переместить в архив' }
+                        { id: 'ha-1', name: isFixed ? 'Открепить' : 'Закрепить', handler: this.changeStateFixed },
+                        { id: 'ha-2', name: isArchive ? 'Вернуть из архива' : 'Переместить в архив', handler: this.changeStateArchive }
                     ],
-                    [typesDialog['Поддержка']]: [ { id: 'ha-1', name: 'Закрепить' } ]
+                    [typesDialog['Поддержка']]: [ { id: 'ha-1', name: isFixed ? 'Открепить' : 'Закрепить' } ]
                 }
 
-                const type = this.activeDialogData.typeDialog;
+                const type = this.activeDialogData?.typeDialog;
 
-                return list[type]
+                const arrData = list[type] || [];
+
+                return arrData.filter(item => {
+                    if (isArchive) {
+                        return !['Закрепить', 'Открепить'].includes(item.name)
+                    } 
+                    return true;
+                })
             },
             visibleChatHeaderActions() {
                 return this.$store.state.visibleChatHeaderActions;
@@ -115,6 +124,16 @@
             },
             toggleChatActions() {
                 this.$store.commit('toggleChatActions');
+            },
+            changeStateArchive() {
+                this.$store.commit('moveDialogToArchive');
+            },
+            changeStateFixed() {
+                this.$store.commit('sortDialogs');
+                this.$store.commit('toggleFixedDialog');
+            },
+            showWindowRenameDialog() {
+                return this.$store.commit('toggleRenameDialog', this.activeDialogData.id);
             }
         }
     }
