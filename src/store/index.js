@@ -15,6 +15,8 @@ export default createStore({
         descSort: true,
         showArchive: false,
 
+
+        ChatDialogMenu: null,
         renameDialog: null,
 
         visibleChatHeaderActions: false,
@@ -127,6 +129,9 @@ export default createStore({
                 dialog.archiveDialog = !dialog.archiveDialog;
                 dialog.fixedDialog = false;
             }
+        },
+        toggleChatDialogMenu(state, id) {
+            state.ChatDialogMenu = id;
         },
         renameDialog(state, name) {
             const id = state.activeDialogId;

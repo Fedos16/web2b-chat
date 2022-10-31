@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="dialog_menu" @click="popapMenu">
-            <ChatPopup :visible="!showMenu" :data="menuUsersAndModerator" />
+            <ChatPopup :visible="this.$store.state.ChatDialogMenu == dialog.id" :data="menuUsersAndModerator" />
         </div>
     </div>
     <RenameDialog v-if="renameDialog == dialog.id" :dialog="dialog"/>
@@ -36,14 +36,6 @@ export default {
     components:{
         RenameDialog,
         ChatPopup
-    },
-    data() {
-        return {
-            showMenu: {
-                type: Boolean,
-                default: false,
-            },
-        }
     },
     computed: {
         activeDialogId() {
@@ -86,8 +78,24 @@ export default {
                 ],
                 [typesDialog['Поддержка']]: [ { id: 'ha-1', name: !this.dialog.fixedDialog ? 'Закрепить' : 'Открепить' , handler: this.switchFixedDialog } ]
             }
+            const Archivelist = {
+                [typesDialog['Пользователь']]: [
+                    { id: 'ha-1', name: !this.dialog.archiveDialog ? 'Переместить в архив' : 'Вернуть из архива' , handler: this.moveDialogToArchive }
+                ],
+                [typesDialog['Модератор']]: [
+                    { id: 'ha-1', name: !this.dialog.archiveDialog ? 'Переместить в архив' : 'Вернуть из архива' , handler: this.moveDialogToArchive }
+                ],
+                [typesDialog['Заказ']]: [
+                    { id: 'ha-1', name: !this.dialog.archiveDialog ? 'Переместить в архив' : 'Вернуть из архива' , handler: this.moveDialogToArchive }
+                ]
+            }
             const type = this.activeDialogData?.typeDialog;
-            return list[type] || {};
+            if(!this.dialog.archiveDialog){
+                return list[type] || {};
+            }
+            else{
+                return Archivelist[type] || {};
+            }
         },
     },
     props: {
@@ -104,7 +112,7 @@ export default {
             }
         },
         popapMenu(){
-            this.showMenu = !this.showMenu
+            return this.$store.commit('toggleChatDialogMenu', this.dialog.id)
         },
         moveDialogToArchive(){
             this.$store.commit('moveDialogToArchive');
@@ -122,6 +130,8 @@ export default {
 
 <style scoped>
 .dialog {
+    max-height: 73px;
+    height: 73px;
     padding: 12px;
     display: flex;
     border-bottom: 1px solid #E7EFFD;
