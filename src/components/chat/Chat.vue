@@ -16,6 +16,13 @@
     border-radius: 4px;
     background-color: #fff;
     cursor: default;
+
+    button, input, select, textarea {
+      font-family: "Raleway";
+      font-feature-settings: 'pnum' on, 'lnum' on;
+      font-size: 14px;
+    }
+
   }
 
   .chat-popup {

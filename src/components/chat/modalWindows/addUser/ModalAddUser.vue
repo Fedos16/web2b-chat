@@ -1,180 +1,63 @@
 <template>
     <div class="modal-window_search">
         <div class="modal-window__icon-search"></div>
-        <input type="text" placeholder="Поиск">
+        <input type="text" placeholder="Поиск" v-model="textSearch">
     </div>
-    <div class="modal-window_list my-scroll">
-        <div class="modal-window_list__title">Мои контакты</div>
-        <ul>
-            <li>
-                <div>
-                    <img src="@/assets/images/tehSupport.svg" alt="">
-                    <p>Олег Федин</p>
-                </div>
-                <label>
-                    <input type="checkbox" name="user-name" />
-                    <span></span>
-                </label>
-            </li>
-            <li>
-                <div>
-                    <img src="@/assets/images/tehSupport.svg" alt="">
-                    <p>Олег Федин</p>
-                </div>
-                <label>
-                    <input type="checkbox" name="user-name" />
-                    <span></span>
-                </label>
-            </li>
-            <li>
-                <div>
-                    <img src="@/assets/images/tehSupport.svg" alt="">
-                    <p>Олег Федин</p>
-                </div>
-                <label>
-                    <input type="checkbox" name="user-name" />
-                    <span></span>
-                </label>
-            </li>
-            <li>
-                <div>
-                    <img src="@/assets/images/tehSupport.svg" alt="">
-                    <p>Олег Федин</p>
-                </div>
-                <label>
-                    <input type="checkbox" name="user-name" />
-                    <span></span>
-                </label>
-            </li>
-            <li>
-                <div>
-                    <img src="@/assets/images/tehSupport.svg" alt="">
-                    <p>Олег Федин</p>
-                </div>
-                <label>
-                    <input type="checkbox" name="user-name" />
-                    <span></span>
-                </label>
-            </li>
-            <li>
-                <div>
-                    <img src="@/assets/images/tehSupport.svg" alt="">
-                    <p>Олег Федин</p>
-                </div>
-                <label>
-                    <input type="checkbox" name="user-name" />
-                    <span></span>
-                </label>
-            </li>
-            <li>
-                <div>
-                    <img src="@/assets/images/tehSupport.svg" alt="">
-                    <p>Олег Федин</p>
-                </div>
-                <label>
-                    <input type="checkbox" name="user-name" />
-                    <span></span>
-                </label>
-            </li>
-            <li>
-                <div>
-                    <img src="@/assets/images/tehSupport.svg" alt="">
-                    <p>Олег Федин</p>
-                </div>
-                <label>
-                    <input type="checkbox" name="user-name" />
-                    <span></span>
-                </label>
-            </li>
-            <li>
-                <div>
-                    <img src="@/assets/images/tehSupport.svg" alt="">
-                    <p>Олег Федин</p>
-                </div>
-                <label>
-                    <input type="checkbox" name="user-name" />
-                    <span></span>
-                </label>
-            </li>
-            <li>
-                <div>
-                    <img src="@/assets/images/tehSupport.svg" alt="">
-                    <p>Олег Федин</p>
-                </div>
-                <label>
-                    <input type="checkbox" name="user-name" />
-                    <span></span>
-                </label>
-            </li>
-        </ul>
-    </div>
+    <AddUserListUsers v-if="usersFromContacts.length > 0" :title="titleContacts" :users="usersFromContacts" />
+    <AddUserListUsers v-if="usersFromSystem.length > 0" :title="titleUsers" :users="usersFromSystem" />
     <div class="modal-window_actions">
-        <button class="chat-button main-button margin-r--15">Добавить</button>
-        <button class="chat-button secondary-button">Отмена</button>
+        <button class="chat-button main-button margin-r--15" @click="appendUsersForChat">Добавить</button>
+        <button class="chat-button secondary-button" @click="closeWindow">Отмена</button>
     </div>
 </template>
 
 <script>
+
+import AddUserListUsers from './AddUserListUsers.vue';
+
 export default {
-    setup() {
-        
+    components: { AddUserListUsers },
+    data() {
+        return {
+            titleContacts: 'Мои контакты',
+            titleUsers: 'Пользователи системы'
+        }
     },
+    computed: {
+        usersFromContacts() {
+            return this.$store.getters['modalWindows/getUsersToAdded'].filter(item => item.type === 'contact');
+        },
+        usersFromSystem() {
+            return this.$store.getters['modalWindows/getUsersToAdded'].filter(item => item.type === 'user');
+        },
+        textSearch: {
+            get() {
+                return this.$store.state.modalWindows.addUser.textSearch;
+            },
+            set(value) {
+                this.$store.commit('modalWindows/setTextSearch', value);
+            }
+        },
+        selectedUsers() {
+            return this.$store.state.modalWindows.addUser.selectedUsers;
+        }
+    },
+    emits: {
+        closeWindow: null
+    },
+    methods: {
+        closeWindow() {
+            this.$emit('closeWindow');
+        },
+        appendUsersForChat() {
+            console.log(`Добавили юзеров c ID: ${this.selectedUsers}`);
+            this.closeWindow();
+        }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
-
-    .modal-window_list {
-        position: relative;
-        width: 100%;
-        margin-bottom: 16px;
-        overflow: auto;
-
-        &__title {
-            width: 100%;
-            position: sticky;
-            top: 0px;
-            color: #7D95BD;
-            background-color: #fff;
-            margin-bottom: 16px;
-        }
-
-        ul li {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
-
-            img {
-                margin-right: 8px;
-            }
-
-            div {
-                display: flex;
-                align-items: center;
-            }
-
-            input[type="checkbox"] {
-                opacity: 0;
-                position: absolute;
-            }
-            label {
-                position: relative;
-
-                span {
-                    display: flex;
-                    width: 20px;
-                    height: 20px;
-                    background-image: url('@/assets/images/state-off.svg');
-                    background-size: cover;
-                }
-
-                input:checked ~ span {
-                    background-image: url('@/assets/images/state-on.svg');
-                }
-            }
-        }
-    }
     .modal-window_search {
         width: 100%;
         margin-bottom: 16px;

@@ -131,7 +131,7 @@ export default createStore({
             }
         },
         toggleChatDialogMenu(state, id) {
-            state.ChatDialogMenu = id;
+            state.ChatDialogMenu == id ? state.ChatDialogMenu = null : state.ChatDialogMenu = id;
         },
         renameDialog(state, name) {
             const id = state.activeDialogId;

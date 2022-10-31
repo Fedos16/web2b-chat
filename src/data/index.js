@@ -144,7 +144,7 @@ export const dialogs = [
         img: "123",
         name: "Заказ №12345",
         lastMessage: {
-            date: new Date(2022, 9, 10, 17, 46),
+            date: new Date(),
             text: 'Привет, как дела?',
             user: 'Fedos16'
         },
@@ -192,9 +192,9 @@ export const dialogs = [
     }
 ]
 export const users = [
-    { id: 'u1', name: 'Олег Федин', type: 'user' },
-    { id: 'u2', name: 'Иванов Сергей', type: 'contact' },
-    { id: 'u3', name: 'Толкачев Владислав', type: 'contact' },
-    { id: 'u4', name: 'Турсунов Михаил', type: 'user' },
-    { id: 'u5', name: 'Григорьев Евгений', type: 'contact' }
+    { id: 'u1', sort: 2, img: '@/assets/images/tehSupport.svg', name: 'Олег Федин', type: 'user' },
+    { id: 'u2', sort: 1, img: '@/assets/images/tehSupport.svg', name: 'Иванов Сергей', type: 'contact' },
+    { id: 'u3', sort: 1, img: '@/assets/images/tehSupport.svg', name: 'Толкачев Владислав', type: 'contact' },
+    { id: 'u4', sort: 2, img: '@/assets/images/tehSupport.svg', name: 'Турсунов Михаил', type: 'user' },
+    { id: 'u5', sort: 1, img: '@/assets/images/tehSupport.svg', name: 'Григорьев Евгений', type: 'contact' }
 ]

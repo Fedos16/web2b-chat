@@ -22,9 +22,9 @@
 
 <script>
 
-import Dialog from "./componentsDialogs/Dialog.vue";
-import Menu from "./componentsDialogs/Menu.vue";
-import Archive from "./componentsDialogs/Archive.vue";
+import Dialog from "./Dialog.vue";
+import Menu from "./Menu.vue";
+import Archive from "./Archive.vue";
 
 export default {
     components: { Dialog, Menu, Archive },

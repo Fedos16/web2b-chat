@@ -88,7 +88,7 @@
                     [typesDialog['Заказ']]: [
                         { id: 'ha-1', name: isFixed ? 'Открепить' : 'Закрепить', handler: this.changeStateFixed },
                         { id: 'ha-2', name: 'Переименовать', handler: this.showWindowRenameDialog },
-                        { id: 'ha-3', name: 'Добавить пользователя' },
+                        { id: 'ha-3', name: 'Добавить пользователя', handler: this.showWindowAddUser },
                         { id: 'ha-4', name: 'Показать участников' },
                         { id: 'ha-5', name: isArchive ? 'Вернуть из архива' : 'Переместить в архив', handler: this.changeStateArchive },
                     ],
@@ -103,12 +103,7 @@
 
                 const arrData = list[type] || [];
 
-                return arrData.filter(item => {
-                    if (isArchive) {
-                        return !['Закрепить', 'Открепить'].includes(item.name)
-                    } 
-                    return true;
-                })
+                return arrData.filter(item => (isArchive && !['Закрепить', 'Открепить'].includes(item.name)) || !isArchive );
             },
             visibleChatHeaderActions() {
                 return this.$store.state.visibleChatHeaderActions;
@@ -133,7 +128,10 @@
                 this.$store.commit('toggleFixedDialog');
             },
             showWindowRenameDialog() {
-                return this.$store.commit('toggleRenameDialog', this.activeDialogData.id);
+                this.$store.commit('toggleRenameDialog', this.activeDialogData.id);
+            },
+            showWindowAddUser() {
+                this.$store.commit('modalWindows/showAddUser');
             }
         }
     }

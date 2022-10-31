@@ -19,8 +19,8 @@
                 <div class="notReadMessage" v-if="dialog.unReadCount > 0">{{ dialog.unReadCount }}</div>
             </div>
         </div>
-        <div class="dialog_menu" @click="popapMenu">
-            <ChatPopup :visible="this.$store.state.ChatDialogMenu == dialog.id" :data="menuUsersAndModerator" />
+        <div class="dialog_menu" @click="toggleDialogMenu">
+            <ChatPopup :visible="visiblePopUp" :data="menuUsersAndModerator" />
         </div>
     </div>
     <RenameDialog v-if="renameDialog == dialog.id" :dialog="dialog"/>
@@ -28,7 +28,7 @@
 
 <script>
 import { formatingDateTime} from '@/helpers/index';
-import RenameDialog from '@/components/chat/dialogs/componentsDialogs/RenameDialog'
+import RenameDialog from './RenameDialog'
 import ChatPopup from '@/components/chat/popup/ChatPopUp'
 import { typesDialog } from '@/data/index';
 
@@ -45,6 +45,9 @@ export default {
             return {
                 'active': this.activeDialogId === this.dialog.id
             }
+        },
+        visiblePopUp() {
+            return this.$store.state.ChatDialogMenu == this.dialog.id;
         },
         userName() {
             return this.$store.state.userName;
@@ -111,14 +114,15 @@ export default {
                 this.$store.commit('setActiveDialog', this.dialog.id);
             }
         },
-        popapMenu(){
-            return this.$store.commit('toggleChatDialogMenu', this.dialog.id)
+        toggleDialogMenu(){
+            console.log('Click to toggleDialogMenu');
+            this.$store.commit('toggleChatDialogMenu', this.dialog.id);
         },
         moveDialogToArchive(){
             this.$store.commit('moveDialogToArchive');
         },
         switchRenameDialog(){
-            return this.$store.commit('toggleRenameDialog',this.dialog.id);
+            this.$store.commit('toggleRenameDialog',this.dialog.id);
         },
         switchFixedDialog(){
             this.$store.commit('sortDialogs');

@@ -5,9 +5,9 @@
         <Footer v-if="!emptyDialog" />
     </div>
 
-    <ModalWindowBackdrop v-if="true">
-        <ModalWindow :title="titleAddUser">
-            <ModalAddUser />
+    <ModalWindowBackdrop v-if="visibleModalWindow && (visibleAddUser)" @closeWindow="hideModalWindow">
+        <ModalWindow :title="titleModalWindow" @closeWindow="hideModalWindow">
+            <ModalAddUser v-if="visibleAddUser" @closeWindow="hideModalWindow" />
         </ModalWindow>
     </ModalWindowBackdrop>
 </template>
@@ -34,6 +34,22 @@ export default {
         return {
             emptyDialog: false,
             titleAddUser: 'Добавить пользователя'
+        }
+    },
+    computed: {
+        visibleModalWindow() {
+            return this.$store.state.modalWindows.visibleModalWindow;
+        },
+        visibleAddUser() {
+            return this.$store.state.modalWindows.addUser.visible;
+        },
+        titleModalWindow() {
+            return this.$store.getters['modalWindows/getTitleModalWindow'];
+        }
+    },
+    methods: {
+        hideModalWindow() {
+            this.$store.commit('modalWindows/hideModalWindow');
         }
     }
 }
