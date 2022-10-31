@@ -5,9 +5,11 @@
         <Footer v-if="!emptyDialog" />
     </div>
 
-    <!-- <ModalWindowBackdrop>
-        <ModalAddUser />
-    </ModalWindowBackdrop> -->
+    <ModalWindowBackdrop v-if="true">
+        <ModalWindow :title="titleAddUser">
+            <ModalAddUser />
+        </ModalWindow>
+    </ModalWindowBackdrop>
 </template>
 
 <script>
@@ -16,7 +18,8 @@ import Header from './header/Header.vue';
 import Content from './content/Content.vue';
 import Footer from './footer/Footer.vue';
 import ModalWindowBackdrop from '../modalWindows/ModalWindowBackdrop.vue';
-import ModalAddUser from '../modalWindows/ChatAddUser.vue';
+import ModalWindow from '../modalWindows/ModalWindow.vue';
+import ModalAddUser from '../modalWindows/addUser/ModalAddUser.vue';
 
 export default {
     components: {
@@ -24,11 +27,13 @@ export default {
         Content,
         Footer,
         ModalWindowBackdrop,
+        ModalWindow,
         ModalAddUser
     },
     data() {
         return {
-            emptyDialog: false
+            emptyDialog: false,
+            titleAddUser: 'Добавить пользователя'
         }
     }
 }

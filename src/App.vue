@@ -77,6 +77,7 @@ export default {
   #app ul {
     list-style: none;
     margin: 0px;
+    padding: 0px;
   }
 
   .my-scroll::-webkit-scrollbar-track {
@@ -91,40 +92,5 @@ export default {
   .my-scroll::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background-color: #C7D4E9;
-  }
-
-  .invisible-button {
-    border: none;
-    background-color: transparent;
-  }
-
-  .web-button {
-    width: auto;
-    height: 36px;
-    border-radius: 4px;
-    border: none;
-    background-color: transparent;
-    padding: 0px 16px;
-    cursor: pointer;
-  }
-  .main-button {
-    color: var(--button-main-color);
-    background-color: var(--button-main-background);
-  }
-  .secondary-button {
-    color: var(--button-secondary-color);
-    background-color: var(--button-secondary-background);
-  }
-
-  .margin-r--10 {
-    margin-right: 10px;
-  }
-  .margin-r--15 {
-    margin-right: 15px;
-  }
-
-  .finded-text-format {
-    font-weight: 700;
-    color: var(--input-text-color);
   }
 </style>

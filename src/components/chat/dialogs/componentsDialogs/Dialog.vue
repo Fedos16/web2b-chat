@@ -115,10 +115,10 @@ export default {
             return this.$store.commit('toggleChatDialogMenu', this.dialog.id)
         },
         moveDialogToArchive(){
-            this.$store.commit('moveDialogToArchive')
+            this.$store.commit('moveDialogToArchive');
         },
         switchRenameDialog(){
-            return this.$store.commit('toggleRenameDialog',this.dialog.id)
+            return this.$store.commit('toggleRenameDialog',this.dialog.id);
         },
         switchFixedDialog(){
             this.$store.commit('sortDialogs');

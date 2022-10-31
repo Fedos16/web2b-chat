@@ -1,9 +1,22 @@
 <template>
     <div class="modal-window_backdrop">
-        <div class="modal-window_backdrop__close"></div>
+        <div class="modal-window_backdrop__close" @click="closeWindow"></div>
         <slot></slot>
     </div>
 </template>
+
+<script>
+export default {
+    emits: {
+        closeWindow: null
+    },
+    methods: {
+        closeWindow() {
+            this.$emit('closeWindow');
+        }
+    }
+}
+</script>
 
 <style scoped>
     .modal-window_backdrop {

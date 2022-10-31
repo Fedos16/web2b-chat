@@ -55,7 +55,7 @@ export const messages = [
     },
     {
         "id": 7,
-        'chatId': 7,
+        'chatId': 1,
         "text": "Внезапно, представители современных социальных резервов призывают нас к новым свершениям, которые, в свою очередь, должны быть функционально разнесены на независимые элементы.",
         "user": "Иванов Сергей",
         "incoming": true,
@@ -63,7 +63,7 @@ export const messages = [
     },
     {
         "id": 8,
-        'chatId': 1,
+        'chatId': 2,
         "text": "Таким образом, сложившаяся структура организации создаёт необходимость включения в производственный план целого ряда внеочередных мероприятий с учётом комплекса глубокомысленных рассуждений.",
         "user": "Иванов Сергей",
         "incoming": false,
@@ -71,7 +71,7 @@ export const messages = [
     },
     {
         "id": 9,
-        'chatId': 2,
+        'chatId': 3,
         "text": "Идейные соображения высшего порядка, а также синтетическое тестирование не оставляет шанса для модели развития.",
         "user": "Иванов Сергей",
         "incoming": false,
@@ -80,14 +80,13 @@ export const messages = [
     ,
     {
         "id": 10,
-        'chatId': 3,
+        'chatId': 4,
         "text": "Как принято считать, тщательные исследования конкурентов ассоциативно распределены по отраслям.",
         "user": "Иванов Сергей",
         "incoming": true,
         "date": new Date(),
     }
 ]
-
 export const dialogs = [
     {
         id: 1,
@@ -103,7 +102,7 @@ export const dialogs = [
         additionalInfo: {
             numOrder: null
         },
-        archiveDialog: true,
+        archiveDialog: false,
         fixedDialog: false
     },
     {
@@ -116,7 +115,7 @@ export const dialogs = [
             user: 'Fedos16'
         },
         unReadCount: 0,
-        typeDialog: "moderator",
+        typeDialog: "user",
         additionalInfo: {
             numOrder: 8392
         },
@@ -126,14 +125,14 @@ export const dialogs = [
     {
         id: 3,
         img: "123",
-        name: "Евгений",
+        name: "Модератор",
         lastMessage: {
             date: new Date(),
             text: 'Привет, как дела?',
             user: 'Любовь'
         },
         unReadCount: 0,
-        typeDialog: "order",
+        typeDialog: "moderator",
         additionalInfo: {
             numOrder: 26794
         },
@@ -143,16 +142,16 @@ export const dialogs = [
     {
         id: 4,
         img: "123",
-        name: "Григорий",
+        name: "Заказ №12345",
         lastMessage: {
             date: new Date(2022, 9, 10, 17, 46),
             text: 'Привет, как дела?',
             user: 'Fedos16'
         },
         unReadCount: 0,
-        typeDialog: "moderator",
+        typeDialog: "order",
         additionalInfo: {
-            numOrder: null
+            numOrder: 12345
         },
         archiveDialog: false,
         fixedDialog: false
@@ -160,7 +159,7 @@ export const dialogs = [
     {
         id: 5,
         img: "123",
-        name: "Василий",
+        name: "Тех. поддержка",
         lastMessage: {
             date: new Date(2022, 9, 11, 17, 46),
             text: 'Привет, как дела?',
@@ -184,23 +183,6 @@ export const dialogs = [
             user: 'Fedos16'
         },
         unReadCount: 0,
-        typeDialog: "order",
-        additionalInfo: {
-            numOrder: null
-        },
-        archiveDialog: false,
-        fixedDialog: false
-    },
-    {
-        id: 7,
-        img: "123",
-        name: "Владислав",
-        lastMessage: {
-            date: new Date(2022, 9, 13, 17, 46),
-            text: 'Привет, как дела?',
-            user: 'Fedos16'
-        },
-        unReadCount: 0,
         typeDialog: "user",
         additionalInfo: {
             numOrder: null
@@ -208,4 +190,11 @@ export const dialogs = [
         archiveDialog: false,
         fixedDialog: true
     }
+]
+export const users = [
+    { id: 'u1', name: 'Олег Федин', type: 'user' },
+    { id: 'u2', name: 'Иванов Сергей', type: 'contact' },
+    { id: 'u3', name: 'Толкачев Владислав', type: 'contact' },
+    { id: 'u4', name: 'Турсунов Михаил', type: 'user' },
+    { id: 'u5', name: 'Григорьев Евгений', type: 'contact' }
 ]
