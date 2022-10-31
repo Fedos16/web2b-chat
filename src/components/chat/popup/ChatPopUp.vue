@@ -1,22 +1,18 @@
 <template>
-    <div class="chat-dropdown" v-if="visible">
-        <ul>
-            <button class="chat-button-invisible" @click="closePopUp">
-                <li v-for="item in data" :key="item.id" @click="item.handler">{{ item.name }}</li>
-            </button>
+    <div class="chat-dropdown">
+        <ul @click="closePopUp">
+            <li v-for="item in data" :key="item.id" @click="item.handler">
+                <img v-show="item.icon" :src="item.icon">
+                {{ item.name }}
+            </li>
         </ul>
     </div>
-    <div class="chat-dropdown_backdrop" v-if="visible" @click="closePopUp"></div>
+    <div class="chat-dropdown_backdrop" @click="closePopUp"></div>
 </template>
 
 <script>
 export default {
     props: {
-        visible: {
-            type: Boolean,
-            default: false,
-            required: true
-        },
         data: {
             type: Object,
             required: true
@@ -65,6 +61,13 @@ export default {
                 padding: 6px 24px;
                 cursor: default;
                 white-space: nowrap;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+
+                img {
+                    margin-right: 10px;
+                }
 
                 &:hover {
                     background-color: #F7F8FA;

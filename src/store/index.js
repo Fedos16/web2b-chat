@@ -6,6 +6,7 @@ import modalWindows from './modules/modalWindows';
 export default createStore({
     state: {
         userName: 'Fedos16',
+
         activeDialogId: null,
 
         activeDialogSearch: false,
@@ -15,6 +16,13 @@ export default createStore({
         descSort: true,
         showArchive: false,
 
+        isCreateChat: false,
+        menuCreateChat: [
+            { id: 'cch-1', name: 'С пользователем', icon: require('@/assets/images/user.svg'), handler: this.commit('toggleCreateChatToUser') },
+            { id: 'cch-2', name: 'По заказу', icon: require('@/assets/images/order.svg'), handler: this.commit('toggleCreateChatToOrder') }
+        ],
+        isCreateChatToUser: false,
+        isCreateChatToOrder: false,
 
         ChatDialogMenu: null,
         renameDialog: null,
@@ -139,6 +147,18 @@ export default createStore({
             if (dialog) {
                 dialog.name = name;
             }
+        },
+
+        toggleCreateChat(state) {
+            state.isCreateChat = !state.isCreateChat;
+        },
+        toggleCreateChatToUser(state) {
+            state.isCreateChatToUser = !state.isCreateChatToUser;
+            state.isCreateChatToOrder = false;
+        },
+        toggleCreateChatToOrder(state) {
+            state.isCreateChatToOrder = !state.isCreateChatToOrder;
+            state.isCreateChatToUser = false;
         }
     },
     actions: {

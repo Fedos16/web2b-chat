@@ -7,12 +7,9 @@
         <div class="menu_actions" v-show="!showMenu">
             <button class="chat-button-invisible" :disabled="!isUnreadDialogs" @click="switchUnReadMessges"><img class="img" :src="imageUnReadMessages" alt="" ></button>
             <button class="chat-button-invisible"  @click="sortDialogs"><img :class="classTypeSort" src="@/assets/images/arrowup.svg" alt=""></button>
-            <div class="menu_actions__button">
-                <button class="actions_button" @click="popapCreateChat">Создать чат<img src="@/assets/images/checkmarkdown.svg" alt=""></button>
-                <div class="popap-create-chat" v-if="!CreateChat">
-                    <button class="popap-create-chat__button">С пользователем</button>
-                    <button class="popap-create-chat__button">По заказу</button>
-                </div>
+            <div class="menu_actions__button chat-popup">
+                <button class="actions_button" @click="switchCreateChat">Создать чат<img src="@/assets/images/checkmarkdown.svg" alt=""></button>
+                <ChatPopup v-if="isCreateChat" :data="menuCreateChat" @handlerClose="switchCreateChat" />
             </div>
         </div>
         <img src="@/assets/images/crossclose.svg" alt="" @click="switchMenuSearch" v-show="showMenu">
@@ -20,15 +17,11 @@
 </template>
 
 <script>
+
+import ChatPopup from '@/components/chat/popup/ChatPopUp';
+
 export default {
-    data() {
-        return {
-            CreateChat: {
-                type: Boolean,
-                default: false,
-            }
-        }
-    },
+    components: { ChatPopup },
     computed: {
         showMenu() {
             return this.$store.state.activeDialogSearch;
@@ -55,6 +48,15 @@ export default {
                 'img': true,
                 'arrow': !this.$store.state.descSort
             }
+        },
+        isCreateChat() {
+            return this.$store.state.isCreateChat;
+        },
+        menuCreateChat() {
+            return [
+                { id: 'cch-1', name: 'С пользователем', icon: require('@/assets/images/user.svg'), handler: this.toggleCreateChatToUser },
+                { id: 'cch-2', name: 'По заказу', icon: require('@/assets/images/order.svg'), handler: this.toggleCreateChatToOrder }
+            ]
         }
 
     },
@@ -68,12 +70,18 @@ export default {
         switchUnReadMessges() {
             this.$store.commit('toggleUnReadMessages');
         },
+        switchCreateChat() {
+            this.$store.commit('toggleCreateChat');
+        },
         sortDialogs() {
             this.$store.commit('swithTypeSort');
             this.$store.commit('sortDialogs');
         },
-        popapCreateChat(){
-            this.CreateChat = !this.CreateChat;
+        toggleCreateChatToUser() {
+            this.$store.commit('toggleCreateChatToUser');
+        },
+        toggleCreateChatToOrder() {
+            this.$store.commit('toggleCreateChatToOrder');
         }
     },
 }

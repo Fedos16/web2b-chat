@@ -1,9 +1,13 @@
 <template>
     <div class="chat-body_content my-scroll" ref="chatBody">
-        <div class="empty-dialog" v-if="messages.length === 0">
+        <div class="empty-dialog " v-if="messages.length === 0">
             <img class="union-messages" src="@/assets/images/union-messages.png" alt="">
             <p>Выберите чат</p>
-            <p>или <span>создайте новый <img class="arrow-bottom" src="@/assets/images/checkmarkdown.svg" alt=""></span></p>
+            <p>или <span class="chat-popup">
+                создайте новый 
+                <img class="arrow-bottom" src="@/assets/images/checkmarkdown.svg" alt="">
+                <ChatPopup :data="menuCreateChat" />
+            </span></p>
         </div>
         <div class="message-list" v-else>
             <Message v-for="(message, index) in messages" :pre-message="index-1 >= 0 ? messages[index-1] : null" :message="message" :key="message.id" />
@@ -14,10 +18,12 @@
 <script>
 
 import Message from './Message.vue';
+import ChatPopup from '@/components/chat/popup/ChatPopUp';
 
 export default {
     components: {
-        Message
+        Message,
+        ChatPopup
     },
     mounted() {
         this.$store.watch(() => this.$store.state.activeDialogId, () => {
@@ -32,6 +38,9 @@ export default {
     computed: {
         messages() {
             return this.$store.getters.getMessages;
+        },
+        menuCreateChat() {
+            return this.$store.state.menuCreateChat;
         }
     }
 }

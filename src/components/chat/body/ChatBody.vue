@@ -1,8 +1,13 @@
 <template>
     <div class="chat-body">
-        <Header v-if="!emptyDialog" />
+        <Header v-if="messages.length > 0 || isCreateChatToOrder || isCreateChatToUser">
+            {{  }}
+            <HeaderChat v-if="messages.length > 0 && !isCreateChatToUser && !isCreateChatToOrder" />
+            <HeaderNewChatToOrder v-if="isCreateChatToOrder" />
+            <HeaderNewChatToUser v-if="isCreateChatToUser" />
+        </Header>
         <Content />
-        <Footer v-if="!emptyDialog" />
+        <Footer v-if="messages.length > 0" />
     </div>
 
     <ModalWindowBackdrop v-if="visibleModalWindow && (visibleAddUser)" @closeWindow="hideModalWindow">
@@ -15,6 +20,9 @@
 <script>
 
 import Header from './header/Header.vue';
+import HeaderChat from './header/HeaderChat.vue';
+import HeaderNewChatToOrder from './header/HeaderNewChatToOrder.vue';
+import HeaderNewChatToUser from './header/HeaderNewChatToUser.vue';
 import Content from './content/Content.vue';
 import Footer from './footer/Footer.vue';
 import ModalWindowBackdrop from '../modalWindows/ModalWindowBackdrop.vue';
@@ -24,17 +32,14 @@ import ModalAddUser from '../modalWindows/addUser/ModalAddUser.vue';
 export default {
     components: {
         Header,
+        HeaderChat,
+        HeaderNewChatToOrder,
+        HeaderNewChatToUser,
         Content,
         Footer,
         ModalWindowBackdrop,
         ModalWindow,
         ModalAddUser
-    },
-    data() {
-        return {
-            emptyDialog: false,
-            titleAddUser: 'Добавить пользователя'
-        }
     },
     computed: {
         visibleModalWindow() {
@@ -45,6 +50,15 @@ export default {
         },
         titleModalWindow() {
             return this.$store.getters['modalWindows/getTitleModalWindow'];
+        },
+        messages() {
+            return this.$store.getters.getMessages;
+        },
+        isCreateChatToUser() {
+            return this.$store.state.isCreateChatToUser;
+        },
+        isCreateChatToOrder() {
+            return this.$store.state.isCreateChatToOrder;
         }
     },
     methods: {

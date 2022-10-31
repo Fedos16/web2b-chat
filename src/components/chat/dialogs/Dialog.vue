@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="dialog_menu" @click="toggleDialogMenu">
-            <ChatPopup :visible="visiblePopUp" :data="menuUsersAndModerator" />
+            <ChatPopup v-if="visiblePopUp" :data="menuUsersAndModerator" />
         </div>
     </div>
     <RenameDialog v-if="renameDialog == dialog.id" :dialog="dialog"/>

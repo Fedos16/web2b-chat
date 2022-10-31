@@ -38,15 +38,13 @@
     font-size: inherit;
     color: inherit;
     font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
   .chat-button-invisible:disabled {
     opacity: 0.2;
     cursor: not-allowed;
-  }
-
-  .invisible-button {
-    border: none;
-    background-color: transparent;
   }
 
   .chat-button {
