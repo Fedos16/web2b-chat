@@ -17,10 +17,7 @@ export default createStore({
         showArchive: false,
 
         isCreateChat: false,
-        menuCreateChat: [
-            { id: 'cch-1', name: 'С пользователем', icon: require('@/assets/images/user.svg'), handler: this.commit('toggleCreateChatToUser') },
-            { id: 'cch-2', name: 'По заказу', icon: require('@/assets/images/order.svg'), handler: this.commit('toggleCreateChatToOrder') }
-        ],
+        
         isCreateChatToUser: false,
         isCreateChatToOrder: false,
 

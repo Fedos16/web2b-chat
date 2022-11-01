@@ -6,7 +6,6 @@
             <p>или <span class="chat-popup">
                 создайте новый 
                 <img class="arrow-bottom" src="@/assets/images/checkmarkdown.svg" alt="">
-                <ChatPopup :data="menuCreateChat" />
             </span></p>
         </div>
         <div class="message-list" v-else>
@@ -18,12 +17,11 @@
 <script>
 
 import Message from './Message.vue';
-import ChatPopup from '@/components/chat/popup/ChatPopUp';
+import { mapGetters } from 'vuex';
 
 export default {
     components: {
-        Message,
-        ChatPopup
+        Message
     },
     mounted() {
         this.$store.watch(() => this.$store.state.activeDialogId, () => {
@@ -36,12 +34,9 @@ export default {
         })
     },
     computed: {
-        messages() {
-            return this.$store.getters.getMessages;
-        },
-        menuCreateChat() {
-            return this.$store.state.menuCreateChat;
-        }
+        ...mapGetters({
+            messages: 'getMessages'
+        })
     }
 }
 </script>
