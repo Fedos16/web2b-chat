@@ -192,26 +192,26 @@ export const dialogs = [
     }
 ];
 export const users = [
-    { id: 'u1', sort: 2, img: '@/assets/images/tehSupport.svg', name: 'Олег Федин', type: 'user' },
-    { id: 'u2', sort: 1, img: '@/assets/images/tehSupport.svg', name: 'Иванов Сергей', type: 'contact' },
-    { id: 'u3', sort: 1, img: '@/assets/images/tehSupport.svg', name: 'Толкачев Владислав', type: 'contact' },
-    { id: 'u4', sort: 2, img: '@/assets/images/tehSupport.svg', name: 'Турсунов Михаил', type: 'user' },
-    { id: 'u5', sort: 1, img: '@/assets/images/tehSupport.svg', name: 'Григорьев Евгений', type: 'contact' },
-    { id: 'u6', sort: 2, img: '@/assets/images/tehSupport.svg', name: 'Петров Андрей', type: 'user' },
-    { id: 'u7', sort: 1, img: '@/assets/images/tehSupport.svg', name: 'Алексеев Игорь', type: 'contact' },
-    { id: 'u8', sort: 1, img: '@/assets/images/tehSupport.svg', name: 'Мкртычан Валерия', type: 'contact' },
-    { id: 'u9', sort: 2, img: '@/assets/images/tehSupport.svg', name: 'Андронова Валентина', type: 'user' },
-    { id: 'u10', sort: 1, img: '@/assets/images/tehSupport.svg', name: 'Алина Екатерина', type: 'contact' }
+    { id: 'u1', sort: 2, img: require('@/assets/images/tehSupport.svg'), name: 'Олег Федин', type: 'user' },
+    { id: 'u2', sort: 1, img: require('@/assets/images/tehSupport.svg'), name: 'Иванов Сергей', type: 'contact' },
+    { id: 'u3', sort: 1, img: require('@/assets/images/tehSupport.svg'), name: 'Толкачев Владислав', type: 'contact' },
+    { id: 'u4', sort: 2, img: require('@/assets/images/tehSupport.svg'), name: 'Турсунов Михаил', type: 'user' },
+    { id: 'u5', sort: 1, img: require('@/assets/images/tehSupport.svg'), name: 'Григорьев Евгений', type: 'contact' },
+    { id: 'u6', sort: 2, img: require('@/assets/images/tehSupport.svg'), name: 'Петров Андрей', type: 'user' },
+    { id: 'u7', sort: 1, img: require('@/assets/images/tehSupport.svg'), name: 'Алексеев Игорь', type: 'contact' },
+    { id: 'u8', sort: 1, img: require('@/assets/images/tehSupport.svg'), name: 'Мкртычан Валерия', type: 'contact' },
+    { id: 'u9', sort: 2, img: require('@/assets/images/tehSupport.svg'), name: 'Андронова Валентина', type: 'user' },
+    { id: 'u10', sort: 1, img: require('@/assets/images/tehSupport.svg'), name: 'Алина Екатерина', type: 'contact' }
 ];
 export const orders = [
-    { id: 'o1', name: 127345 },
-    { id: 'o2', name: 299784 },
-    { id: 'o3', name: 367483 },
-    { id: 'o4', name: 192032 },
-    { id: 'o5', name: 393027 },
-    { id: 'o6', name: 940383 },
-    { id: 'o7', name: 628492 },
-    { id: 'o8', name: 112925 },
-    { id: 'o9', name: 111122 },
-    { id: 'o10', name: 573892 },
+    { id: 'o1', name: 'Заказ №127345' },
+    { id: 'o2', name: 'Заказ №299784' },
+    { id: 'o3', name: 'Заказ №367483' },
+    { id: 'o4', name: 'Заказ №192032' },
+    { id: 'o5', name: 'Заказ №393027' },
+    { id: 'o6', name: 'Заказ №940383' },
+    { id: 'o7', name: 'Заказ №628492' },
+    { id: 'o8', name: 'Заказ №112925' },
+    { id: 'o9', name: 'Заказ №111122' },
+    { id: 'o10', name: 'Заказ №573892' },
 ];

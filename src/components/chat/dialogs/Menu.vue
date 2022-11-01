@@ -8,7 +8,9 @@
             <button class="chat-button-invisible" :disabled="!isUnreadDialogs" @click="switchUnReadMessges"><img class="img" :src="imageUnReadMessages" alt="" ></button>
             <button class="chat-button-invisible"  @click="sortDialogs"><img :class="classTypeSort" src="@/assets/images/arrowup.svg" alt=""></button>
             <div class="menu_actions__button chat-popup">
-                <button class="actions_button" @click="switchCreateChat">Создать чат<img src="@/assets/images/checkmarkdown.svg" alt=""></button>
+                <button class="actions_button" @click="switchCreateChat">
+                    Создать чат<img :class="classCreateChat" src="@/assets/images/checkmarkdown.svg">
+                </button>
                 <ChatPopup v-if="isCreateChat" :data="menuCreateChat" @handlerClose="switchCreateChat" />
             </div>
         </div>
@@ -57,6 +59,9 @@ export default {
                 { id: 'cch-1', name: 'С пользователем', icon: require('@/assets/images/user.svg'), handler: this.toggleCreateChatToUser },
                 { id: 'cch-2', name: 'По заказу', icon: require('@/assets/images/order.svg'), handler: this.toggleCreateChatToOrder }
             ]
+        },
+        classCreateChat() {
+            return this.isCreateChat ? 'top-arrow' : 'normal-arrow';
         }
 
     },
@@ -87,7 +92,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .menu {
         min-height: 56px;
         max-height: 56px;
@@ -95,69 +100,62 @@ export default {
         padding: 0px 10px 0px 20px;
         align-items: center;
         border-bottom: 1px solid #E7EFFD;
-    }
-    .menu_search {
-        min-height: 56px;
-        max-height: 56px;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-    }
-    .menu_search input::placeholder {
-        color: var(--input-placeholder-color);
-    }
-    .menu_search input {
-        width: 100%;
-        color: var(----input-text-color);
-    }
-    .menu_search__find {
-        width: 50%;
-        height: 100%;
-        color: #7D95BD;
-        margin-left: 20px;
-        cursor: pointer;
-        border: none;
-    }
-    .menu_actions {
-        display: flex;
-    }
-    .actions_button {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        width: 132px;
-        height: 38px;
-        background: #E9EDF5;
-        border-radius: 4px;
-        border: none;
-        order: 1;
-        flex-grow: 0;
-        line-height: 20px;
-        color: #2E5599;
-        cursor: pointer;
+
+        .menu_search {
+            min-height: 56px;
+            max-height: 56px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            input {
+                width: 100%;
+                color: var(----input-text-color);
+
+                &::placeholder {
+                    color: var(--input-placeholder-color);
+                }
+            }
+
+            &__find {
+                width: 50%;
+                height: 100%;
+                color: #7D95BD;
+                margin-left: 20px;
+                cursor: pointer;
+                border: none;
+            }
+        }
+
+        .menu_actions {
+            display: flex;
+
+            .actions_button {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                width: 132px;
+                height: 38px;
+                background: #E9EDF5;
+                border-radius: 4px;
+                border: none;
+                order: 1;
+                flex-grow: 0;
+                line-height: 20px;
+                color: #2E5599;
+                cursor: pointer;
+            }
+
+            .menu_actions__button{
+                position: relative;
+            }
+        }
     }
     .arrow{
         transform: rotate(180deg);
     }
-    .popap-create-chat{
-        display: block;
-        position: absolute;
-        width: 100%;
-        z-index: 1;
-    }
-    .menu_actions__button{
-        position: relative;
-    }
-    .popap-create-chat__button{
-        width: 100%;
-        min-height: 30px;
-        border: none;
-        background-color: #fff;
-        text-align: left;
-        color: #2E5599;
-    }
-    .popap-create-chat__button:hover{
-        background-color: #F7F8FA;
+    .top-arrow {
+        transform: rotate(180deg);
     }
 </style>

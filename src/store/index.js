@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import { messages, dialogs } from '@/data/index';
+import { messages, dialogs, orders, users } from '@/data/index';
 import { formatingText } from '@/helpers/index';
 import modalWindows from './modules/modalWindows';
 
@@ -26,11 +26,37 @@ export default createStore({
 
         visibleChatHeaderActions: false,
         searchMessageText: '',
-        messages: []
+        messages: [],
+
+        users,
+        orders,
+        createChatPopup: {
+            users: {
+                visible: false,
+                selected: null,
+                search: ''
+            },
+            orders: {
+                visible: false,
+                selected: null,
+                search: ''
+            }
+        }
     },
     getters: {
         getDialogById: (state) => (id) => {
             return state.dialogs.find(item => item.id == id);
+        },
+
+        getDialogs(state) {
+            return state.dialogs.filter(item => {
+                const filterName = item.name.toLowerCase().includes(state.searchDialogText.toLowerCase());
+                const filterUnRead = state.unReadMessages ? item.unReadCount > 0 : true;
+                const filterArchiv = !item.archiveDialog;
+                const filterFixed = !item.fixedDialog;
+
+                return filterName && filterUnRead && filterArchiv && filterFixed;
+            })
         },
 
         getMessages(state) {
@@ -45,16 +71,48 @@ export default createStore({
                 return item;
             });
         },
-        getDialogs(state) {
-            return state.dialogs.filter(item => {
-                const filterName = item.name.toLowerCase().includes(state.searchDialogText.toLowerCase());
-                const filterUnRead = state.unReadMessages ? item.unReadCount > 0 : true;
-                const filterArchiv = !item.archiveDialog;
-                const filterFixed = !item.fixedDialog;
 
-                return filterName && filterUnRead && filterArchiv && filterFixed;
-            })
+        getOrders(state) {
+            const search = state.createChatPopup.orders.search;
+            return state.orders.filter(item => {
+                if (search) {
+                    return item.name.toLowerCase().includes(search.toLowerCase());
+                }
+                return true;
+            });
         },
+        getOrderById(state) {
+            const item = state.isCreateChatToUser ? 'users' : 'orders';
+            const selected = state.createChatPopup[item].selected;
+
+            return state.orders.find(item => item.id == selected);
+        },
+
+        getUsers(state) {
+            const search = state.createChatPopup.users.search;
+            return state.users.filter(item => {
+                if (search) {
+                    return item.name.toLowerCase().includes(search.toLowerCase());
+                }
+                return true;
+            });
+        },
+        getUserById(state) {
+            const item = state.isCreateChatToUser ? 'users' : 'orders';
+            const selected = state.createChatPopup[item].selected;
+
+            return state.users.find(item => item.id == selected);
+        },
+
+        getCreateChatSearch(state) {
+            const item = state.isCreateChatToUser ? 'users' : 'orders';
+
+            console.log('Вызываем...');
+
+            return state.createChatPopup[item].search;
+        },
+
+
         isUnreadDialogs(state) {
             return state.dialogs.filter(item => item.unReadCount > 0).length > 0;
         },
@@ -156,6 +214,28 @@ export default createStore({
         toggleCreateChatToOrder(state) {
             state.isCreateChatToOrder = !state.isCreateChatToOrder;
             state.isCreateChatToUser = false;
+        },
+
+        toggleVisibleListCreateChat(state) {
+            const item = state.isCreateChatToUser ? 'users' : 'orders';
+
+            state.createChatPopup[item].visible = !state.createChatPopup[item].visible;
+        },
+        selectItemCreateChat(state, id) {
+
+            console.log(id);
+
+            const item = state.isCreateChatToUser ? 'users' : 'orders';
+
+            state.createChatPopup[item].selected = id;
+        },
+        inputSearchCreateChat(state, text) {
+            const item = state.isCreateChatToUser ? 'users' : 'orders';
+
+            state.createChatPopup[item].search = text;
+            if (!state.createChatPopup[item].visible) {
+                state.createChatPopup[item].visible = true;
+            }
         }
     },
     actions: {
