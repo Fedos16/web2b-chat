@@ -4,7 +4,7 @@
         <div class="dialog_info">
             <div class="dialog_info__row">
                 <div class="dialog_info__name" :title="dialogName">{{ dialogName }}</div>
-                <div class="dialog_info__date">{{ formatingDateTime(dialog.lastMessage.date) }}</div>
+                <div class="dialog_info__date">{{ dialog.lastMessage?.date ? formatingDateTime(dialog.lastMessage.date) : '' }}</div>
             </div>
             <div class="dialog_info__row" v-if="dialog.typeDialog === 'moderator'">
                 <div class="dialog_info__text">
@@ -13,7 +13,7 @@
             </div>
             <div class="dialog_info__row">
                 <div class="dialog_info__text">
-                    <p><span>{{ userLastMessage }}: </span>{{ dialog.lastMessage.text }}</p>
+                    <p v-if="userLastMessage"><span>{{ userLastMessage }}: </span>{{ dialog.lastMessage.text }}</p>
                 </div>
                 <div class="fixed-dialog"><img src="@/assets/images/pinbutton.svg" alt="" v-if="dialog.fixedDialog"></div>
                 <div class="notReadMessage" v-if="dialog.unReadCount > 0">{{ dialog.unReadCount }}</div>
@@ -132,7 +132,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .dialog {
     max-height: 73px;
     height: 73px;
@@ -184,8 +184,10 @@ export default {
     color: #7D95BD;
 }
 .notReadMessage{
-    width: 16px;
-    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    max-width: 16px;
+    max-height: 16px;
     background: #2E5599;
     font-size: 10px;
     border-radius: 50%;
@@ -206,11 +208,18 @@ export default {
     background-color: #F7F8FA;
 }
 .dialog_menu{
-    width: 20px;
-    height: 25px;
+    min-width: 25px;
+    min-height: 25px;
     position: relative;
     background-image: url('@/assets/images/menu.svg');
     background-size: cover;
+    cursor: pointer;
+    transition: 200ms;
+
+    &:hover {
+        border-radius: 50%;
+        background-color: var(--button-secondary-background);
+    }
 }
 .dialog_menu__moderator{
     border-radius: 4px;

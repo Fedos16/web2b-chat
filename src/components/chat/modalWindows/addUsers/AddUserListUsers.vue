@@ -1,6 +1,6 @@
 <template>
     <div class="modal-window_list my-scroll">
-        <div class="modal-window_list__title">{{title}}</div>
+        <div class="modal-window_list__title" v-if="title">{{title}}</div>
         <ul>
             <AddUserListUsersItem v-for="user in users" :key="user.id" :user="user" />
         </ul>

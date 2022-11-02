@@ -6,13 +6,14 @@
     <AddUserListUsers v-if="usersFromContacts.length > 0" :title="titleContacts" :users="usersFromContacts" />
     <AddUserListUsers v-if="usersFromSystem.length > 0" :title="titleUsers" :users="usersFromSystem" />
     <div class="modal-window_actions">
-        <button class="chat-button main-button margin-r--15" @click="appendUsersForChat">Добавить</button>
+        <button class="chat-button main-button margin-r--10" @click="appendUsersForChat">Добавить</button>
         <button class="chat-button secondary-button" @click="closeWindow">Отмена</button>
     </div>
 </template>
 
 <script>
 
+import { mapActions } from 'vuex';
 import AddUserListUsers from './AddUserListUsers.vue';
 
 export default {
@@ -49,8 +50,9 @@ export default {
         closeWindow() {
             this.$emit('closeWindow');
         },
+        ...mapActions('modalWindows', ['appendUsersForDialog']),
         appendUsersForChat() {
-            console.log(`Добавили юзеров c ID: ${this.selectedUsers}`);
+            this.appendUsersForDialog(this.selectedUsers);
             this.closeWindow();
         }
     }

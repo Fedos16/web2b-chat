@@ -152,10 +152,7 @@ export default {
             }
         }
     }
-    .arrow{
-        transform: rotate(180deg);
-    }
-    .top-arrow {
+    .arrow {
         transform: rotate(180deg);
     }
 </style>

@@ -7,10 +7,10 @@
             </div>
             <input class="change-name-dialog_input" type="text" name="" id="" v-model="dialogName">
             <div class="change-name-dialog_button">
-                <button class="change-name-dialog_button__rename" @click="saveRename">
+                <button class="chat-button main-button margin-r--10" @click="saveRename">
                 Переименовать
                 </button>
-                <button class="change-name-dialog_button__cancell" @click="closeRenameDialog">
+                <button class="chat-button secondary-button" @click="closeRenameDialog">
                 Отменить
                 </button>
             </div>
@@ -90,35 +90,6 @@ export default {
 }
 .change-name-dialog_button{
     display: flex;
-}
-.change-name-dialog_button__rename{
-    width: 155px;
-    height: 48px;
-    background: #2E5599;
-    border-radius: 4px;
-    border: none;
-    color: #FFFFFF;
-    font-family: 'Raleway';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    margin-right: 8px;
-    cursor: pointer;
-}
-.change-name-dialog_button__cancell{
-    width: 91px;
-    height: 48px;
-    background: #E9EDF5;
-    border-radius: 4px;
-    border: none;
-    color: #2E5599;
-    font-family: 'Raleway';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    cursor: pointer;
 }
 img{
     cursor: pointer;

@@ -84,7 +84,7 @@
                         { id: 'ha-1', name: isFixed ? 'Открепить' : 'Закрепить', handler: this.changeStateFixed },
                         { id: 'ha-2', name: 'Переименовать', handler: this.showWindowRenameDialog },
                         { id: 'ha-3', name: 'Добавить пользователя', handler: this.showWindowAddUser },
-                        { id: 'ha-4', name: 'Показать участников' },
+                        { id: 'ha-4', name: 'Показать участников', handler: this.showViewUsers },
                         { id: 'ha-5', name: isArchive ? 'Вернуть из архива' : 'Переместить в архив', handler: this.changeStateArchive },
                     ],
                     [typesDialog['Модератор']]: [
@@ -127,6 +127,9 @@
             },
             showWindowAddUser() {
                 this.$store.commit('modalWindows/showAddUser');
+            },
+            showViewUsers() {
+                this.$store.commit('modalWindows/showViewUsers');
             }
         }
     }

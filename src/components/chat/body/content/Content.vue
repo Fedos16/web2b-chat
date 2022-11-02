@@ -1,6 +1,6 @@
 <template>
     <div class="chat-body_content my-scroll" ref="chatBody">
-        <div class="empty-dialog " v-if="messages.length === 0">
+        <div class="empty-dialog " v-if="!activeDialogId && !isCreateChat && !isCreateChatToUser && !isCreateChatToOrder">
             <img class="union-messages" src="@/assets/images/union-messages.png" alt="">
             <p>Выберите чат</p>
             <p>или <span class="chat-popup">
@@ -17,14 +17,22 @@
 <script>
 
 import Message from './Message.vue';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
     components: {
         Message
     },
     mounted() {
-        this.$store.watch(() => this.$store.state.activeDialogId, () => {
+        this.$store.watch(() => this.activeDialogId, () => {
+            this.$nextTick(() => {
+                const chatBody = this.$refs.chatBody;
+                if (chatBody) {
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }
+            })
+        }),
+        this.$store.watch(() => this.messages, () => {
             this.$nextTick(() => {
                 const chatBody = this.$refs.chatBody;
                 if (chatBody) {
@@ -34,6 +42,7 @@ export default {
         })
     },
     computed: {
+        ...mapState(['isCreateChat', 'activeDialogId', 'isCreateChatToUser', 'isCreateChatToOrder']),
         ...mapGetters({
             messages: 'getMessages'
         })
@@ -47,6 +56,10 @@ export default {
         width: 100%;
         padding: 24px 14px;
         height: 100%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
         overflow-y: auto;
     }
     .empty-dialog {
@@ -80,10 +93,11 @@ export default {
     }
 
     .message-list {
-        height: 100%;
+        height: auto;
+        max-height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
+        align-items: stretch;
     }
 
 </style>

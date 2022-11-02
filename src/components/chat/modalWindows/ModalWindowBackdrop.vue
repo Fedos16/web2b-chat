@@ -20,7 +20,7 @@ export default {
 
 <style scoped>
     .modal-window_backdrop {
-        background: rgba(16, 36, 71, 0.4);
+        background-color: rgba(0,0,0, 0.3);
         position: fixed;
         top: 0px;
         left: 0px;

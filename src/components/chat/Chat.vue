@@ -54,6 +54,7 @@
     border: none;
     background-color: transparent;
     padding: 0px 16px;
+    white-space: nowrap;
     cursor: pointer;
 
     &.main-button {
@@ -63,6 +64,11 @@
     &.secondary-button {
       color: var(--button-secondary-color);
       background-color: var(--button-secondary-background);
+    }
+
+    &:disabled {
+      opacity: 0.2;
+      cursor: not-allowed;
     }
 
   }
@@ -78,6 +84,10 @@
   .finded-text-format {
     font-weight: 700;
     color: var(--input-text-color);
+  }
+
+  .top-arrow {
+    transform: rotate(180deg);
   }
 
 </style>

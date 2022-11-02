@@ -5,7 +5,7 @@
         <div v-if="!showArchive">
             <Dialog v-for="dialog in dialogsFixed" :dialog="dialog" :key="dialog.id" />
         </div>
-        <div class="sidebar_chats my-scroll" v-show="dialogs.length > 0">
+        <div class="sidebar_chats my-scroll" v-show="dialogs.length > 0 || dialogsArchive.length > 0">
             <div v-if="showArchive && dialogsArchive.length > 0">
                 <Dialog v-for="dialog in dialogsArchive" :dialog="dialog" :key="dialog.id" />
             </div>
@@ -13,7 +13,7 @@
                 <Dialog v-for="dialog in dialogs" :dialog="dialog" :key="dialog.id" />
             </div>
         </div>
-        <div class="sidebar_chatNotFound" v-show="dialogs.length === 0">
+        <div class="sidebar_chatNotFound" v-show="dialogs.length === 0 && searchDialogText">
             <p>Чатов с названием</p>
             <p><b>«{{chatName}}»</b> не найдено</p>
         </div>
@@ -35,6 +35,9 @@ export default {
         dialogs() {
             return this.$store.getters.getDialogs;
         },
+        searchDialogText() {
+            return this.$store.state.searchDialogText;
+        },
         dialogsArchive() {
             return this.$store.getters.getArchiveDialogs;
         },
@@ -46,9 +49,6 @@ export default {
         },
         showArchive(){
             return this.$store.state.showArchive;
-        },
-        switchArchive(){
-            return this.$store.commit('toggleShowArchive')
         }
     }
 }

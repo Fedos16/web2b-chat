@@ -1,11 +1,11 @@
 import { createStore } from 'vuex';
-import { messages, dialogs, orders, users } from '@/data/index';
+import { messages, setMessage, dialogs, orders, users } from '@/data/index';
 import { formatingText } from '@/helpers/index';
 import modalWindows from './modules/modalWindows';
 
 export default createStore({
     state: {
-        userName: 'Fedos16',
+        userName: 'my_id',
 
         activeDialogId: null,
 
@@ -27,6 +27,8 @@ export default createStore({
         visibleChatHeaderActions: false,
         searchMessageText: '',
         messages: [],
+
+        viewChatId: null,
 
         users,
         orders,
@@ -103,6 +105,15 @@ export default createStore({
 
             return state.users.find(item => item.id == selected);
         },
+        getUsersFromChat(state) {
+            const dialog = state.dialogs.find(item => item.id == state.activeDialogId);
+            const dialogUsers = dialog.users;
+
+            const findedUsers = state.users.filter(item => dialogUsers.includes(item.id));
+
+            return findedUsers;
+
+        },
 
         getCreateChatSearch(state) {
             const item = state.isCreateChatToUser ? 'users' : 'orders';
@@ -117,11 +128,7 @@ export default createStore({
             return state.dialogs.filter(item => item.unReadCount > 0).length > 0;
         },
         getArchiveDialogs(state) {
-            return state.dialogs.filter(item => {
-                const filterArchiv = item.archiveDialog;
-
-                return filterArchiv;
-            })
+            return state.dialogs.filter(item => item.archiveDialog);
         },
         getFixedDialogs(state) {
             return state.dialogs.filter(item => {
@@ -138,6 +145,9 @@ export default createStore({
     mutations: {
         sortDialogs(state) {
             state.dialogs.sort((a, b) => {
+
+                if (!a.lastMessage?.date) return 0;
+
                 const aDate = a.lastMessage.date.getTime();
                 const bDate = b.lastMessage.date.getTime();
                 if (state.descSort) {
@@ -206,14 +216,27 @@ export default createStore({
 
         toggleCreateChat(state) {
             state.isCreateChat = !state.isCreateChat;
+            this.commit('setActiveDialog', null);
         },
         toggleCreateChatToUser(state) {
             state.isCreateChatToUser = !state.isCreateChatToUser;
             state.isCreateChatToOrder = false;
+
+            if (!state.isCreateChatToUser) {
+                state.createChatPopup.users.search = '';
+                state.createChatPopup.users.visible = false;
+                state.createChatPopup.users.selected = null;
+            }
         },
         toggleCreateChatToOrder(state) {
             state.isCreateChatToOrder = !state.isCreateChatToOrder;
             state.isCreateChatToUser = false;
+
+            if (!state.isCreateChatToOrder) {
+                state.createChatPopup.orders.search = '';
+                state.createChatPopup.orders.visible = false;
+                state.createChatPopup.orders.selected = null;
+            }
         },
 
         toggleVisibleListCreateChat(state) {
@@ -221,13 +244,19 @@ export default createStore({
 
             state.createChatPopup[item].visible = !state.createChatPopup[item].visible;
         },
-        selectItemCreateChat(state, id) {
+        hideListCreateChat(state) {
+            const item = state.isCreateChatToUser ? 'users' : 'orders';
+            state.createChatPopup[item].visible = false;
+            state.createChatPopup[item].selected = null;
+            state.createChatPopup[item].search = '';
 
-            console.log(id);
+        },
+        selectItemCreateChat(state, id) {
 
             const item = state.isCreateChatToUser ? 'users' : 'orders';
 
             state.createChatPopup[item].selected = id;
+            state.createChatPopup[item].visible = false;
         },
         inputSearchCreateChat(state, text) {
             const item = state.isCreateChatToUser ? 'users' : 'orders';
@@ -236,9 +265,120 @@ export default createStore({
             if (!state.createChatPopup[item].visible) {
                 state.createChatPopup[item].visible = true;
             }
+        },
+
+        appendDialog(state, dialog) {
+            state.dialogs.push(dialog);
+        },
+        appendMessage(state, message) {
+            state.messages.push(message);
+        },
+        appendUsersForDialog(state, users) {
+            const activeDialogId = state.activeDialogId;
+            const dialog = state.dialogs.find(item => item.id == activeDialogId);
+            dialog.users.push(...users);
+        },
+
+        setViewChatId(state, id) {
+            if (state.viewChatId == id) return state.viewChatId = null;
+            state.viewChatId = id;
+        },
+        writeToUser(state, id) {
+            const dialog = state.dialogs.find(item => item.users.includes(id) && item.typeDialog == 'user');
+            if (dialog) {
+                state.activeDialogId = dialog.id;
+            } else {
+                const countDialogs = state.dialogs.length;
+                const dialogID = countDialogs + 1;
+
+                const user = state.users.find(item => item.id == id);
+
+                const dialog = {
+                    id: dialogID,
+                    name: user.name,
+                    icon: user?.img || null,
+                    typeDialog: 'user',
+                    unReadCount: 0,
+                    additionalInfo: {
+                        numOrder: null
+                    },
+                    archiveDialog: false,
+                    fixedDialog: false,
+                    lastMessage: {},
+                    users: [state.userName, id],
+                }
+
+                this.commit('appendDialog', dialog);
+                state.activeDialogId = dialogID;
+            }
+
+            state.viewChatId = null;
+            state.modalWindows.viewUsers.visible = false;
+
+            state.activeDialogId
         }
     },
     actions: {
+        createChat({ state, commit }) {
+            const item = state.isCreateChatToUser ? 'users' : 'orders';
+            const idSelected = state.createChatPopup[item].selected;
+            const essence = state[item].find(item => item.id == idSelected);
+
+            const chatName = essence.name;
+
+            const countDialogs = state.dialogs.length;
+            const dialog = {
+                id: countDialogs + 1,
+                name: chatName,
+                icon: essence?.img || null,
+                typeDialog: item == 'users' ? 'user' : 'order',
+                unReadCount: 0,
+                additionalInfo: {
+                    numOrder: item == 'users' ? null : essence.num
+                },
+                archiveDialog: false,
+                fixedDialog: false,
+                lastMessage: {},
+                users: [state.userName, idSelected],
+            }
+
+            commit('appendDialog', dialog);
+
+            if (item == 'users') {
+                commit('toggleCreateChatToUser');
+            } else {
+                commit('toggleCreateChatToOrder');
+            }
+
+            commit('setActiveDialog', dialog.id);
+        },
+        sendMessage({ state, commit }, payload) {
+            const countMessages = state.messages.length;
+            const activeDialogId = state.activeDialogId;
+            const activeUser = state.userName;
+
+            const message = {
+                id: countMessages + 1,
+                chatId: activeDialogId,
+                text: payload,
+                user: activeUser,
+                incoming: false,
+                date: new Date()
+            }
+
+            if (payload) {
+                setMessage(message);
+                commit('appendMessage', message);
+
+                const dialog = state.dialogs.find(item => item.id == activeDialogId);
+                dialog.lastMessage = {
+                    text: message.text,
+                    user: message.user,
+                    date: message.date
+                }
+
+            }
+        }
     },
     modules: {
         modalWindows

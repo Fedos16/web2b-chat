@@ -98,6 +98,7 @@ export default {
     .message-list_row_message__text {
         margin-right: 5px;
         line-height: 20px;
+        word-break: break-word;
     }
     .message-list_row_message__time {
         font-size: 12px;

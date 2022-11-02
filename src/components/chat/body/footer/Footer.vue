@@ -1,16 +1,20 @@
 <template>
-    <div class="chat-body_footer" v-if="messages.length > 0">
+    <div class="chat-body_footer">
         <div class="chat-body_footer__section">
-            <input type="text" placeholder="Введите текст сообщения" ref="inputTextMessage">
+            <input type="text" placeholder="Введите текст сообщения" ref="inputTextMessage" @keyup.enter="handlerSendMessage">
             <img src="@/assets/images/attachment.svg" alt="">
         </div>
         <div class="chat-body_footer__send-message">
-            <img src="@/assets/images/send-message.svg" alt="">
+            <button class="chat-button-invisible" @click="handlerSendMessage">
+                <img src="@/assets/images/send-message.svg" alt="">
+            </button>
         </div>
     </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
     mounted() {
         this.$store.watch(() => this.$store.state.activeDialogId, () => {
@@ -22,9 +26,14 @@ export default {
             })
         })
     },
-    computed: {
-        messages() {
-            return this.$store.getters.getMessages;
+    methods: {
+        ...mapActions(['sendMessage']),
+        handlerSendMessage() {
+            const value = this.$refs.inputTextMessage.value;
+            this.sendMessage(value);
+            this.$refs.inputTextMessage.value = '';
+
+            this.$refs.inputTextMessage.focus();
         }
     }
 }
