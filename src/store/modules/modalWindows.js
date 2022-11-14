@@ -14,6 +14,12 @@ export default {
             title: 'Участники чата',
             visible: false
         },
+        forwardMessages: {
+            title: 'Переслать сообщения',
+            subTitle: 'Выберите диалог, в которых хотите переслать выбранные сообщения',
+            visible: false,
+            textSearch: ''
+        },
         users
     }),
     getters: {
@@ -31,6 +37,16 @@ export default {
                 }
                 return item.type === 'contact';
             }).sort((a, b) => a.sort - b.sort);
+        },
+        getUsersToForwardMessages(state) {
+            const text = state.forwardMessages.textSearch.toLowerCase();
+
+            return state.users.filter(item => {
+                if (text) {
+                    return item.name.toLowerCase().includes(text);
+                }
+                return true
+            }).sort((a, b) => a.sort - b.sort);
         }
     },
     mutations: {
@@ -43,6 +59,9 @@ export default {
             state.viewUsers.visible = true;
             this.commit('modalWindows/showModalWindow');
         },
+        showForwardMessages(state) {
+            state.forwardMessages.visible = true;
+        },
         showModalWindow(state) {
             state.visibleModalWindow = true;
         },
@@ -50,9 +69,13 @@ export default {
             state.visibleModalWindow = false;
             state.addUser.visible = false;
             state.viewUsers.visible = false;
+            state.forwardMessages.visible = false;
         },
         setTextSearch(state, text) {
             state.addUser.textSearch = text;
+        },
+        setTextSearchForwardMessage(state, text) {
+            state.forwardMessages.textSearch = text;
         },
         appendOrRemoveUser(state, id) {
             const arr = state.addUser.selectedUsers;

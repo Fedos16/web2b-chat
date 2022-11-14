@@ -54,7 +54,12 @@ export default createStore({
         forwardedMessages: {
             type: null,
             messages: []
-        }
+        },
+
+        modeSelectMessages: false,
+        selectedMessages: [],
+
+        tempMessage: null,
     },
     getters: {
         getDialogById: (state) => (id) => {
@@ -345,12 +350,19 @@ export default createStore({
         toggleVisibleMenuMessage(state, id) {
             state.messageMenuId == id ? state.messageMenuId = null : state.messageMenuId = id;
         },
-        
+
+        setTempMessage(state, message) {
+            state.tempMessage = message;
+        },
+
         setForwardedMessages(state, payload) {
             const { message: { id, text, user, date }, type } = payload;
 
             if (state.forwardedMessages.type  === type) {
-                state.forwardedMessages.messages.push({ id, date, user, text });
+                const isExist = state.forwardedMessages.messages.find(item => item.id == id);
+                if (!isExist) {
+                    state.forwardedMessages.messages.push({ id, date, user, text });
+                }
             } else {
                 state.forwardedMessages.type = type;
                 state.forwardedMessages.messages = [{ id, date, user, text }];
@@ -359,8 +371,22 @@ export default createStore({
         resetForwardedMessages(state) {
             state.forwardedMessages.type = null;
             state.forwardedMessages.messages = [];
+        },
 
-            console.log('reset');
+        toggleModeSelectMessages(state) {
+            state.modeSelectMessages = !state.modeSelectMessages;
+            state.selectedMessages = [];
+        },
+        selectMessage(state, id) {
+            if (state.selectedMessages.includes(id)) {
+                const index = state.selectedMessages.indexOf(id);
+                state.selectedMessages.splice(index, 1);
+            } else {
+                state.selectedMessages.push(id);
+            }
+        },
+        resetSelectedMessages(state) {
+            state.selectedMessages = [];
         },
     },
     actions: {
@@ -428,7 +454,43 @@ export default createStore({
 
             }
 
-            //commit('resetForwardedMessages');
+            commit('resetForwardedMessages');
+        },
+
+        replySelectedMessages({state, commit}) {
+            const messages = state.selectedMessages.map(item => {
+                const { id, date, user, text } = item;
+                return { id, date, user, text };
+            });
+
+            state.forwardedMessages.type = 'reply';
+            state.forwardedMessages.messages = messages;
+
+            commit('toggleModeSelectMessages');
+        },
+
+        forwardMessages({ state, commit }) {
+            if (state.tempMessage) {
+
+                console.log('tempMessage');
+                console.log(state.tempMessage);
+
+                commit('setForwardedMessages', { type: 'forwarded', message: state.tempMessage });
+                commit('setTempMessage', null);
+
+            } else {
+
+                const messages = state.selectedMessages.map(item => {
+                    const { id, date, user, text } = item;
+                    return { id, date, user, text };
+                });
+
+                state.forwardedMessages.type = 'forwarded';
+                state.forwardedMessages.messages = messages;
+
+                commit('toggleModeSelectMessages');
+
+            }
         }
     },
     modules: {

@@ -28,6 +28,7 @@ export default {
     .modal-window {
         position: relative;
         min-width: 400px;
+        max-width: 600px;
         height: auto;
         max-height: 70%;
         background: #fff;

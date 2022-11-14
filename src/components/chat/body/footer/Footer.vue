@@ -1,9 +1,9 @@
 <template>
     <div class="chat-body_footer">
-        <button class="chat-button-invisible close__block" v-if="replyMessages.type === 'reply'" @click="resetForwardedMessages">
+        <button class="chat-button-invisible close__block" v-if="replyMessages.type" @click="resetForwardedMessages">
             ×
         </button>
-        <div class="chat-body_footer__forwarder my-scroll" v-if="replyMessages.type === 'reply'">
+        <div class="chat-body_footer__forwarder my-scroll" v-if="replyMessages.type">
             <ForwardedList>
                 <ForwardedMessage v-for="item in replyMessages.messages" :key="item.id" :message="item" />
             </ForwardedList>

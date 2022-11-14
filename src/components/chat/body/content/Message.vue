@@ -1,31 +1,36 @@
 <template>
     <div class="message__title" v-if="isShowTitleChat">{{ dateMessage }}</div>
     <div class="message-list_row" :class="classMessage">
-        <div class="message-list_row__autor" v-if="(currentIncomming && !previosIncomming) || (isShowTitleChat && currentIncomming)">
-            {{ message.user.name }}
+        <div class="message-select" :class="classSelected" v-if="modeSelect">
+           <CheckBox nameCheckbox="selcheckbox" :checked="isSelectedMessages" @handlerChange="handlerSelectMessage" />
         </div>
-        <div class="message-list_row__message-content">
-            <div class="message-list_row_message">
-                <div class="message-list_row__column">
-                    <div class="message-list_row_message__text" v-html="message.findedText || message.text"></div>
-                    <div class="message-list_row_message_attached-list" v-if="message.attachedFiles.length > 0">
-                        <div class="message-list_row_message__attached" v-for="file in message.attachedFiles">
-                            <div class="attached__file"></div>
-                            <div class="attached__info">
-                                <b>{{file.name}}</b>
-                                <p>{{file.format}}, {{file.size}} {{file.unit}}</p>
-                            </div>
-                            <div class="attached__action attached__download"></div>
-                        </div>
-                    </div>
-                    <ForwardedList v-if="message.forwarded?.type" :title="titleForwardedMessage">
-                        <ForwardedMessage v-for="item in message.forwarded?.messages" :message="item" :key="item.id" />
-                    </ForwardedList>
-                </div>
-                <div class="message-list_row_message__time">{{ timeFormat(message.date) }}</div>
+        <div class="message__container">
+            <div class="message-list_row__autor" v-if="isShowAutor">
+            {{ message.user.name }}
             </div>
-            <div class="message-list_row__action chat-popup" @click="toggleMenuMessage">
-                <ChatPopUp v-if="visiblePopUp" :data="menuMessage" />
+            <div class="message-list_row__message-content">
+                <div class="message-list_row_message">
+                    <div class="message-list_row__column">
+                        <div class="message-list_row_message__text" v-html="message.findedText || message.text"></div>
+                        <div class="message-list_row_message_attached-list" v-if="message.attachedFiles.length > 0">
+                            <div class="message-list_row_message__attached" v-for="file in message.attachedFiles" :key="file.id">
+                                <div class="attached__file"></div>
+                                <div class="attached__info">
+                                    <b>{{file.name}}</b>
+                                    <p>{{file.format}}, {{file.size}} {{file.unit}}</p>
+                                </div>
+                                <div class="attached__action attached__download"></div>
+                            </div>
+                        </div>
+                        <ForwardedList v-if="message.forwarded?.type" :title="titleForwardedMessage">
+                            <ForwardedMessage v-for="item in message.forwarded?.messages" :message="item" :key="item.id" />
+                        </ForwardedList>
+                    </div>
+                    <div class="message-list_row_message__time">{{ timeFormat(message.date) }}</div>
+                </div>
+                <div class="message-list_row__action chat-popup" @click="toggleMenuMessage" v-if="!modeSelect">
+                    <ChatPopUp v-if="visiblePopUp" :data="menuMessage" />
+                </div>
             </div>
         </div>
     </div>
@@ -38,9 +43,10 @@ import { mapMutations, mapState } from 'vuex';
 import ChatPopUp from '../../popup/ChatPopUp.vue';
 import ForwardedList from '../../messages/ForwardedList.vue';
 import ForwardedMessage from '../../messages/ForwardedMessage.vue';
+import CheckBox from '@/components/elements/CheckBox.vue';
 
 export default {
-    components: { ChatPopUp, ForwardedList, ForwardedMessage },
+    components: { ChatPopUp, ForwardedList, ForwardedMessage, CheckBox },
     props: {
         message: {
             type: Object,
@@ -53,7 +59,9 @@ export default {
     },
     computed: {
         ...mapState({
-            currentUser: 'currentUser'
+            currentUser: 'currentUser',
+            selectedMessages: 'selectedMessages',
+            modeSelect: 'modeSelectMessages',
         }),
         currentIncomming() {
             return this.currentUser.id !== this.message.user.id;
@@ -61,11 +69,23 @@ export default {
         previosIncomming() {
             return (this.preMessage ? this.currentUser.id !== this.preMessage.user.id : false);
         },
+        isSelectedMessages() {
+            return this.selectedMessages.find(item => item.id === this.message.id) !== undefined;
+        },
+        isShowAutor() {
+            return (this.currentIncomming && !this.previosIncomming) || (this.isShowTitleChat && this.currentIncomming);
+        },
+        classSelected() {
+            return {
+                'message-select--autor': this.isShowAutor
+            }
+        },
         classMessage() {
             return {
                 'message-list_row--incoming': this.currentIncomming,
                 'message-list_row--outgoing': !this.currentIncomming,
-                'message-list_row--unread': this.message.unRead && this.currentIncomming
+                'message-list_row--unread': this.message.unRead && this.currentIncomming,
+                'message-list_row--selected': this.isSelectedMessages,
             }
         },
         isShowTitleChat() {
@@ -89,21 +109,32 @@ export default {
         menuMessage() {
             const menu = [
                 { id: 'mm-1', name: 'Ответить', handler: this.handlerSetReplyMessages },
-                { id: 'mm-2', name: 'Выбрать', handler: null },
-                { id: 'mm-3', name: 'Переслать', handler: null }
+                { id: 'mm-2', name: 'Выбрать', handler: this.handlerToggleModeSelectMessages },
+                { id: 'mm-3', name: 'Переслать', handler: this.showForwardMessages }
             ];
 
             return menu;
-        }
+        },
     },
     methods: {
         timeFormat,
-        ...mapMutations(['setForwardedMessages']),
+        ...mapMutations(['setForwardedMessages', 'selectMessage', 'toggleModeSelectMessages', 'setTempMessage']),
         handlerSetReplyMessages() {
             this.setForwardedMessages({ type: 'reply', message: this.message });
         },
+        handlerSelectMessage() {
+            this.selectMessage(this.message);
+        },
+        handlerToggleModeSelectMessages() {
+            this.toggleModeSelectMessages();
+            this.handlerSelectMessage();
+        },
         toggleMenuMessage() {
             this.$store.commit('toggleVisibleMenuMessage', this.message.id);
+        },
+        showForwardMessages() {
+            this.setTempMessage(this.message);
+            this.$store.commit('modalWindows/showForwardMessages');
         }
     }
 }
@@ -120,26 +151,35 @@ export default {
         padding: 8px;
         background-color: #fff;
         color: #7D95BD;
+        z-index: 2;
     }
-    .message-list_row {
+    .message__container {
         width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
         padding: 0px 12px;
+    }
+    .message-list_row {
+        display: flex;
+        justify-content: start;
+        align-items: flex-start;
+        padding: 5px 0px;
+
+        .message-select {
+            margin-left: 12px;
+
+            &--autor {
+                margin-top: 30px;
+            }
+        }
 
         &__column {
             display: flex;
             flex-direction: column;
         }
 
-        &--incoming {
-            align-items: flex-start;
-        }
-
         &--outgoing {
-            align-items: flex-end;
-            
             .message-list_row__message-content {
                 flex-direction: row-reverse;
             }
@@ -148,13 +188,16 @@ export default {
         &--unread {
             background-color: #E9EDF5;
         }
+        
+        &--selected {
+            background-color: #E9EDF5;
+        }
 
         &__autor {
-            margin-bottom: 5px;
             color: #102447;
             font-weight: 600;
             padding-left: 12px;
-            padding-top: 8px;
+            padding-bottom: 5px;
         }
 
         &__message-content {
@@ -187,7 +230,6 @@ export default {
             flex-wrap: wrap;
             padding: 12px;
             background-color: #F7F8FA;
-            margin-bottom: 8px;
 
             &__text {
                 margin-right: 5px;

@@ -4,15 +4,16 @@
             <img :src="userAvatar" alt="">
             <p>{{user.name}}</p>
         </div>
-        <label>
-            <input type="checkbox" name="user-name" @change="appendOrRemoveUser" />
-            <span></span>
-        </label>
+        <CheckBox nameCheckbox="userName" @change="appendOrRemoveUser" />
     </li>
 </template>
 
 <script>
+
+import CheckBox from '@/components/elements/CheckBox.vue';
+
 export default {
+    components: { CheckBox },
     props: {
         user: {
             type: Object,
@@ -46,26 +47,6 @@ export default {
         div {
             display: flex;
             align-items: center;
-        }
-
-        input[type="checkbox"] {
-            opacity: 0;
-            position: absolute;
-        }
-        label {
-            position: relative;
-
-            span {
-                display: flex;
-                width: 20px;
-                height: 20px;
-                background-image: url('@/assets/images/state-off.svg');
-                background-size: cover;
-            }
-
-            input:checked ~ span {
-                background-image: url('@/assets/images/state-on.svg');
-            }
         }
     }
 </style>

@@ -72,7 +72,7 @@ export default {
         .list-item__menu {
             width: 20px;
             height: 20px;
-            background-image: url(http://localhost:8080/img/menu.2714904a.svg);
+            background-image: url('@/assets/images/menu.svg');
             background-size: cover;
             background-position: center;
             cursor: pointer;

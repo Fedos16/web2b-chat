@@ -78,10 +78,6 @@ export const messages = [
 ];
 
 export const setMessage = (message) => {
-
-    console.log(message);
-
-    
     messages.push(message);
 }
 export const dialogs = [
