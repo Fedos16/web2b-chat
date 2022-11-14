@@ -54,7 +54,6 @@ export default {
 
     .chat-body_content {
         width: 100%;
-        padding: 24px 14px;
         height: 100%;
         flex: 1;
         display: flex;

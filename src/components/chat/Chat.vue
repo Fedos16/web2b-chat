@@ -49,7 +49,6 @@
 
   .chat-button {
     width: auto;
-    height: 36px;
     border-radius: 4px;
     border: none;
     background-color: transparent;
@@ -69,6 +68,13 @@
     &:disabled {
       opacity: 0.2;
       cursor: not-allowed;
+    }
+
+    &.btn-lg {
+      height: 48px;
+    }
+    &.btn-sm {
+      height: 36px;
     }
 
   }

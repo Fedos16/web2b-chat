@@ -23,8 +23,8 @@
         <button class="chat-button-invisible margin-r--15">
             <img src="@/assets/images/calendar.png" alt="">
         </button>
-        <button class="chat-button main-button margin-r--10" @click="searchMessage">Найти</button>
-        <button class="chat-button secondary-button" @click="switchSearch">Отмена</button>
+        <button class="chat-button btn-sm main-button margin-r--10" @click="searchMessage">Найти</button>
+        <button class="chat-button btn-sm secondary-button" @click="switchSearch">Отмена</button>
     </div>
 </template>
 

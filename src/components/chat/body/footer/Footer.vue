@@ -42,7 +42,7 @@ export default {
 <style scoped>
     .chat-body_footer {
         min-height: 64px;
-        padding: 8px;
+        padding: 8px 12px;
         background: #E7EFFD;
         display: flex;
     }

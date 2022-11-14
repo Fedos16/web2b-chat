@@ -15,7 +15,7 @@
                 <div class="dialog_info__text">
                     <p v-if="userLastMessage"><span>{{ userLastMessage }}: </span>{{ dialog.lastMessage.text }}</p>
                 </div>
-                <div class="fixed-dialog"><img src="@/assets/images/pinbutton.svg" alt="" v-if="dialog.fixedDialog"></div>
+                <div class="fixed-dialog" v-if="dialog.fixedDialog && dialog.unReadCount == 0"></div>
                 <div class="notReadMessage" v-if="dialog.unReadCount > 0">{{ dialog.unReadCount }}</div>
             </div>
         </div>
@@ -23,18 +23,20 @@
             <ChatPopup v-if="visiblePopUp" :data="menuUsersAndModerator" />
         </div>
     </div>
-    <RenameDialog v-if="renameDialog == dialog.id" :dialog="dialog"/>
+
+    <ModalRenameDialog v-if="renameDialog == dialog.id" :dialog="dialog" />
+    
 </template>
 
 <script>
 import { formatingDateTime} from '@/helpers/index';
-import RenameDialog from './RenameDialog'
-import ChatPopup from '@/components/chat/popup/ChatPopUp'
+import ModalRenameDialog from '../modalWindows/renameDialog/ModalRenameDialog.vue';
+import ChatPopup from '@/components/chat/popup/ChatPopUp';
 import { typesDialog } from '@/data/index';
 
 export default {
     components:{
-        RenameDialog,
+        ModalRenameDialog,
         ChatPopup
     },
     computed: {
@@ -49,11 +51,11 @@ export default {
         visiblePopUp() {
             return this.$store.state.ChatDialogMenu == this.dialog.id;
         },
-        userName() {
-            return this.$store.state.userName;
+        currentUser() {
+            return this.$store.state.currentUser;
         },
         userLastMessage() {
-            return this.userName == this.dialog.lastMessage.user ? 'Вы' : this.dialog.lastMessage.user;
+            return this.currentUser.id == this.dialog.lastMessage?.user?.id ? 'Вы' : this.dialog.lastMessage?.user?.name;
         },
         dialogName() {
             return this.dialog.name;
@@ -112,6 +114,12 @@ export default {
         setActiveDialog() {
             if (this.dialog.id !== this.activeDialogId) {
                 this.$store.commit('setActiveDialog', this.dialog.id);
+                const timer = setTimeout(() => {
+
+                    this.$store.commit('readMessagesForDialog', this.dialog.id);
+
+                    clearTimeout(timer);
+                }, 1000)
             }
         },
         toggleDialogMenu(){
@@ -221,6 +229,13 @@ export default {
         background-color: var(--button-secondary-background);
     }
 }
+.fixed-dialog {
+    min-width: 25px;
+    min-height: 25px;
+    background-image: url('@/assets/images/pinbutton.svg');
+    background-size: cover;
+}
+
 .dialog_menu__moderator{
     border-radius: 4px;
     position: absolute;

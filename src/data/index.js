@@ -6,30 +6,116 @@ export const typesDialog = {
 };
 export const messages = [
     {
-        "id": 1,
-        'chatId': 1,
-        "text": "Но разбавленное изрядной долей эмпатии, рациональное мышление говорит о возможностях форм воздействия.",
-        "user": "Домников Сергей",
-        "incoming": true,
-        "date": new Date(),
+        id: 0,
+        chatId: 1,
+        text: "Я тебя понял, Олег",
+        user: { id: 'u1', name: 'Домников Сергей' },
+        date: new Date(2022, 10, 12, 18, 29),
+        unRead: false,
+        attachedFiles: [],
+        forwarded: []
     },
     {
-        "id": 2,
-        'chatId': 2,
-        "text": "Но разбавленное изрядной долей эмпатии, рациональное мышление говорит о возможностях форм воздействия.",
-        "user": "Домников Сергей",
-        "incoming": true,
-        "date": new Date(),
+        id: 1,
+        chatId: 1,
+        text: "Привет, Олег. Как дела?",
+        user: { id: 'u1', name: 'Домников Сергей' },
+        date: new Date(new Date().setMinutes(new Date().getMinutes() - 10)),
+        unRead: false,
+        attachedFiles: [],
+        forwarded: []
     },
-    ,
     {
-        "id": 3,
-        'chatId': 2,
-        "text": "Но разбавленное изрядной долей эмпатии, рациональное мышление говорит о возможностях форм воздействия.",
-        "user": "Толкачев Владислав",
-        "incoming": true,
-        "date": new Date(),
+        id: 2,
+        chatId: 1,
+        text: "Здарова. Всё отлично, а у тебя как?",
+        user: { id: 'u0', name: 'Федин Олег' },
+        date: new Date(new Date().setMinutes(new Date().getMinutes() - 7)),
+        unRead: false,
+        attachedFiles: [],
+        forwarded: []
+    },
+    {
+        id: 3,
+        chatId: 1,
+        text: "Да и у меня в порядке, в принципе",
+        user: { id: 'u1', name: 'Домников Сергей' },
+        date: new Date(new Date().setMinutes(new Date().getMinutes() - 3)),
+        unRead: true,
+        attachedFiles: [],
+        forwarded: []
+    },
+    {
+        id: 4,
+        chatId: 1,
+        text: "Кое-что хотел спросить, но не знаю как",
+        user: { id: 'u1', name: 'Домников Сергей' },
+        date: new Date(),
+        unRead: true,
+        attachedFiles: [],
+        forwarded: []
+    },
+    {
+        id: 5,
+        chatId: 1,
+        text: "Как принято считать, явные признаки победы институционализации неоднозначны и будут представлены в исключительно положительном свете.",
+        user: { id: 'u1', name: 'Домников Сергей' },
+        date: new Date(),
+        unRead: true,
+        attachedFiles: [],
+        forwarded: []
+    },
+    {
+        id: 6,
+        chatId: 1,
+        text: "Как уже неоднократно упомянуто, действия представителей оппозиции, которые представляют собой яркий пример континентально-европейского типа политической культуры, будут смешаны с не уникальными данными до степени совершенной неузнаваемости, из-за чего возрастает их статус бесполезности.",
+        user: { id: 'u1', name: 'Домников Сергей' },
+        date: new Date(),
+        unRead: true,
+        attachedFiles: [],
+        forwarded: []
+    },
+    {
+        id: 7,
+        chatId: 1,
+        text: "Как уже неоднократно упомянуто, базовые сценарии поведения пользователей призывают нас к новым свершениям, которые, в свою очередь, должны быть объективно рассмотрены соответствующими инстанциями.",
+        user: { id: 'u1', name: 'Домников Сергей' },
+        date: new Date(),
+        unRead: true,
+        attachedFiles: [],
+        forwarded: []
+    },
+    {
+        id: 8,
+        chatId: 1,
+        text: "Но действия представителей оппозиции, вне зависимости от их уровня, должны быть функционально разнесены на независимые элементы.",
+        user: { id: 'u1', name: 'Домников Сергей' },
+        date: new Date(),
+        unRead: true,
+        attachedFiles: [],
+        forwarded: []
+    },
+    {
+        id: 9,
+        chatId: 1,
+        text: "Есть над чем задуматься: интерактивные прототипы описаны максимально подробно.",
+        user: { id: 'u1', name: 'Домников Сергей' },
+        date: new Date(),
+        unRead: true,
+        attachedFiles: [],
+        forwarded: []
+    },
+    {
+        id: 10,
+        chatId: 1,
+        text: "Но укрепление и развитие внутренней структуры, в своём классическом представлении, допускает внедрение своевременного выполнения сверхзадачи.",
+        user: { id: 'u1', name: 'Домников Сергей' },
+        date: new Date(),
+        unRead: true,
+        attachedFiles: [],
+        forwarded: []
     }
+    
 ];
 
 export const setMessage = (message) => {
@@ -43,7 +129,7 @@ export const dialogs = [
         lastMessage: {
             date: new Date(2022, 9, 24, 18, 30),
             text: 'Но разбавленное изрядной долей эмпатии, рациональное мышление говорит о возможностях форм воздействия.',
-            user: 'Домников Сергей'
+            user: { id: 'u1', name: 'Домников Сергей' }
         },
         unReadCount: 1,
         typeDialog: "user",
@@ -52,7 +138,7 @@ export const dialogs = [
         },
         archiveDialog: false,
         fixedDialog: false,
-        users: ['u1']
+        users: ['u1'],
     },
     {
         id: 2,
@@ -61,7 +147,7 @@ export const dialogs = [
         lastMessage: {
             date: new Date(2022, 10, 1),
             text: 'Но разбавленное изрядной долей эмпатии, рациональное мышление говорит о возможностях форм воздействия."',
-            user: 'Домников Сергей'
+            user: { id: 'u1', name: 'Домников Сергей' }
         },
         unReadCount: 0,
         typeDialog: "order",

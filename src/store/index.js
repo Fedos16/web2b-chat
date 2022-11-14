@@ -5,7 +5,11 @@ import modalWindows from './modules/modalWindows';
 
 export default createStore({
     state: {
-        userName: 'my_id',
+
+        currentUser: {
+            id: 'u0',
+            name: 'Федин Олег'
+        },
 
         activeDialogId: null,
 
@@ -182,6 +186,19 @@ export default createStore({
             state.activeDialogId = id;
             state.messages = messages.filter(item => item.chatId === id);
         },
+        readMessagesForDialog(state, id) {
+            state.dialogs.map(item => {
+                if (item.id === id) item.unReadCount = 0;
+                return item;
+            })
+
+            const activeDialogId = state.activeDialogId;
+
+            state.messages.map(item => {
+                if (item.chatId === activeDialogId) item.unRead = false;
+                return item;
+            });
+        },
         toggleShowArchive(state) {
             state.showArchive = !state.showArchive;
         },
@@ -269,6 +286,7 @@ export default createStore({
 
         appendDialog(state, dialog) {
             state.dialogs.push(dialog);
+            this.commit('setActiveDialog', dialog.id);
         },
         appendMessage(state, message) {
             state.messages.push(message);
@@ -286,7 +304,7 @@ export default createStore({
         writeToUser(state, id) {
             const dialog = state.dialogs.find(item => item.users.includes(id) && item.typeDialog == 'user');
             if (dialog) {
-                state.activeDialogId = dialog.id;
+                this.commit('setActiveDialog', dialog.id);
             } else {
                 const countDialogs = state.dialogs.length;
                 const dialogID = countDialogs + 1;
@@ -309,7 +327,6 @@ export default createStore({
                 }
 
                 this.commit('appendDialog', dialog);
-                state.activeDialogId = dialogID;
             }
 
             state.viewChatId = null;
@@ -355,15 +372,17 @@ export default createStore({
         sendMessage({ state, commit }, payload) {
             const countMessages = state.messages.length;
             const activeDialogId = state.activeDialogId;
-            const activeUser = state.userName;
+            const currentUser = state.currentUser;
 
             const message = {
                 id: countMessages + 1,
                 chatId: activeDialogId,
                 text: payload,
-                user: activeUser,
-                incoming: false,
-                date: new Date()
+                user: currentUser,
+                date: new Date(),
+                unRead: true,
+                attachedFiles: [],
+                forwarded: []
             }
 
             if (payload) {

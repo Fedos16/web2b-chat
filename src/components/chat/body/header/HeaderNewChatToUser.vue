@@ -16,8 +16,8 @@
         <button v-if="selectedUser" class="chat-button-invisible margin-r--15" @click="hideListCreateChat">
             <img src="@/assets/images/crossclose.svg" alt="">
         </button>
-        <button class="chat-button main-button margin-r--10" :disabled="!selectedUser" @click="createChat">Создать чат</button>
-        <button class="chat-button secondary-button" @click="toggleCreateChatToUser">Отмена</button>
+        <button class="chat-button btn-sm main-button margin-r--10" :disabled="!selectedUser" @click="createChat">Создать чат</button>
+        <button class="chat-button btn-sm secondary-button" @click="toggleCreateChatToUser">Отмена</button>
         <CreateChatPopup v-if="popup.users.visible" :data="users" :title="title" />
     </div>
 </template>

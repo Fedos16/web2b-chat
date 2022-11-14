@@ -10,12 +10,10 @@
         <Footer v-if="activeDialogId" />
     </div>
 
-    <ModalWindowBackdrop v-if="visibleModalWindow && (visibleAddUser || visibleViewUser)" @closeWindow="hideModalWindow">
-        <ModalWindow :title="titleModalWindow" @closeWindow="hideModalWindow">
-            <ModalAddUser v-if="visibleAddUser" @closeWindow="hideModalWindow" />
-            <ModalViewUsers v-if="visibleViewUser" />
-        </ModalWindow>
-    </ModalWindowBackdrop>
+    <ModalViewUsers v-if="visibleViewUser" />
+
+    <ModalAddUser v-if="visibleAddUser" />
+
 </template>
 
 <script>
@@ -26,8 +24,6 @@ import HeaderNewChatToOrder from './header/HeaderNewChatToOrder.vue';
 import HeaderNewChatToUser from './header/HeaderNewChatToUser.vue';
 import Content from './content/Content.vue';
 import Footer from './footer/Footer.vue';
-import ModalWindowBackdrop from '../modalWindows/ModalWindowBackdrop.vue';
-import ModalWindow from '../modalWindows/ModalWindow.vue';
 import ModalAddUser from '../modalWindows/addUsers/ModalAddUser.vue';
 import ModalViewUsers from '../modalWindows/viewUsers/ModalViewUsers.vue';
 
@@ -39,8 +35,6 @@ export default {
         HeaderNewChatToUser,
         Content,
         Footer,
-        ModalWindowBackdrop,
-        ModalWindow,
         ModalAddUser,
         ModalViewUsers
     },
@@ -65,11 +59,6 @@ export default {
         },
         isCreateChatToOrder() {
             return this.$store.state.isCreateChatToOrder;
-        }
-    },
-    methods: {
-        hideModalWindow() {
-            this.$store.commit('modalWindows/hideModalWindow');
         }
     }
 }

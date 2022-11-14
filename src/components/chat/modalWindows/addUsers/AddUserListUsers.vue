@@ -9,6 +9,7 @@
 
 <script>
     import AddUserListUsersItem from './AddUserListUsersItem.vue';
+
     export default {
         components: { AddUserListUsersItem },
         props: {

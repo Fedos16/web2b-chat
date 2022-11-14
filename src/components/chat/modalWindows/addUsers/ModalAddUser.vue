@@ -1,25 +1,32 @@
 <template>
-    <div class="modal-window_search">
-        <div class="modal-window__icon-search"></div>
-        <input type="text" placeholder="Поиск" v-model="textSearch">
-    </div>
-    <AddUserListUsers v-if="usersFromContacts.length > 0" :title="titleContacts" :users="usersFromContacts" />
-    <AddUserListUsers v-if="usersFromSystem.length > 0" :title="titleUsers" :users="usersFromSystem" />
-    <div class="modal-window_actions">
-        <button class="chat-button main-button margin-r--10" @click="appendUsersForChat">Добавить</button>
-        <button class="chat-button secondary-button" @click="closeWindow">Отмена</button>
-    </div>
+    <ModalWindowBackdrop @closeWindow="hideModalWindow">
+        <ModalWindow :title="windowTitle" @closeWindow="hideModalWindow">
+            <div class="modal-window_search">
+                <div class="modal-window__icon-search"></div>
+                <input type="text" placeholder="Поиск" v-model="textSearch">
+            </div>
+            <AddUserListUsers v-if="usersFromContacts.length > 0" :title="titleContacts" :users="usersFromContacts" />
+            <AddUserListUsers v-if="usersFromSystem.length > 0" :title="titleUsers" :users="usersFromSystem" />
+            <div class="modal-window_actions">
+                <button class="chat-button btn-lg main-button margin-r--10" @click="appendUsersForChat">Добавить</button>
+                <button class="chat-button btn-lg secondary-button" @click="hideModalWindow">Отмена</button>
+            </div>
+        </ModalWindow>
+    </ModalWindowBackdrop>
 </template>
 
 <script>
 
 import { mapActions } from 'vuex';
 import AddUserListUsers from './AddUserListUsers.vue';
+import ModalWindowBackdrop from '../ModalWindowBackdrop.vue';
+import ModalWindow from '../ModalWindow.vue';
 
 export default {
-    components: { AddUserListUsers },
+    components: { ModalWindowBackdrop, ModalWindow, AddUserListUsers },
     data() {
         return {
+            windowTitle: 'Добавить пользователя',
             titleContacts: 'Мои контакты',
             titleUsers: 'Пользователи системы'
         }
@@ -43,14 +50,11 @@ export default {
             return this.$store.state.modalWindows.addUser.selectedUsers;
         }
     },
-    emits: {
-        closeWindow: null
-    },
     methods: {
-        closeWindow() {
-            this.$emit('closeWindow');
-        },
         ...mapActions('modalWindows', ['appendUsersForDialog']),
+        hideModalWindow() {
+            this.$store.commit('modalWindows/hideModalWindow');
+        },
         appendUsersForChat() {
             this.appendUsersForDialog(this.selectedUsers);
             this.closeWindow();

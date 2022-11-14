@@ -1,20 +1,39 @@
 <template>
-    <div class="modal-window_list my-scroll">
-        <ul>
-            <ViewUsersListItem v-for="user in usersFromChat" :key="user.id" :user="user" />
-        </ul>
-    </div>
+    <ModalWindowBackdrop @closeWindow="hideModalWindow">
+        <ModalWindow :title="windowTitle" @closeWindow="hideModalWindow">
+            <div class="modal-window_list my-scroll">
+                <ul>
+                    <ViewUsersListItem v-for="user in usersFromChat" :key="user.id" :user="user" />
+                </ul>
+            </div>
+        </ModalWindow>
+    </ModalWindowBackdrop>
 </template>
 
 <script>
     import { mapGetters } from 'vuex';
-import ViewUsersListItem from './ViewUsersListItem.vue';
+
+    import ModalWindowBackdrop from '../ModalWindowBackdrop.vue';
+    import ModalWindow from '../ModalWindow.vue';
+
+    import ViewUsersListItem from './ViewUsersListItem.vue';
+    
     export default {
-        components: { ViewUsersListItem },
+        components: { ModalWindowBackdrop, ModalWindow, ViewUsersListItem },
+        data() {
+            return {
+                windowTitle: 'Показать пользователей'
+            }
+        },
         computed: {
             ...mapGetters({
                 usersFromChat: 'getUsersFromChat'
             })
+        },
+        methods: {
+            hideModalWindow() {
+                this.$store.commit('modalWindows/hideModalWindow');
+            }
         }
     }
 </script>

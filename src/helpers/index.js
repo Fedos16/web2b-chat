@@ -6,6 +6,16 @@ export const timeFormat = (date) => {
 export const dateFormat = (date) => {
     return new Date(date).toLocaleDateString('ru-RU');
 }
+export const dateTitleChat = (date) => {
+    const days = dateDifference(new Date(), date);
+    
+    if (days < 1) return 'Сегодня';
+
+    return new Date(date).toLocaleDateString('ru-RU', { dateStyle: 'full' })
+}
+export const dateDifference = (endDate, startDate) => {
+    return (new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24);
+}
 export const formatingDateTime = (date) => {
     const now = new Date();
     date = new Date(date);
