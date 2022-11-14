@@ -55,7 +55,6 @@ export default {
         z-index: 3;
 
         ul {
-            padding: 18px 0px;
 
             li {
                 padding: 6px 24px;

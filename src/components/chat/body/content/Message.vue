@@ -1,15 +1,32 @@
 <template>
     <div class="message__title" v-if="isShowTitleChat">{{ dateMessage }}</div>
     <div class="message-list_row" :class="classMessage">
-        <div class="message-list_row__autor" v-if="currentIncomming && !previosIncomming">
+        <div class="message-list_row__autor" v-if="(currentIncomming && !previosIncomming) || (isShowTitleChat && currentIncomming)">
             {{ message.user.name }}
         </div>
         <div class="message-list_row__message-content">
             <div class="message-list_row_message">
-                <div class="message-list_row_message__text" v-html="message.findedText || message.text"></div>
+                <div class="message-list_row__column">
+                    <div class="message-list_row_message__text" v-html="message.findedText || message.text"></div>
+                    <div class="message-list_row_message_attached-list" v-if="message.attachedFiles.length > 0">
+                        <div class="message-list_row_message__attached" v-for="file in message.attachedFiles">
+                            <div class="attached__file"></div>
+                            <div class="attached__info">
+                                <b>{{file.name}}</b>
+                                <p>{{file.format}}, {{file.size}} {{file.unit}}</p>
+                            </div>
+                            <div class="attached__action attached__download"></div>
+                        </div>
+                    </div>
+                    <ForwardedList v-if="message.forwarded?.type" :title="titleForwardedMessage">
+                        <ForwardedMessage v-for="item in message.forwarded?.messages" :message="item" :key="item.id" />
+                    </ForwardedList>
+                </div>
                 <div class="message-list_row_message__time">{{ timeFormat(message.date) }}</div>
             </div>
-            <div class="message-list_row__action"></div>
+            <div class="message-list_row__action chat-popup" @click="toggleMenuMessage">
+                <ChatPopUp v-if="visiblePopUp" :data="menuMessage" />
+            </div>
         </div>
     </div>
 </template>
@@ -17,9 +34,13 @@
 <script>
 
 import { timeFormat, dateTitleChat, dateDifference } from '@/helpers/index';
-import { mapState } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
+import ChatPopUp from '../../popup/ChatPopUp.vue';
+import ForwardedList from '../../messages/ForwardedList.vue';
+import ForwardedMessage from '../../messages/ForwardedMessage.vue';
 
 export default {
+    components: { ChatPopUp, ForwardedList, ForwardedMessage },
     props: {
         message: {
             type: Object,
@@ -50,20 +71,40 @@ export default {
         isShowTitleChat() {
             if (!this.preMessage) return true;
 
-            console.log('Тестик');
-
             const days = dateDifference(this.message.date, this.preMessage.date);
-
-            console.log(days);
 
             return days > 1;
         },
         dateMessage() {
             return dateTitleChat(this.message.date);
+        },
+        visiblePopUp() {
+            return this.$store.state.messageMenuId == this.message.id;
+        },
+        titleForwardedMessage() {
+            const { type, messages } = this.message?.forwarded;
+            if (type === 'reply') return '';
+            return messages.length > 1 ? 'Пересланные сообщения' : 'Пересланное сообщение';
+        },
+        menuMessage() {
+            const menu = [
+                { id: 'mm-1', name: 'Ответить', handler: this.handlerSetReplyMessages },
+                { id: 'mm-2', name: 'Выбрать', handler: null },
+                { id: 'mm-3', name: 'Переслать', handler: null }
+            ];
+
+            return menu;
         }
     },
     methods: {
-        timeFormat
+        timeFormat,
+        ...mapMutations(['setForwardedMessages']),
+        handlerSetReplyMessages() {
+            this.setForwardedMessages({ type: 'reply', message: this.message });
+        },
+        toggleMenuMessage() {
+            this.$store.commit('toggleVisibleMenuMessage', this.message.id);
+        }
     }
 }
 </script>
@@ -72,8 +113,9 @@ export default {
 
     .message__title {
         position: sticky;
-        top: 0px;
-        width: 100%;
+        top: 5px;
+        width: 200px;
+        margin: 0px auto;
         text-align: center;
         padding: 8px;
         background-color: #fff;
@@ -83,7 +125,13 @@ export default {
         width: 100%;
         display: flex;
         flex-direction: column;
+        justify-content: flex-end;
         padding: 0px 12px;
+
+        &__column {
+            display: flex;
+            flex-direction: column;
+        }
 
         &--incoming {
             align-items: flex-start;
@@ -121,7 +169,6 @@ export default {
             background-position: center;
             cursor: pointer;
             transition: 200ms;
-            line-height: 0px;
             margin: 0px 5px;
 
             &:hover {
@@ -135,8 +182,8 @@ export default {
             max-width: 404px;
             border-radius: 4px;
             display: flex;
-            justify-content: flex-end;
-            align-items: center;
+            justify-content: space-between;
+            align-items: flex-end;
             flex-wrap: wrap;
             padding: 12px;
             background-color: #F7F8FA;
@@ -152,6 +199,53 @@ export default {
                 font-size: 12px;
                 color: #7D95BD;
                 font-feature-settings: 'pnum' on, 'lnum' on;
+                width: 100%;
+                text-align: right;
+                margin-top: -20px;
+                margin-left: 10px;
+            }
+
+            &_attached-list {
+                margin-top: 20px;
+                display: flex;
+                flex-wrap: wrap;
+            }
+            &__attached {
+                width: auto;
+                height: auto;
+                display: flex;
+                align-items: center;
+                margin-right: 20px;
+                padding: 10px 5px;
+                border-radius: 4px;
+
+                &:hover {
+                    background-color: #fff;
+                }
+
+                .attached__file {
+                    width: 21px;
+                    height: 27px;
+                    background-image: url('@/assets/images/file.png');
+                    background-size: cover;
+                    margin-right: 10px;
+                }
+
+                .attached__info {
+                    margin-right: 10px;
+
+                    p {
+                        color: #7D95BD;
+                    }
+                }
+
+                .attached__download {
+                    width: 14px;
+                    height: 11px;
+                    background-image: url('@/assets/images/download-file.png');
+                    background-size: cover;
+                    cursor: pointer;
+                }
             }
         }
     }

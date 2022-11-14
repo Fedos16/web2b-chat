@@ -1,5 +1,5 @@
 <template>
-    <div class="chat-body_content my-scroll" ref="chatBody">
+    <div class="chat-body_content">
         <div class="empty-dialog " v-if="!activeDialogId && !isCreateChat && !isCreateChatToUser && !isCreateChatToOrder">
             <img class="union-messages" src="@/assets/images/union-messages.png" alt="">
             <p>Выберите чат</p>
@@ -8,7 +8,7 @@
                 <img class="arrow-bottom" src="@/assets/images/checkmarkdown.svg" alt="">
             </span></p>
         </div>
-        <div class="message-list" v-else>
+        <div class="message-list my-scroll" ref="chatBody" v-else>
             <Message v-for="(message, index) in messages" :pre-message="index-1 >= 0 ? messages[index-1] : null" :message="message" :key="message.id" />
         </div>
     </div>
@@ -54,7 +54,7 @@ export default {
 
     .chat-body_content {
         width: 100%;
-        height: 100%;
+        height: 100vh;
         flex: 1;
         display: flex;
         flex-direction: column;
@@ -93,7 +93,7 @@ export default {
 
     .message-list {
         height: auto;
-        max-height: 100%;
+        overflow-y: auto;
         display: flex;
         flex-direction: column;
         align-items: stretch;

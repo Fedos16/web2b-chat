@@ -43,7 +43,7 @@ export const messages = [
         date: new Date(new Date().setMinutes(new Date().getMinutes() - 3)),
         unRead: true,
         attachedFiles: [],
-        forwarded: []
+        forwarded: { type: 'forwarded', messages: [{ id: 'f1', date: new Date(), text: 'Текст отвеченного сообщения', user: { id: 'u1', name: 'Домников Сергей' } }] }
     },
     {
         id: 4,
@@ -52,73 +52,36 @@ export const messages = [
         user: { id: 'u1', name: 'Домников Сергей' },
         date: new Date(),
         unRead: true,
-        attachedFiles: [],
+        attachedFiles: [
+            { id: 'f1', name: 'Прайс лист', format: 'doc', size: 32, unit: 'кб' },
+            { id: 'f2', name: 'Инструкция', format: 'docx', size: 178, unit: 'кб' }
+        ],
         forwarded: []
     },
     {
         id: 5,
         chatId: 1,
-        text: "Как принято считать, явные признаки победы институционализации неоднозначны и будут представлены в исключительно положительном свете.",
+        text: "Что скажешь на это",
         user: { id: 'u1', name: 'Домников Сергей' },
         date: new Date(),
         unRead: true,
         attachedFiles: [],
-        forwarded: []
-    },
-    {
-        id: 6,
-        chatId: 1,
-        text: "Как уже неоднократно упомянуто, действия представителей оппозиции, которые представляют собой яркий пример континентально-европейского типа политической культуры, будут смешаны с не уникальными данными до степени совершенной неузнаваемости, из-за чего возрастает их статус бесполезности.",
-        user: { id: 'u1', name: 'Домников Сергей' },
-        date: new Date(),
-        unRead: true,
-        attachedFiles: [],
-        forwarded: []
-    },
-    {
-        id: 7,
-        chatId: 1,
-        text: "Как уже неоднократно упомянуто, базовые сценарии поведения пользователей призывают нас к новым свершениям, которые, в свою очередь, должны быть объективно рассмотрены соответствующими инстанциями.",
-        user: { id: 'u1', name: 'Домников Сергей' },
-        date: new Date(),
-        unRead: true,
-        attachedFiles: [],
-        forwarded: []
-    },
-    {
-        id: 8,
-        chatId: 1,
-        text: "Но действия представителей оппозиции, вне зависимости от их уровня, должны быть функционально разнесены на независимые элементы.",
-        user: { id: 'u1', name: 'Домников Сергей' },
-        date: new Date(),
-        unRead: true,
-        attachedFiles: [],
-        forwarded: []
-    },
-    {
-        id: 9,
-        chatId: 1,
-        text: "Есть над чем задуматься: интерактивные прототипы описаны максимально подробно.",
-        user: { id: 'u1', name: 'Домников Сергей' },
-        date: new Date(),
-        unRead: true,
-        attachedFiles: [],
-        forwarded: []
-    },
-    {
-        id: 10,
-        chatId: 1,
-        text: "Но укрепление и развитие внутренней структуры, в своём классическом представлении, допускает внедрение своевременного выполнения сверхзадачи.",
-        user: { id: 'u1', name: 'Домников Сергей' },
-        date: new Date(),
-        unRead: true,
-        attachedFiles: [],
-        forwarded: []
+        forwarded: { 
+            type: 'reply', 
+            messages: [
+                { id: 'r1', date: new Date(), text: 'Текст отвеченного сообщения', user: { id: 'u1', name: 'Домников Сергей' } },
+                { id: 'r2', date: new Date(), text: 'Текст отвеченного сообщения', user: { id: 'u1', name: 'Домников Сергей' } }
+            ] 
+        }
     }
     
 ];
 
 export const setMessage = (message) => {
+
+    console.log(message);
+
+    
     messages.push(message);
 }
 export const dialogs = [

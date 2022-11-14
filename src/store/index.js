@@ -47,6 +47,13 @@ export default createStore({
                 selected: null,
                 search: ''
             }
+        },
+
+        messageMenuId: null,
+
+        forwardedMessages: {
+            type: null,
+            messages: []
         }
     },
     getters: {
@@ -333,7 +340,28 @@ export default createStore({
             state.modalWindows.viewUsers.visible = false;
 
             state.activeDialogId
-        }
+        },
+
+        toggleVisibleMenuMessage(state, id) {
+            state.messageMenuId == id ? state.messageMenuId = null : state.messageMenuId = id;
+        },
+        
+        setForwardedMessages(state, payload) {
+            const { message: { id, text, user, date }, type } = payload;
+
+            if (state.forwardedMessages.type  === type) {
+                state.forwardedMessages.messages.push({ id, date, user, text });
+            } else {
+                state.forwardedMessages.type = type;
+                state.forwardedMessages.messages = [{ id, date, user, text }];
+            }
+        },
+        resetForwardedMessages(state) {
+            state.forwardedMessages.type = null;
+            state.forwardedMessages.messages = [];
+
+            console.log('reset');
+        },
     },
     actions: {
         createChat({ state, commit }) {
@@ -374,6 +402,8 @@ export default createStore({
             const activeDialogId = state.activeDialogId;
             const currentUser = state.currentUser;
 
+            const { type, messages } = state.forwardedMessages;
+
             const message = {
                 id: countMessages + 1,
                 chatId: activeDialogId,
@@ -382,7 +412,7 @@ export default createStore({
                 date: new Date(),
                 unRead: true,
                 attachedFiles: [],
-                forwarded: []
+                forwarded: type ? { type, messages } : {}
             }
 
             if (payload) {
@@ -397,6 +427,8 @@ export default createStore({
                 }
 
             }
+
+            //commit('resetForwardedMessages');
         }
     },
     modules: {

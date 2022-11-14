@@ -6,6 +6,9 @@ export const timeFormat = (date) => {
 export const dateFormat = (date) => {
     return new Date(date).toLocaleDateString('ru-RU');
 }
+export const dateTimeFormat = (date) => {
+    return new Date(date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' });
+}
 export const dateTitleChat = (date) => {
     const days = dateDifference(new Date(), date);
     

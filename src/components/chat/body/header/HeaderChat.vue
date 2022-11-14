@@ -91,7 +91,7 @@
                         { id: 'ha-1', name: isFixed ? 'Открепить' : 'Закрепить', handler: this.changeStateFixed },
                         { id: 'ha-2', name: isArchive ? 'Вернуть из архива' : 'Переместить в архив', handler: this.changeStateArchive }
                     ],
-                    [typesDialog['Поддержка']]: [ { id: 'ha-1', name: isFixed ? 'Открепить' : 'Закрепить' } ]
+                    [typesDialog['Поддержка']]: [ { id: 'ha-1', name: isFixed ? 'Открепить' : 'Закрепить', handler: this.changeStateFixed } ]
                 }
 
                 const type = this.activeDialogData?.typeDialog;
